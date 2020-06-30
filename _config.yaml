@@ -1,1 +1,4 @@
 baseurl : ""
+
+includes:
+- assets/data
