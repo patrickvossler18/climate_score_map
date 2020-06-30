@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html class="no-js" lang="">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <title>Who's in Office?</title>
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="img/favicon/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="img/favicon/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="img/favicon/favicon-16x16.png">
+  <link rel="manifest" href="img/favicon/manifest.json">
+  <link rel="mask-icon" href="img/favicon/safari-pinned-tab.svg" color="#3174a3">
+  <meta name="theme-color" content="#ffffff">
+
+  <link rel="stylesheet" href="assets/css/normalize.css">
+  <!-- <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.50.0/mapbox-gl.css' rel='stylesheet' /> -->
+
+<script src='https://api.mapbox.com/mapbox-gl-js/v1.11.0/mapbox-gl.js'></script>
+<link href='https://api.mapbox.com/mapbox-gl-js/v1.11.0/mapbox-gl.css' rel='stylesheet' />
+
+  <link rel="stylesheet" href="assets/css/main.css">
+
+</head>
+
+<body>
+  <!--[if lte IE 9]>
+    <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience and security.</p>
+  <![endif]-->
+  <header>
+    <h1>
+      Climate Cabinet
+    </h1>
+  </header>
+  <div id="map" class="map"></div>
+  <div id="legend">
+    <h3>Who's in Office?</h3>
+    <p>This map displays the name and party of every state legislator in office as of February 2019. Data from <a href="https://cicerodata.com" target="_blank">Cicero</a>.</p>
+    <div id="legend-content">
+      <div id="legend-default">
+        <div class="legend-item">
+          <div class="legend-color" style="background-color: #2381C1"></div>
+          <div class="legend-label">Democratic</div>
+        </div>
+        <div class="legend-item">
+          <div class="legend-color" style="background-color: #CC2531"></div>
+          <div class="legend-label">Republican</div>
+        </div>
+        <div class="legend-item">
+          <div class="legend-color" style="background-color: #6e23c1"></div>
+          <div class="legend-label">Mixed</div>
+        </div>
+        <div class="legend-item">
+          <div class="legend-color" style="background-color: #a6a6a6"></div>
+          <div class="legend-label">Other</div>
+        </div>
+      </div>
+    </div>
+    <div class="buttons buttons-visualization">
+      <div class="button-group">
+        <button id="button-dots" class="selected" onclick="loadDots()">Dots</button>
+        <button id="button-polygon" onclick="loadPolygons()">Districts</button>
+      </div>
+      <div class="button-group">
+        <button id="button-senate" class="selected" onclick="loadSenate()">Senate</button>
+        <button id="button-house" onclick="loadHouse()">House</button>
+      </div>
+    </div>
+  </div>
+  <script src="https://cdn.polyfill.io/v2/polyfill.min.js"></script>
+  <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.50.0/mapbox-gl.js'></script>
+  <script src="assets/js/main.js"></script>
+</body>
+
+</html>

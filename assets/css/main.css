@@ -1,0 +1,880 @@
+/*! HTML5 Boilerplate v6.1.0 | MIT License | https://html5boilerplate.com/ */
+
+/*
+ * What follows is the result of much research on cross-browser styling.
+ * Credit left inline and big thanks to Nicolas Gallagher, Jonathan Neal,
+ * Kroc Camen, and the H5BP dev community and team.
+ */
+
+/* ==========================================================================
+   Base styles: opinionated defaults
+   ========================================================================== */
+
+html {
+    color: #222;
+    font-size: 14px;
+    line-height: 1.4;
+}
+
+/*
+ * Remove text-shadow in selection highlight:
+ * https://twitter.com/miketaylr/status/12228805301
+ *
+ * Vendor-prefixed and regular ::selection selectors cannot be combined:
+ * https://stackoverflow.com/a/16982510/7133471
+ *
+ * Customize the background color to match your design.
+ */
+
+::-moz-selection {
+    background: #b3d4fc;
+    text-shadow: none;
+}
+
+::selection {
+    background: #b3d4fc;
+    text-shadow: none;
+}
+
+/*
+ * A better looking default horizontal rule
+ */
+
+hr {
+    display: block;
+    height: 1px;
+    border: 0;
+    border-top: 1px solid #ccc;
+    margin: 1em 0;
+    padding: 0;
+}
+
+/*
+ * Remove the gap between audio, canvas, iframes,
+ * images, videos and the bottom of their containers:
+ * https://github.com/h5bp/html5-boilerplate/issues/440
+ */
+
+audio,
+canvas,
+iframe,
+img,
+svg,
+video {
+    vertical-align: middle;
+}
+
+/*
+ * Remove default fieldset styles.
+ */
+
+fieldset {
+    border: 0;
+    margin: 0;
+    padding: 0;
+}
+
+/*
+ * Allow only vertical resizing of textareas.
+ */
+
+textarea {
+    resize: vertical;
+}
+
+/* ==========================================================================
+   Browser Upgrade Prompt
+   ========================================================================== */
+
+.browserupgrade {
+    margin: 0.2em 0;
+    background: #ccc;
+    color: #000;
+    padding: 0.2em 0;
+}
+
+/* ==========================================================================
+   Author's custom styles
+   ========================================================================== */
+
+/* ==========================================================================
+   Helper classes
+   ========================================================================== */
+
+/*
+ * Hide visually and from screen readers
+ */
+
+.hidden {
+    display: none !important;
+}
+
+/*
+ * Hide only visually, but have it available for screen readers:
+ * https://snook.ca/archives/html_and_css/hiding-content-for-accessibility
+ *
+ * 1. For long content, line feeds are not interpreted as spaces and small width
+ *    causes content to wrap 1 word per line:
+ *    https://medium.com/@jessebeach/beware-smushed-off-screen-accessible-text-5952a4c2cbfe
+ */
+
+.visuallyhidden {
+    border: 0;
+    clip: rect(0 0 0 0);
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    padding: 0;
+    position: absolute;
+    width: 1px;
+    white-space: nowrap; /* 1 */
+}
+
+/*
+ * Extends the .visuallyhidden class to allow the element
+ * to be focusable when navigated to via the keyboard:
+ * https://www.drupal.org/node/897638
+ */
+
+.visuallyhidden.focusable:active,
+.visuallyhidden.focusable:focus {
+    clip: auto;
+    height: auto;
+    margin: 0;
+    overflow: visible;
+    position: static;
+    width: auto;
+    white-space: inherit;
+}
+
+/*
+ * Hide visually and from screen readers, but maintain layout
+ */
+
+.invisible {
+    visibility: hidden;
+}
+
+/*
+ * Clearfix: contain floats
+ *
+ * For modern browsers
+ * 1. The space content is one way to avoid an Opera bug when the
+ *    `contenteditable` attribute is included anywhere else in the document.
+ *    Otherwise it causes space to appear at the top and bottom of elements
+ *    that receive the `clearfix` class.
+ * 2. The use of `table` rather than `block` is only necessary if using
+ *    `:before` to contain the top-margins of child elements.
+ */
+
+.clearfix:before,
+.clearfix:after {
+    content: ' '; /* 1 */
+    display: table; /* 2 */
+}
+
+.clearfix:after {
+    clear: both;
+}
+
+/* ==========================================================================
+   EXAMPLE Media Queries for Responsive Design.
+   These examples override the primary ('mobile first') styles.
+   Modify as content requires.
+   ========================================================================== */
+
+@media only screen and (min-width: 35em) {
+    /* Style adjustments for viewports that meet the condition */
+}
+
+@media print,
+    (-webkit-min-device-pixel-ratio: 1.25),
+    (min-resolution: 1.25dppx),
+    (min-resolution: 120dpi) {
+    /* Style adjustments for high resolution devices */
+}
+
+/* ==========================================================================
+   Print styles.
+   Inlined to avoid the additional HTTP request:
+   https://www.phpied.com/delay-loading-your-print-css/
+   ========================================================================== */
+
+@media print {
+    *,
+    *:before,
+    *:after {
+        background: transparent !important;
+        color: #000 !important; /* Black prints faster */
+        -webkit-box-shadow: none !important;
+        box-shadow: none !important;
+        text-shadow: none !important;
+    }
+
+    a,
+    a:visited {
+        text-decoration: underline;
+    }
+
+    a[href]:after {
+        content: ' (' attr(href) ')';
+    }
+
+    abbr[title]:after {
+        content: ' (' attr(title) ')';
+    }
+
+    /*
+     * Don't show links that are fragment identifiers,
+     * or use the `javascript:` pseudo protocol
+     */
+
+    a[href^='#']:after,
+    a[href^='javascript:']:after {
+        content: '';
+    }
+
+    pre {
+        white-space: pre-wrap !important;
+    }
+    pre,
+    blockquote {
+        border: 1px solid #999;
+        page-break-inside: avoid;
+    }
+
+    /*
+     * Printing Tables:
+     * http://css-discuss.incutio.com/wiki/Printing_Tables
+     */
+
+    thead {
+        display: table-header-group;
+    }
+
+    tr,
+    img {
+        page-break-inside: avoid;
+    }
+
+    p,
+    h2,
+    h3 {
+        orphans: 3;
+        widows: 3;
+    }
+
+    h2,
+    h3 {
+        page-break-after: avoid;
+    }
+}
+
+html {
+    box-sizing: border-box;
+}
+*,
+*:before,
+*:after {
+    box-sizing: inherit;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif,
+        'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
+}
+
+a {
+    color: #2e7ef9;
+}
+
+/*body.sidebar-open .sidebar {
+    transform: translateY(0);
+    transition-delay: 800ms;
+}*/
+
+.sidebar h3 {
+    margin-top: -10px;
+    font-size: 18px;
+    font-weight: 600;
+}
+
+header {
+    background-color: #27323d;
+    color: #fff;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    margin-left: auto;
+    margin-right: auto;
+    z-index: 4000;
+    height: 50px;
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+body.embed header {
+    display: none;
+}
+
+header .text {
+    position: relative;
+    top: 2px;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 14px;
+    line-height: 42px;
+    font-weight: 700;
+}
+
+header .logo {
+    height: 38px;
+    padding: 10px 10px 4px 0;
+    margin-right: 10px;
+}
+
+.sidebar {
+    position: absolute !important;
+    top: 44px;
+    left: 0;
+    bottom: 0;
+    width: 420px;
+    overflow: auto;
+    padding: 15px;
+    background-color: #f5f6f8;
+    display: none;
+    z-index: 8000;
+}
+
+.sidebar--open .sidebar {
+    display: block;
+}
+
+.map {
+    position: absolute !important;
+    top: 50px;
+    left: 0;
+    bottom: 0;
+    right: 0;
+}
+
+body.embed .map {
+    top: 0;
+}
+
+.switch {
+    border-radius: 100px;
+    display: inline-block;
+    width: 32px;
+    height: 17px;
+    background-color: #7c94ac;
+    box-shadow: rgba(67, 90, 111, 0.14) 0px 0px 0px 1px inset,
+        rgba(67, 90, 111, 0.06) 0px -1px 1px 0px inset;
+    -webkit-appearance: none;
+    position: relative;
+    top: 3px;
+    margin-left: 7px;
+}
+
+#modal {
+    z-index: 10000;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: #27323c;
+    color: #fff;
+    overflow-y: auto;
+    height: 100%;
+    padding: 15px;
+    display: none;
+}
+
+#modal a {
+    color: #fff;
+}
+
+#modal.active {
+    display: block;
+}
+
+#modal-close {
+    position: fixed;
+    right: 15px;
+    top: 15px;
+    height: 48px;
+    width: 48px;
+    background: none;
+    box-shadow: none;
+}
+
+.modal-content {
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#button-toggle.active .switch {
+    background-color: #4ba6dd;
+}
+
+#button-toggle.active .switch-circle {
+    transform: translateX(18px);
+}
+
+button {
+    padding: 7px 8px;
+    -webkit-appearance: none;
+    vertical-align: middle;
+    cursor: pointer;
+    background-color: white;
+    background-image: linear-gradient(rgb(255, 255, 255), rgb(244, 245, 247));
+    box-shadow: rgba(67, 90, 111, 0.14) 0px 0px 0px 1px inset,
+        rgba(67, 90, 111, 0.06) 0px -1px 1px 0px inset;
+    text-decoration: none;
+    border-width: initial;
+    border-style: none;
+    border-color: initial;
+    border-image: initial;
+    outline: none;
+    font-size: 14px;
+}
+
+.switch-circle {
+    position: absolute;
+    top: 3px;
+    left: 0;
+    width: 11px;
+    height: 11px;
+    border-radius: 100px;
+    transition: all 0.2s ease-in-out;
+    transform: translateX(3px);
+    background-color: #fff;
+}
+
+.sidebar--open .map {
+    left: 420px;
+}
+
+#legend {
+    background-color: #fff;
+    padding: 12px;
+    position: absolute;
+    bottom: 15px;
+    right: 15px;
+    width: 300px;
+    border-radius: 2px;
+    z-index: 8000;
+    box-shadow: rgba(67, 90, 111, 0.3) 0px 0px 1px, rgba(67, 90, 111, 0.47) 0px 2px 4px -2px;
+}
+
+#legend h3 {
+    font-size: 18px;
+    margin-top: 0;
+    margin-bottom: -2px;
+    font-weight: 800;
+}
+
+#legend-content {
+    font-size: 14px;
+}
+
+#legend-model {
+    display: none;
+}
+
+#legend-streets {
+    display: none;
+}
+
+#legend-countries {
+    height: 69px;
+    width: 14px;
+    background: linear-gradient(to top, #fde0dd, #fa9fb5, #c51b8a);
+    position: relative;
+}
+
+.legend-top {
+    position: absolute;
+    top: 0;
+    line-height: 0.9;
+}
+
+.legend-middle {
+    position: absolute;
+    top: 28px;
+    line-height: 0.9;
+}
+
+.legend-bottom {
+    position: absolute;
+    top: 57px;
+    line-height: 0.9;
+}
+
+.legend-item {
+    margin-bottom: 4px;
+    width: 120px;
+    display: inline-block;
+}
+
+.legend-items {
+    transform: translateX(20px);
+    height: 100%;
+    color: #444;
+    font-size: 14px;
+}
+
+.legend-color {
+    width: 13px;
+    height: 13px;
+    display: inline-block;
+    background-color: #ccc;
+    position: relative;
+    top: 1px;
+    margin-right: 4px;
+    border-radius: 100px;
+}
+
+.legend-label {
+    display: inline-block;
+}
+
+.container {
+    max-width: 900px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 10px;
+    padding-right: 10px;
+    position: relative;
+}
+
+#close-sidebar {
+    position: absolute;
+    right: 5px;
+    top: 15px;
+    cursor: pointer;
+    padding: 10px;
+    background: none;
+    outline: none;
+    -webkit-appearance: none;
+    border: none;
+    box-shadow: none;
+}
+
+#close-sidebar img {
+    width: 12px;
+}
+
+h2 {
+    font-size: 21px;
+    font-weight: 800;
+    margin-top: 14px;
+}
+
+.value {
+    font-weight: 600;
+}
+
+.unit h3 {
+    font-size: 21px;
+    font-weight: 600;
+    margin-top: -15px;
+    color: #999;
+}
+
+.unit {
+    padding: 15px;
+    background-color: #fff;
+    box-shadow: rgba(67, 90, 111, 0.3) 0px 0px 1px, rgba(67, 90, 111, 0.47) 0px 2px 4px -2px;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.unit h4 {
+    margin: 0 0 4px;
+    font-weight: 500;
+    color: #666;
+    font-size: 14px;
+}
+
+.unit:not(:last-child) {
+    margin-bottom: 15px;
+}
+
+.property {
+    width: 48%;
+    display: inline-block;
+    margin: 8px 0;
+}
+
+#loading {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #fff;
+    opacity: 0.5;
+    z-index: 10000;
+}
+
+.mapboxgl-ctrl-attrib.mapboxgl-compact {
+    padding-left: 28px !important;
+    margin: 0 10px 10px;
+    position: relative;
+    background-color: #fff;
+    border-radius: 12px;
+    padding-right: 14px !important;
+}
+
+.mapboxgl-ctrl-attrib.mapboxgl-compact span {
+    display: none;
+}
+
+.mapboxgl-ctrl-attrib.mapboxgl-compact:hover span {
+    display: inline;
+}
+
+.mapboxgl-ctrl-attrib.mapboxgl-compact:hover {
+    padding: 2px 14px 2px 4px;
+    visibility: visible;
+}
+
+.mapboxgl-ctrl-attrib.mapboxgl-compact::after {
+    right: auto;
+    left: 0;
+}
+
+@media only screen and (max-width: 480px) {
+    #legend {
+        left: 10px;
+        right: 10px;
+        width: auto;
+    }
+
+    header .logo {
+        height: 32px;
+    }
+
+    .legend-item {
+        display: inline-block;
+        margin-right: 6px;
+    }
+
+    #legend h3 {
+        font-size: 16px;
+    }
+
+    #legend p {
+        font-size: 14px;
+    }
+
+    .sidebar {
+        top: 0;
+        width: auto;
+        right: 0;
+    }
+    f #close-sidebar {
+        right: 5px;
+        top: 0;
+    }
+}
+
+@media only screen and (max-width: 400px) {
+    #button-toggle {
+        color: transparent;
+    }
+}
+
+#spinner {
+    display: inline-block;
+    width: 50px;
+    height: 50px;
+    border: 3px solid rgb(29, 29, 29);
+    border-radius: 50%;
+    border-top-color: #fff;
+    animation: spin 1s ease-in-out infinite;
+    -webkit-animation: spin 1s ease-in-out infinite;
+    position: absolute;
+    left: 0;
+    right: 0;
+    margin-left: auto;
+    margin-right: auto;
+    top: 50%;
+    margin-top: -25px;
+}
+
+#button-modal {
+    margin-right: 10px;
+    background: none;
+    box-shadow: none;
+}
+
+#button-hospitals {
+}
+
+#button-satellite {
+    margin-left: 10px;
+}
+
+#button-toggle {
+    color: #fff;
+    position: absolute;
+    padding: 0;
+    top: 11px;
+    right: 15px;
+    z-index: 5000;
+    vertical-align: middle;
+    cursor: pointer;
+    text-decoration: none;
+    border-width: initial;
+    border-style: none;
+    border-color: initial;
+    border-image: initial;
+    font-size: 14px;
+    background: none;
+    outline: none;
+    font-weight: 500;
+    box-shadow: none;
+}
+
+.mapboxgl-map {
+    font: inherit;
+}
+
+.mapboxgl-popup-content {
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+    min-width: 100px;
+}
+
+.mapboxgl-popup-content h2 {
+    font-size: 21px;
+    font-weight: 800;
+    margin-top: 0px;
+    margin-bottom: 10px;
+}
+
+.mapboxgl-popup-content h1 {
+    font-size: 13px !important;
+    font-weight: 500;
+    max-width: 140px;
+}
+
+.mapboxgl-ctrl-attrib {
+    font-size: 11px;
+}
+
+.party-color {
+    border-radius: 2px;
+    width: 14px;
+    height: 14px;
+    display: inline-block;
+    background: #fff;
+    position: relative;
+    top: 1px;
+    margin-right: 5px;
+}
+
+.buttons-visualization {
+    margin-top: 18px;
+    z-index: 6000;
+    display: flex;
+}
+
+.button-group {
+    display: flex;
+}
+
+#button-senate {
+    margin-left: 10px;
+}
+
+.buttons-visualization button {
+    background: linear-gradient(180deg, hsla(0, 0%, 100%, 0.8), hsla(0, 0%, 100%, 0));
+    box-shadow: inset 0 0 0 1px rgba(16, 22, 26, 0.2), inset 0 -1px 0 rgba(16, 22, 26, 0.1);
+    border-radius: 3px;
+}
+
+.button-group button {
+    border-radius: 0;
+    margin-right: -1px;
+}
+
+.button-group button:first-child {
+    border-radius: 3px 0 0 3px;
+}
+
+.button-group button:last-child {
+    border-radius: 3px;
+    border-left: 0;
+    border-radius: 0 3px 3px 0;
+}
+
+.buttons-visualization button.selected {
+    background-image: none;
+    background: #e0e6eb;
+    box-shadow: inset 0 0 0 1px rgba(16, 22, 26, 0.2), inset 0 1px 2px rgba(16, 22, 26, 0.2) !important;
+    z-index: 200;
+    position: relative;
+}
+
+.mapboxgl-popup-close-button {
+    background-color: transparent;
+    background: none;
+    box-shadow: none;
+}
+
+@keyframes spin {
+    to {
+        -webkit-transform: rotate(360deg);
+    }
+}
+@-webkit-keyframes spin {
+    to {
+        -webkit-transform: rotate(360deg);
+    }
+}
+
+.mapboxgl-popup {
+    z-index: 40000;
+}
+
+.mapboxgl-popup-content {
+    pointer-events: none;
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+    margin-top: 1rem;
+    margin-left: 1rem;
+}
+
+.mapboxgl-popup-tip {
+    display: none;
+}
+
+.mapboxgl-popup-content h1 {
+    font-size: 14px !important;
+    margin-bottom: 6px;
+}
+
+.mapboxgl-popup-content h2 {
+    font-size: 16px;
+    font-weight: 700;
+    margin-top: 6px;
+}
+
+.mapboxgl-ctrl-attrib {
+    font-size: 10px;
+}
+
+.mapboxgl-popup-content h3 {
+    font-size: 14px;
+    margin-top: -7px;
+    font-weight: 500;
+    margin-bottom: 11px;
+}
