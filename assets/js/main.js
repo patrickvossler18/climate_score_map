@@ -367,7 +367,7 @@ const loadMap = function() {
 map.on('load', function() {
     map.addSource('us-states', {
         type: 'geojson',
-        data: 'assets/data/us-states.json',
+        data: 'data/us-states.json',
     });
 
     map.addLayer(
@@ -402,7 +402,7 @@ map.on('load', function() {
     map.addSource('district', {
         type: 'vector',
         // tiles: [location.origin + location.pathname + '/data/tiles/{z}/{x}/{y}.pbf'],
-        tiles: [ location.origin + '/assets/data/tiles/{z}/{x}/{y}.pbf'],
+        tiles: [ location.origin + '/data/tiles/{z}/{x}/{y}.pbf'],
         // tiles: ['https://azavea.github.io/election-results-map/' + '/data/tiles/{z}/{x}/{y}.pbf'],
         minzoom: 1,
         maxzoom: 8,
