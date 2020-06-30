@@ -367,7 +367,7 @@ const loadMap = function() {
 map.on('load', function() {
     map.addSource('us-states', {
         type: 'geojson',
-        data: 'data/us-states.json',
+        data: '/data/us-states.json',
     });
 
     map.addLayer(
