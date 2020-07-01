@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Page not found - Delaware General Assembly</title>
+    <meta charset="UTF-8">
+    <meta content="IE=edge" http-equiv="X-UA-Compatible">
+    <meta content="width=device-width,initial-scale=1,maximum-scale=1.0" name="viewport">
+    <meta content="Delaware Legislature" name="author">
+    <link href="/Content/css/bootstrap.css" rel="stylesheet">
+    <link href="/Content/css/bootstrap-theme.css" rel="stylesheet">
+    <link href="/Content/css/styles.css" rel="stylesheet">
+    <link type="text/css" rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Serif:400,700">
+    <style type="text/css">
+		body .container-home {
+			background-color: #f5f2e9;
+		}
+		h2 {
+			color: #6f3928;
+			font-family: "PT Serif",serif;
+			font-size: 32px;
+			font-weight: 400;
+			margin-bottom: 20px;
+		}
+		p {
+			font-size: 14px;
+		}
+		.img-responsive {
+			max-width: 200px;
+		}
+		@media (min-width: 768px) {
+			h2 {
+				margin-top: 100px;
+				font-size: 42px;
+			}
+			p {
+				font-size: 16px;
+			}
+		}
+    </style>
+</head>
+<body>
+    <div class="page-container static-page">
+        <div class="container container-header">
+            <div class="row">
+                <header class="clearfix">
+                    <div class="col-xs-24 col-sm-15 col-lg-16">
+                        <h1><a href="/" title="Return to Delaware General Assembly home page">Delaware General Assembly</a></h1>
+                    </div>
+                </header>
+            </div>
+        </div>
+        <div class="container container-home">
+            
+
+<div class="row">
+    <div class="col-xs-hidden col-sm-1"></div>
+    <div class="col-xs-24 col-sm-14">
+        <h2>Page not found</h2>
+        <p>It seems we can't find what you're looking for - this page has been moved, removed, or the page address was incorrectly typed.<p>
+        <p>Please try starting from the <a href="/">homepage</a> and using the site navigation or search to find what you're looking for.</p>
+    </div>
+    <div class="col-xs-hidden col-sm-1"></div>
+    <div class="col-xs-24 col-sm-8 col-img">
+        <img class="img-responsive" alt="Image of the State of Delaware" src="/Content/images/de-state-dots.png" />
+    </div>
+</div>
+
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<!--[if IEMobile 7]><html class="iem7"  lang="en" dir="ltr"><![endif]-->
+<!--[if lte IE 6]><html class="lt-ie9 lt-ie8 lt-ie7 no-js"  lang="en" dir="ltr"><![endif]-->
+<!--[if (IE 7)&(!IEMobile)]><html class="lt-ie9 lt-ie8 no-js"  lang="en" dir="ltr"><![endif]-->
+<!--[if IE 8]><html class="lt-ie9 no-js"  lang="en" dir="ltr"><![endif]-->
+<!--[if IE 9]><html class="ie9 lt-ie10 no-js"  lang="en" dir="ltr"><![endif]-->
+<!--[if (gt IE 9)|(gt IEMobile 7)]><!--><html class="no-js"  lang="en" dir="ltr" prefix="content: http://purl.org/rss/1.0/modules/content/ dc: http://purl.org/dc/terms/ foaf: http://xmlns.com/foaf/0.1/ og: http://ogp.me/ns# rdfs: http://www.w3.org/2000/01/rdf-schema# sioc: http://rdfs.org/sioc/ns# sioct: http://rdfs.org/sioc/types# skos: http://www.w3.org/2004/02/skos/core# xsd: http://www.w3.org/2001/XMLSchema#"><!--<![endif]-->
+
+<head>
+  <meta charset="utf-8" /><script type="text/javascript">(window.NREUM||(NREUM={})).loader_config={licenseKey:"48ca2afd60",applicationID:"65781041"};window.NREUM||(NREUM={}),__nr_require=function(e,n,t){function r(t){if(!n[t]){var i=n[t]={exports:{}};e[t][0].call(i.exports,function(n){var i=e[t][1][n];return r(i||n)},i,i.exports)}return n[t].exports}if("function"==typeof __nr_require)return __nr_require;for(var i=0;i<t.length;i++)r(t[i]);return r}({1:[function(e,n,t){function r(){}function i(e,n,t){return function(){return o(e,[u.now()].concat(f(arguments)),n?null:this,t),n?void 0:this}}var o=e("handle"),a=e(4),f=e(5),c=e("ee").get("tracer"),u=e("loader"),s=NREUM;"undefined"==typeof window.newrelic&&(newrelic=s);var p=["setPageViewName","setCustomAttribute","setErrorHandler","finished","addToTrace","inlineHit","addRelease"],l="api-",d=l+"ixn-";a(p,function(e,n){s[n]=i(l+n,!0,"api")}),s.addPageAction=i(l+"addPageAction",!0),s.setCurrentRouteName=i(l+"routeName",!0),n.exports=newrelic,s.interaction=function(){return(new r).get()};var m=r.prototype={createTracer:function(e,n){var t={},r=this,i="function"==typeof n;return o(d+"tracer",[u.now(),e,t],r),function(){if(c.emit((i?"":"no-")+"fn-start",[u.now(),r,i],t),i)try{return n.apply(this,arguments)}catch(e){throw c.emit("fn-err",[arguments,this,e],t),e}finally{c.emit("fn-end",[u.now()],t)}}}};a("actionText,setName,setAttribute,save,ignore,onEnd,getContext,end,get".split(","),function(e,n){m[n]=i(d+n)}),newrelic.noticeError=function(e,n){"string"==typeof e&&(e=new Error(e)),o("err",[e,u.now(),!1,n])}},{}],2:[function(e,n,t){function r(e,n){var t=e.getEntries();t.forEach(function(e){"first-paint"===e.name?c("timing",["fp",Math.floor(e.startTime)]):"first-contentful-paint"===e.name&&c("timing",["fcp",Math.floor(e.startTime)])})}function i(e,n){var t=e.getEntries();t.length>0&&c("lcp",[t[t.length-1]])}function o(e){if(e instanceof s&&!l){var n,t=Math.round(e.timeStamp);n=t>1e12?Date.now()-t:u.now()-t,l=!0,c("timing",["fi",t,{type:e.type,fid:n}])}}if(!("init"in NREUM&&"page_view_timing"in NREUM.init&&"enabled"in NREUM.init.page_view_timing&&NREUM.init.page_view_timing.enabled===!1)){var a,f,c=e("handle"),u=e("loader"),s=NREUM.o.EV;if("PerformanceObserver"in window&&"function"==typeof window.PerformanceObserver){a=new PerformanceObserver(r),f=new PerformanceObserver(i);try{a.observe({entryTypes:["paint"]}),f.observe({entryTypes:["largest-contentful-paint"]})}catch(p){}}if("addEventListener"in document){var l=!1,d=["click","keydown","mousedown","pointerdown","touchstart"];d.forEach(function(e){document.addEventListener(e,o,!1)})}}},{}],3:[function(e,n,t){function r(e,n){if(!i)return!1;if(e!==i)return!1;if(!n)return!0;if(!o)return!1;for(var t=o.split("."),r=n.split("."),a=0;a<r.length;a++)if(r[a]!==t[a])return!1;return!0}var i=null,o=null,a=/Version\/(\S+)\s+Safari/;if(navigator.userAgent){var f=navigator.userAgent,c=f.match(a);c&&f.indexOf("Chrome")===-1&&f.indexOf("Chromium")===-1&&(i="Safari",o=c[1])}n.exports={agent:i,version:o,match:r}},{}],4:[function(e,n,t){function r(e,n){var t=[],r="",o=0;for(r in e)i.call(e,r)&&(t[o]=n(r,e[r]),o+=1);return t}var i=Object.prototype.hasOwnProperty;n.exports=r},{}],5:[function(e,n,t){function r(e,n,t){n||(n=0),"undefined"==typeof t&&(t=e?e.length:0);for(var r=-1,i=t-n||0,o=Array(i<0?0:i);++r<i;)o[r]=e[n+r];return o}n.exports=r},{}],6:[function(e,n,t){n.exports={exists:"undefined"!=typeof window.performance&&window.performance.timing&&"undefined"!=typeof window.performance.timing.navigationStart}},{}],ee:[function(e,n,t){function r(){}function i(e){function n(e){return e&&e instanceof r?e:e?c(e,f,o):o()}function t(t,r,i,o){if(!l.aborted||o){e&&e(t,r,i);for(var a=n(i),f=v(t),c=f.length,u=0;u<c;u++)f[u].apply(a,r);var p=s[y[t]];return p&&p.push([b,t,r,a]),a}}function d(e,n){h[e]=v(e).concat(n)}function m(e,n){var t=h[e];if(t)for(var r=0;r<t.length;r++)t[r]===n&&t.splice(r,1)}function v(e){return h[e]||[]}function g(e){return p[e]=p[e]||i(t)}function w(e,n){u(e,function(e,t){n=n||"feature",y[t]=n,n in s||(s[n]=[])})}var h={},y={},b={on:d,addEventListener:d,removeEventListener:m,emit:t,get:g,listeners:v,context:n,buffer:w,abort:a,aborted:!1};return b}function o(){return new r}function a(){(s.api||s.feature)&&(l.aborted=!0,s=l.backlog={})}var f="nr@context",c=e("gos"),u=e(4),s={},p={},l=n.exports=i();l.backlog=s},{}],gos:[function(e,n,t){function r(e,n,t){if(i.call(e,n))return e[n];var r=t();if(Object.defineProperty&&Object.keys)try{return Object.defineProperty(e,n,{value:r,writable:!0,enumerable:!1}),r}catch(o){}return e[n]=r,r}var i=Object.prototype.hasOwnProperty;n.exports=r},{}],handle:[function(e,n,t){function r(e,n,t,r){i.buffer([e],r),i.emit(e,n,t)}var i=e("ee").get("handle");n.exports=r,r.ee=i},{}],id:[function(e,n,t){function r(e){var n=typeof e;return!e||"object"!==n&&"function"!==n?-1:e===window?0:a(e,o,function(){return i++})}var i=1,o="nr@id",a=e("gos");n.exports=r},{}],loader:[function(e,n,t){function r(){if(!x++){var e=E.info=NREUM.info,n=d.getElementsByTagName("script")[0];if(setTimeout(s.abort,3e4),!(e&&e.licenseKey&&e.applicationID&&n))return s.abort();u(y,function(n,t){e[n]||(e[n]=t)}),c("mark",["onload",a()+E.offset],null,"api");var t=d.createElement("script");t.src="https://"+e.agent,n.parentNode.insertBefore(t,n)}}function i(){"complete"===d.readyState&&o()}function o(){c("mark",["domContent",a()+E.offset],null,"api")}function a(){return O.exists&&performance.now?Math.round(performance.now()):(f=Math.max((new Date).getTime(),f))-E.offset}var f=(new Date).getTime(),c=e("handle"),u=e(4),s=e("ee"),p=e(3),l=window,d=l.document,m="addEventListener",v="attachEvent",g=l.XMLHttpRequest,w=g&&g.prototype;NREUM.o={ST:setTimeout,SI:l.setImmediate,CT:clearTimeout,XHR:g,REQ:l.Request,EV:l.Event,PR:l.Promise,MO:l.MutationObserver};var h=""+location,y={beacon:"bam.nr-data.net",errorBeacon:"bam.nr-data.net",agent:"js-agent.newrelic.com/nr-1169.min.js"},b=g&&w&&w[m]&&!/CriOS/.test(navigator.userAgent),E=n.exports={offset:f,now:a,origin:h,features:{},xhrWrappable:b,userAgent:p};e(1),e(2),d[m]?(d[m]("DOMContentLoaded",o,!1),l[m]("load",r,!1)):(d[v]("onreadystatechange",i),l[v]("onload",r)),c("mark",["firstbyte",f],null,"api");var x=0,O=e(6)},{}],"wrap-function":[function(e,n,t){function r(e){return!(e&&e instanceof Function&&e.apply&&!e[a])}var i=e("ee"),o=e(5),a="nr@original",f=Object.prototype.hasOwnProperty,c=!1;n.exports=function(e,n){function t(e,n,t,i){function nrWrapper(){var r,a,f,c;try{a=this,r=o(arguments),f="function"==typeof t?t(r,a):t||{}}catch(u){l([u,"",[r,a,i],f])}s(n+"start",[r,a,i],f);try{return c=e.apply(a,r)}catch(p){throw s(n+"err",[r,a,p],f),p}finally{s(n+"end",[r,a,c],f)}}return r(e)?e:(n||(n=""),nrWrapper[a]=e,p(e,nrWrapper),nrWrapper)}function u(e,n,i,o){i||(i="");var a,f,c,u="-"===i.charAt(0);for(c=0;c<n.length;c++)f=n[c],a=e[f],r(a)||(e[f]=t(a,u?f+i:i,o,f))}function s(t,r,i){if(!c||n){var o=c;c=!0;try{e.emit(t,r,i,n)}catch(a){l([a,t,r,i])}c=o}}function p(e,n){if(Object.defineProperty&&Object.keys)try{var t=Object.keys(e);return t.forEach(function(t){Object.defineProperty(n,t,{get:function(){return e[t]},set:function(n){return e[t]=n,n}})}),n}catch(r){l([r])}for(var i in e)f.call(e,i)&&(n[i]=e[i]);return n}function l(n){try{e.emit("internal-error",n)}catch(t){}}return e||(e=i),t.inPlace=u,t.flag=a,t}},{}]},{},["loader"]);</script>
+<link rel="shortcut icon" href="http://leg.colorado.gov/sites/all/themes/themekit/favicon.ico" type="image/vnd.microsoft.icon" />
+<meta name="generator" content="Drupal 7 (http://drupal.org)" />
+<link rel="canonical" href="http://leg.colorado.gov/" />
+<link rel="shortlink" href="http://leg.colorado.gov/" />
+  <title>404 - Page Not Found | Colorado General Assembly</title>
+
+      <meta name="MobileOptimized" content="width">
+    <meta name="HandheldFriendly" content="true">
+    <meta name="viewport" content="width=device-width">
+    <meta http-equiv="cleartype" content="on">
+
+  <script>(function(H){H.className=H.className.replace(/\bno-js\b/,'js')})(document.documentElement)</script>
+
+  <link rel="" />
+
+  <link rel="apple-touch-icon-precomposed" sizes="57x57" href="http://leg.colorado.gov/sites/all/themes/themekit/images/favicons/apple-touch-icon-57x57.png" />
+  <link rel="apple-touch-icon-precomposed" sizes="114x114" href="http://leg.colorado.gov/sites/all/themes/themekit/images/favicons/apple-touch-icon-114x114.png" />
+  <link rel="apple-touch-icon-precomposed" sizes="72x72" href="http://leg.colorado.gov/sites/all/themes/themekit/images/favicons/apple-touch-icon-72x72.png" />
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="http://leg.colorado.gov/sites/all/themes/themekit/images/favicons/apple-touch-icon-144x144.png" />
+  <link rel="apple-touch-icon-precomposed" sizes="120x120" href="http://leg.colorado.gov/sites/all/themes/themekit/images/favicons/apple-touch-icon-120x120.png" />
+  <link rel="apple-touch-icon-precomposed" sizes="152x152" href="http://leg.colorado.gov/sites/all/themes/themekit/images/favicons/apple-touch-icon-152x152.png" />
+  <link rel="icon" type="image/png" href="http://leg.colorado.gov/sites/all/themes/themekit/images/favicons/favicon-32x32.png" sizes="32x32" />
+  <link rel="icon" type="image/png" href="http://leg.colorado.gov/sites/all/themes/themekit/images/favicons/favicon-16x16.png" sizes="16x16" />
+  <meta name="application-name" content="Colorado General Assembly"/>
+  <meta name="msapplication-TileColor" content="#FFFFFF" />
+  <meta name="msapplication-TileImage" content="http://leg.colorado.gov/sites/all/themes/themekit/images/favicons/mstile-144x144.png" />
+
+  <link type="text/css" rel="stylesheet" href="http://leg.colorado.gov/sites/default/files/css/css_ywqYrtSodM0qVMzAkOSnqZ_iBnAVpkSeD_yPtUN9tBk.css" media="all" />
+<link type="text/css" rel="stylesheet" href="http://leg.colorado.gov/sites/default/files/css/css_lkvHUqwuaMnlSkPLjR6wgdcvM88sr5Mi-fDRQ-vdqKU.css" media="all" />
+<link type="text/css" rel="stylesheet" href="http://leg.colorado.gov/sites/default/files/css/css_WdXuRxU05AB2dXsuqw0393UM8ritmLXNd9RyvoMrZqQ.css" media="all" />
+<link type="text/css" rel="stylesheet" href="http://leg.colorado.gov/sites/default/files/css/css_DeELTXgK9MXgTLdJrr2NQ1ysp1tT9RTGVKEPHuExb-s.css" media="all" />
+<link type="text/css" rel="stylesheet" href="http://leg.colorado.gov/sites/default/files/css/css_47DEQpj8HBSa-_TImW-5JCeuQeRkm5NMpJWZG3hSuFU.css" media="all" />
+  <script src="http://leg.colorado.gov/sites/default/files/js/js_lef8LQWgZttfkKawP29pwgSGhRKq_veOWp1zaw1JIrc.js"></script>
+<script src="http://leg.colorado.gov/sites/default/files/js/js_RWNSGzohFTmXCNuv0z6X76PcVrTxIUmQKFYEUEM9b08.js"></script>
+<script src="//use.typekit.net/ylw4wfz.js"></script>
+<script>try{Typekit.load();}catch(e){}</script>
+<script src="http://leg.colorado.gov/sites/default/files/js/js_DzD04PZATtGOFjfR8HJgfcaO3-pPZpWFXEvuMvQz2gA.js"></script>
+<script src="http://leg.colorado.gov/sites/default/files/js/js_uiF75tUtWsZIPud4DMk7FvzKr_zA8oqdtm3l-SnQKJ0.js"></script>
+<script src="http://leg.colorado.gov/sites/default/files/js/js_gb86_m4qPBjAv0xlv5u8ozKkw0G4wtsnofdh5fqvlcs.js"></script>
+<script>(function(i,s,o,g,r,a,m){i["GoogleAnalyticsObject"]=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,"script","//www.google-analytics.com/analytics.js","ga");ga("create", "UA-84496800-1", {"cookieDomain":"auto"});ga("set", "anonymizeIp", true);ga("set", "page", "/404.html?page=" + document.location.pathname + document.location.search + "&from=" + document.referrer);ga("send", "pageview");</script>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+<script>jQuery.extend(Drupal.settings, {"basePath":"\/","pathPrefix":"","ajaxPageState":{"theme":"themekit","theme_token":"osPVsKvFUzOBeqInSdueSXdIGZBEG91h4ARaH5Xrs1A","js":{"sites\/all\/themes\/themekit\/js\/dist\/theme.js":1,"sites\/all\/modules\/contrib\/jquery_update\/replace\/jquery\/1.10\/jquery.min.js":1,"misc\/jquery-extend-3.4.0.js":1,"misc\/jquery-html-prefilter-3.5.0-backport.js":1,"misc\/jquery.once.js":1,"misc\/drupal.js":1,"sites\/all\/themes\/themekit\/js\/lib\/modernizr.custom-new.js":1,"\/\/use.typekit.net\/ylw4wfz.js":1,"0":1,"sites\/all\/modules\/contrib\/jquery_update\/replace\/ui\/ui\/minified\/jquery.ui.core.min.js":1,"sites\/all\/modules\/contrib\/jquery_update\/replace\/ui\/ui\/minified\/jquery.ui.widget.min.js":1,"sites\/all\/modules\/contrib\/jquery_update\/replace\/ui\/ui\/minified\/jquery.ui.accordion.min.js":1,"sites\/all\/modules\/contrib\/admin_menu\/admin_devel\/admin_devel.js":1,"sites\/all\/modules\/contrib\/extlink\/extlink.js":1,"sites\/all\/modules\/contrib\/context_accordion\/context_accordion.js":1,"sites\/all\/modules\/contrib\/notification_bar\/notification_bar.js":1,"sites\/all\/modules\/contrib\/google_analytics\/googleanalytics.js":1,"1":1,"2":1},"css":{"modules\/system\/system.base.css":1,"modules\/system\/system.menus.css":1,"modules\/system\/system.messages.css":1,"modules\/system\/system.theme.css":1,"misc\/ui\/jquery.ui.core.css":1,"misc\/ui\/jquery.ui.theme.css":1,"misc\/ui\/jquery.ui.accordion.css":1,"modules\/book\/book.css":1,"sites\/all\/modules\/contrib\/date\/date_api\/date.css":1,"sites\/all\/modules\/contrib\/date\/date_popup\/themes\/datepicker.1.7.css":1,"modules\/field\/theme\/field.css":1,"sites\/all\/modules\/contrib\/logintoboggan\/logintoboggan.css":1,"modules\/node\/node.css":1,"sites\/all\/modules\/contrib\/relation_add\/relation_add.css":1,"modules\/search\/search.css":1,"modules\/user\/user.css":1,"sites\/all\/modules\/contrib\/extlink\/extlink.css":1,"sites\/all\/modules\/contrib\/views\/css\/views.css":1,"sites\/all\/modules\/contrib\/ckeditor\/css\/ckeditor.css":1,"sites\/all\/modules\/contrib\/context_accordion\/context_accordion.css":1,"sites\/all\/modules\/contrib\/ctools\/css\/ctools.css":1,"sites\/all\/modules\/contrib\/notification_bar\/notification_bar.css":1,"sites\/all\/themes\/themekit\/css\/src\/style.css":1,"sites\/all\/themes\/themekit\/system.menus.css":1,"sites\/all\/themes\/themekit\/system.messages.css":1}},"extlink":{"extTarget":0,"extClass":0,"extLabel":"(link is external)","extImgClass":0,"extSubdomains":1,"extExclude":"(apps\\.leg\\.co\\.gov)|([a-z.]@state\\.co\\.us)|(www\\.leg\\.state\\.co\\.us)|(tornado\\.state\\.co\\.us)|(.+acquia\\-sites\\.com*)|(.+amazonaws.+)","extInclude":"^((www.)?(leg|coga|gadev)).*","extCssExclude":"","extCssExplicit":"","extAlert":"_blank","extAlertText":"Note: You are now leaving the Colorado General Assembly website.","mailtoClass":0,"mailtoLabel":"(link sends e-mail)"},"googleanalytics":{"trackOutbound":1,"trackMailto":1,"trackDownload":1,"trackDownloadExtensions":"7z|aac|arc|arj|asf|asx|avi|bin|csv|doc(x|m)?|dot(x|m)?|exe|flv|gif|gz|gzip|hqx|jar|jpe?g|js|mp(2|3|4|e?g)|mov(ie)?|msi|msp|pdf|phps|png|ppt(x|m)?|pot(x|m)?|pps(x|m)?|ppam|sld(x|m)?|thmx|qtm?|ra(m|r)?|sea|sit|tar|tgz|torrent|txt|wav|wma|wmv|wpd|xls(x|m|b)?|xlt(x|m)|xlam|xml|z|zip"},"urlIsAjaxTrusted":{"\/sitewide-search":true}});</script>
+      <!--[if lt IE 9]>
+    <script src="/sites/all/themes/zen/js/html5-respond.js"></script>
+    <![endif]-->
+  </head>
+<body class="html not-front not-logged-in no-sidebars page-node page-node- page-node-14556 node-type-advanced-page section-error-404 f-not-processed" >
+  <div id="skip-to-content">
+    <a href="#main-content" class="skip-to-content-link">Skip to main content</a>
+  </div>
+    
+<div class="page-wrapper">
+
+  <div class="scroll-menu-wrapper">
+  <div class="scroll-menus"></div>
+</div>
+
+<div class="mobile-menu-bar mobile-main-menu-bar"><a href="/" class="site-title">Colorado General Assembly</a><a href="#" class="mobile-main-menu-toggle" data-toggle-target="main">Toggle Main Menu<span class="animated-toggle"><span class="lines"></span></span></a></div>
+<div class="mobile-menu-bar mobile-agency-menu-bar"><span class="agency-title">Agency Name</span><a href="#" class="mobile-agency-menu-toggle" data-toggle-target="agency">Toggle Agency Menu</a></div>
+
+<div class="mobile-menu-wrapper mobile-menu-wrapper-main">
+  <div class="mobile-menu-main"></div>
+</div>
+
+<div class="mobile-menu-wrapper mobile-menu-wrapper-agency">
+  <div class="mobile-menu-agency"></div>
+</div>
+
+  <div id="page">
+
+    <div class="header-wrapper">
+      
+<header id="header" role="banner">
+  <div class="header-top">
+    <div class="brand">
+      <div class="site-title-area">
+        <div class="site-logo">
+          <img src="/sites/all/themes/themekit/images/cga-logo-med.png" alt="Colorado General Assembly Logo">
+        </div>
+        <div class="site-title">
+          <!--            <p class="session-info">2014-2015 First Regular Session | 70th General Assembly</p>-->
+            <p class="session-info">Second Regular Session | 72nd General Assembly</p>
+                                <span id="site-name">
+            <a href="/" title="Home"
+               rel="home"><span>Colorado General Assembly</span></a>
+          </span>
+                  </div>
+      </div>
+      <a href="#" class="mobile-main-menu-toggle" data-toggle-target="main">Toggle Main Menu<span class="animated-toggle"><span class="lines"></span></span></a>
+    </div>
+    <div class="utility">
+      <nav class="top-bar" role="navigation">
+  <div id="responsive-secondary-menu">
+      <div class="region region-navigation-secondary">
+    <nav id="block-menu-block-2" class="block block-menu-block first last odd" role="navigation">
+
+      
+  <ul class="menu-block-wrapper menu-block-2 menu-name-menu-secondary-menu parent-mlid-0 menu-level-1 menu" >
+  <li class="menu__item is-leaf first leaf menu-mlid-493"><a href="http://leg.colorado.gov/visit-learn" title="" class="menu__link">Visit &amp; Learn</a></li>
+<li class="menu__item is-leaf leaf menu-mlid-494"><a href="/findmylegislator" title="" class="menu__link">Find My Legislator</a></li>
+<li class="menu__item is-leaf last leaf menu-mlid-496"><a href="/watch-listen" title="" class="menu__link">Watch &amp; Listen</a></li>
+</ul>
+
+</nav><!-- /.block -->
+  </div>
+  </div>
+</nav>
+
+
+
+      <div class="header-search">
+        <form action="/sitewide-search" method="get" id="views-exposed-form-sitewide-search-2-simple" accept-charset="UTF-8"><div><div class="views-exposed-form">
+  <div class="views-exposed-widgets clearfix">
+          <div id="edit-search-api-views-fulltext-wrapper" class="views-exposed-widget views-widget-filter-search_api_views_fulltext">
+                        <div class="views-widget">
+          <div class="form-item form-type-textfield form-item-search-api-views-fulltext">
+ <input type="text" id="edit-search-api-views-fulltext" name="search_api_views_fulltext" value="" size="30" maxlength="128" class="form-text" />
+</div>
+        </div>
+              </div>
+                    <div class="views-exposed-widget views-submit-button">
+      <input type="submit" id="edit-submit-sitewide-search-2" name="" value="Apply" class="form-submit" />    </div>
+      </div>
+</div>
+</div></form>      </div>
+    </div>
+  </div>
+
+  
+    <nav id="main-menu" role="navigation">
+      <div class="region region-navigation">
+    <nav id="block-menu-block-1" class="block block-menu-block first last odd" role="navigation">
+
+      
+  <ul class="menu-block-wrapper menu-block-1 menu-name-main-menu parent-mlid-0 menu-level-1 menu" >
+  <li class="menu__item is-leaf first leaf menu-mlid-4601"><a href="/interim-schedule" class="menu__link">Interim Schedule</a></li>
+<li class="menu__item is-expanded expanded menu-mlid-417 has-dropdown"><a href="/bills" class="menu__link">Bills</a><ul class="expanded-child dropdown"><li class="menu__item is-leaf first leaf menu-mlid-2686"><a href="/bills" title="" class="menu__link">Find A Bill</a></li>
+<li class="menu__item is-leaf leaf menu-mlid-2676"><a href="/bill-search?field_sessions=64656&amp;sort_bef_combine=field_bill_number%20ASC" title="" class="menu__link">All Bills</a></li>
+<li class="menu__item is-leaf leaf menu-mlid-8201"><a href="/bills-by-bill-number" title="" class="menu__link">All Bills - Condensed</a></li>
+<li class="menu__item is-leaf leaf menu-mlid-3451"><a href="/digest-of-bills" title="" class="menu__link">Bill Digest</a></li>
+<li class="menu__item is-leaf last leaf menu-mlid-7946"><a href="https://leg.colorado.gov/prior-session-information" title="" class="menu__link">Prior Sessions</a></li>
+</ul></li>
+<li class="menu__item is-expanded expanded menu-mlid-2521 has-dropdown"><a href="/laws" class="menu__link">Laws</a><ul class="expanded-child dropdown"><li class="menu__item is-leaf first leaf menu-mlid-3146"><a href="/laws" title="" class="menu__link">Colorado Laws</a></li>
+<li class="menu__item is-leaf leaf menu-mlid-8151"><a href="https://leg.colorado.gov/united-states-constitution" title="" class="menu__link">U.S. Constitution</a></li>
+<li class="menu__item is-leaf leaf menu-mlid-3151"><a href="/colorado-constitution" class="menu__link">Colorado Constitution</a></li>
+<li class="menu__item is-leaf leaf menu-mlid-2886"><a href="/colorado-revised-statutes" title="A link and short description of the Colorado C.R.S." class="menu__link">Colorado Revised Statutes</a></li>
+<li class="menu__item is-leaf leaf menu-mlid-3536"><a href="/session-laws?field_sessions_target_id=64656&amp;sort_bef_combine=field_page_value%20ASC" title="" class="menu__link">Session Laws</a></li>
+<li class="menu__item is-leaf leaf menu-mlid-3541"><a href="/committees/colorado-commission-uniform-state-laws/2020-regular-session" title="" class="menu__link">Uniform State Laws</a></li>
+<li class="menu__item is-leaf last leaf menu-mlid-3546"><a href="http://www.sos.state.co.us/CCR/Welcome.do" title="" class="menu__link">Executive Agency Rules &amp; Regulations</a></li>
+</ul></li>
+<li class="menu__item is-leaf leaf menu-mlid-469"><a href="/legislators" class="menu__link">Legislators</a></li>
+<li class="menu__item is-expanded expanded menu-mlid-532 has-dropdown"><a href="/content/committees" class="menu__link">Committees</a><ul class="expanded-child dropdown"><li class="menu__item is-leaf first leaf menu-mlid-3961"><a href="/content/committees" title="" class="menu__link">Committees</a></li>
+<li class="menu__item is-leaf leaf menu-mlid-10066"><a href="/node/1222211/" title="" class="menu__link">Committee Information</a></li>
+<li class="menu__item is-leaf leaf menu-mlid-10421"><a href="http://leg.colorado.gov/sites/default/files/committee_public_policy.pdf" title="" class="menu__link">Committee Room Policy</a></li>
+<li class="menu__item is-leaf leaf menu-mlid-8091"><a href="/node/970931/" title="" class="menu__link">Year Round &amp; Interim Committee Archives</a></li>
+<li class="menu__item is-leaf leaf menu-mlid-3066"><a href="/remote-testimony" title="" class="menu__link">Remote Testimony Sign-up</a></li>
+<li class="menu__item is-leaf last leaf menu-mlid-11841"><a href="http://leg.colorado.gov/testimony" title="" class="menu__link">Written Testimony &amp; Witness Sign-up</a></li>
+</ul></li>
+<li class="menu__item is-expanded expanded menu-mlid-536 has-dropdown"><a href="/content/initiatives/initiatives-blue-book-overview" class="menu__link">Initiatives</a><ul class="expanded-child dropdown"><li class="menu__item is-leaf first leaf menu-mlid-3956"><a href="/content/initiatives/initiatives-blue-book-overview" title="" class="menu__link">Overview</a></li>
+<li class="menu__item is-leaf leaf menu-mlid-3881"><a href="/content/initiatives/initiatives-blue-book-overview/ballot-information-booklet-blue-book" class="menu__link">Blue Book</a></li>
+<li class="menu__item is-leaf leaf menu-mlid-3211"><a href="/content/initiatives/initiatives-blue-book-overview/initiatives-filed" class="menu__link">Initiatives Filed</a></li>
+<li class="menu__item is-leaf last leaf menu-mlid-3886"><a href="/BallotAnalysis" class="menu__link">Ballot Analysis</a></li>
+</ul></li>
+<li class="menu__item is-expanded expanded menu-mlid-564 has-dropdown"><a href="/content/budget" class="menu__link">Budget</a><ul class="expanded-child dropdown"><li class="menu__item is-leaf first leaf menu-mlid-9696"><a href="/content/budget" title="" class="menu__link">Budget</a></li>
+<li class="menu__item is-leaf leaf menu-mlid-11836"><a href="https://leg.colorado.gov/explorebudget/" title="" class="menu__link">Explore the Budget</a></li>
+<li class="menu__item is-leaf leaf menu-mlid-8356"><a href="/content/budget/budget-documents" class="menu__link">JBC Documents</a></li>
+<li class="menu__item is-leaf leaf menu-mlid-8436"><a href="/agencies/joint-budget-committee" title="" class="menu__link">Joint Budget Committee Staff</a></li>
+<li class="menu__item is-leaf leaf menu-mlid-8431"><a href="/committees/joint-technology-committee/2020-regular-session" title="" class="menu__link">Joint Technology Committee (JTC)</a></li>
+<li class="menu__item is-leaf last leaf menu-mlid-8426"><a href="/committees/capital-development-committee/2020-regular-session" title="" class="menu__link">Capital Development Committee (CDC)</a></li>
+</ul></li>
+<li class="menu__item is-expanded expanded menu-mlid-1786 has-dropdown"><a href="/content/audits" class="menu__link">Audits</a><ul class="expanded-child dropdown"><li class="menu__item is-leaf first leaf menu-mlid-3966"><a href="/content/audits" title="" class="menu__link">Find An Audit</a></li>
+<li class="menu__item is-leaf leaf menu-mlid-3136"><a href="/audit-search" title="" class="menu__link">All Audits</a></li>
+<li class="menu__item is-leaf last leaf menu-mlid-8071"><a href="/audits-by-report-number" title="" class="menu__link">Audits by Report Number</a></li>
+</ul></li>
+<li class="menu__item is-expanded expanded menu-mlid-573 has-dropdown"><a href="/content/publications" class="menu__link">Publications</a><ul class="expanded-child dropdown"><li class="menu__item is-leaf first leaf menu-mlid-2716"><a href="/content/publications" title="" class="menu__link">Find A Publication</a></li>
+<li class="menu__item is-leaf last leaf menu-mlid-2721"><a href="/publication-search" title="" class="menu__link">All Publications</a></li>
+</ul></li>
+<li class="menu__item is-expanded last expanded menu-mlid-565 has-dropdown"><a href="/agencies" class="menu__link">Agencies</a><ul class="expanded-child dropdown"><li class="menu__item is-leaf first leaf menu-mlid-3971"><a href="/agencies" title="" class="menu__link">Agencies</a></li>
+<li class="menu__item is-leaf leaf menu-mlid-703"><a href="/agencies/house-of-representatives" class="menu__link">House of Representatives</a></li>
+<li class="menu__item is-leaf leaf menu-mlid-704"><a href="/agencies/senate" class="menu__link">Senate</a></li>
+<li class="menu__item is-leaf leaf menu-mlid-694"><a href="/agencies/joint-budget-committee" class="menu__link">Joint Budget Committee Staff</a></li>
+<li class="menu__item is-leaf leaf menu-mlid-645"><a href="/agencies/legislative-council-staff" class="menu__link">Legislative Council Staff</a></li>
+<li class="menu__item is-leaf leaf menu-mlid-705"><a href="/agencies/office-of-legislative-legal-services" class="menu__link">Office of Legislative Legal Services</a></li>
+<li class="menu__item is-leaf last leaf menu-mlid-681"><a href="/agencies/office-of-the-state-auditor" class="menu__link">Office of the State Auditor</a></li>
+</ul></li>
+</ul>
+
+</nav><!-- /.block -->
+  </div>
+  </nav>
+
+</header>
+    </div>
+
+    
+  <div id="content-btth">
+      
+           
+<!--      <a id="main-content"></a> -->
+      
+                      
+      
+                      
+                      
+      
+                      
+      
+    </div><!--/#content-btth-->
+
+
+
+
+    
+    <noscript>
+  <div class="no-js-message">
+    <p>
+      <strong>This website requires javascript to run optimally on computers, mobile devices, and screen readers. Please enable javascript for the best experience!</strong>
+    </p>
+  </div>
+</noscript>
+
+
+    
+        <div class="main-content-section-container">
+      <div class="main-content-section">
+        <main id="main-content" class="main-content" role="main">
+          
+
+
+<article class="node-14556 node node-advanced-page view-mode-full clearfix" about="/error-404" typeof="sioc:Item foaf:Document">
+
+      <header>
+                    <h1 class="node__title node-title">404 - Page Not Found</h1>
+            <span property="dc:title" content="404 - Page Not Found" class="rdf-meta element-hidden"></span>    </header>
+  
+  <div class="field field-name-body field-type-text-with-summary field-label-hidden">
+    <div class="field-items">
+          <div class="field-item even" property="content:encoded"><p>This page has either been removed or doesn't exist! Trying using the navigation above or one of the various ways to search the site to find what you're looking for.</p>
+</div>
+      </div>
+</div>
+
+  
+  
+</article>
+                  </main>
+              </div>
+    </div>
+
+    
+    <div class="footer">
+        <footer id="footer" class="region region-footer">
+    <div id="block-cga-cta-defaults-custom-ctas" class="block block-cga-cta-defaults first last odd">
+  <div class="block-container">
+    <div class="block-title-container">
+                      </div>
+    <div class="block-content">
+      
+<div class="paragraphs-items paragraphs-items-field-p-cta-bar paragraphs-items-field-p-cta-bar-full paragraphs-items-full">
+  <div class="field field-name-field-p-cta-bar field-type-paragraphs field-label-hidden">
+    <div class="field-items">
+          <div class="field-item even"><div class="entity entity-paragraphs-item paragraphs-item-component-cta-bar col-number-3" about="" typeof="">
+  <div class="content">
+    
+<div class="paragraphs-items paragraphs-items-field-p-ctas paragraphs-items-field-p-ctas-full paragraphs-items-full">
+  
+<div class="field field-name-field-p-ctas field-type-paragraphs field-label-hidden">
+    <div class="component-cta-bar field-items">
+          <div class="field-item even">
+
+<div class="entity entity-paragraphs-item paragraphs-item-simple-cta" about="" typeof="">
+  <div class="content">
+        <a href="/sitewide-search"
+       title="Sitewide Search"
+       target="_self">
+            <div class="field field-name-field-cta-icon field-type-entityreference field-label-hidden">
+    <div class="field-items">
+          <div class="field-item even">
+
+<div class="entity entity-icon icon-cta-icon clearfix" about="/icon/cta_icon/1" typeof="">
+  <div class="content">
+    <div class="snap-icon-container">
+      <div class="snap-icon snap-cta-icon icon-capitol" data-url="http://leg.colorado.gov/sites/default/files/cta-capitol.svg"></div>    </div>
+          </div>
+</div>
+</div>
+      </div>
+</div>
+<div class="field field-name-field-title field-type-text field-label-hidden">
+    <div class="field-items">
+          <div class="field-item even">Sitewide Search</div>
+      </div>
+</div>
+    </a>
+  </div>
+</div>
+</div>
+          <div class="field-item odd">
+
+<div class="entity entity-paragraphs-item paragraphs-item-simple-cta" about="" typeof="">
+  <div class="content">
+        <a href="/bill-search"
+       title="Search Bills"
+       target="_self">
+            <div class="field field-name-field-cta-icon field-type-entityreference field-label-hidden">
+    <div class="field-items">
+          <div class="field-item even">
+
+<div class="entity entity-icon icon-cta-icon clearfix" about="/icon/cta_icon/106" typeof="">
+  <div class="content">
+    <div class="snap-icon-container">
+      <div class="snap-icon snap-cta-icon icon-capitol" data-url="http://leg.colorado.gov/sites/default/files/cta-quill.svg"></div>    </div>
+          </div>
+</div>
+</div>
+      </div>
+</div>
+<div class="field field-name-field-title field-type-text field-label-hidden">
+    <div class="field-items">
+          <div class="field-item even">Search Bills</div>
+      </div>
+</div>
+    </a>
+  </div>
+</div>
+</div>
+          <div class="field-item even">
+
+<div class="entity entity-paragraphs-item paragraphs-item-simple-cta" about="" typeof="">
+  <div class="content">
+        <a href="/publication-search"
+       title="Search Publications"
+       target="_self">
+            <div class="field field-name-field-cta-icon field-type-entityreference field-label-hidden">
+    <div class="field-items">
+          <div class="field-item even">
+
+<div class="entity entity-icon icon-cta-icon clearfix" about="/icon/cta_icon/51" typeof="">
+  <div class="content">
+    <div class="snap-icon-container">
+      <div class="snap-icon snap-cta-icon icon-capitol" data-url="http://leg.colorado.gov/sites/default/files/cta-magnifying-glass.svg"></div>    </div>
+          </div>
+</div>
+</div>
+      </div>
+</div>
+<div class="field field-name-field-title field-type-text field-label-hidden">
+    <div class="field-items">
+          <div class="field-item even">Search Publications</div>
+      </div>
+</div>
+    </a>
+  </div>
+</div>
+</div>
+      </div>
+</div>
+</div>
+  </div>
+</div>
+</div>
+      </div>
+</div>
+</div>
+    </div>
+  </div>
+
+</div>
+  </footer>
+<div class="footer-bottom">
+  <div class="footer-content-wrapper">
+    <div class="footer-content">
+        <div class="region region-footer-1">
+    <div id="block-bean-footer-copy" class="block block-bean first last odd">
+  <div class="block-container">
+    <div class="block-title-container">
+                    <h2 class="block__title block-title">Colorado General Assembly</h2>
+                </div>
+    <div class="block-content">
+      <div class="entity entity-bean bean-basic-block clearfix" about="/block/footer-copy" typeof="">
+
+  <div class="content">
+    <div class="field field-name-field-body field-type-text-long field-label-hidden">
+    <div class="field-items">
+          <div class="field-item even"><div>Colorado General Assembly</div>
+<div>200 E Colfax Avenue</div>
+<div>Denver, CO 80203</div>
+<p><a href="mailto:comments.ga@state.co.us">comments.ga@state.co.us</a></p>
+</div>
+      </div>
+</div>
+  </div>
+</div>
+    </div>
+  </div>
+
+</div>
+  </div>
+        <div class="region region-footer-2">
+    <nav id="block-menu-block-9" class="block block-menu-block first last odd" role="navigation">
+
+        <h2 class="block__title block-title">Resources &amp; Information</h2>
+    
+  <ul class="menu-block-wrapper menu-block-9 menu-name-menu-footer-menu-1 parent-mlid-0 menu-level-1 menu" >
+  <li class="menu__item is-leaf first leaf menu-mlid-780"><a href="/executive-agency-rules-regulations" title="" class="menu__link">Rules &amp; Regulations of Executive Agencies</a></li>
+<li class="menu__item is-leaf leaf menu-mlid-11196"><a href="https://leg.colorado.gov/node/1669596/" title="" class="menu__link">Colorado Open Records Act Maximum Hourly Research and Retrieval Fee</a></li>
+<li class="menu__item is-leaf leaf menu-mlid-3911"><a href="https://www.colorado.gov/apps/oit/transparency/index.html" title="" class="menu__link">Transparency Online Project</a></li>
+<li class="menu__item is-leaf leaf menu-mlid-782"><a href="http://www.colorado.gov/" title="" class="menu__link">State Home</a></li>
+<li class="menu__item is-leaf leaf menu-mlid-4506"><a href="/publications/legislative-workplace-study" title="" class="menu__link">Legislative Workplace Study</a></li>
+<li class="menu__item is-leaf leaf menu-mlid-4516"><a href="/legislative-resources-requirements" title="" class="menu__link">Legislative Resources &amp; Requirements</a></li>
+<li class="menu__item is-leaf last leaf menu-mlid-10046"><a href="https://leg.colorado.gov/agencies/legislative-council-staff/salaries-legislators-and-county-officers" title="" class="menu__link">Salaries for Legislators, Statewide Elected Officials, and County Officers</a></li>
+</ul>
+
+</nav><!-- /.block -->
+  </div>
+        <div class="region region-footer-3">
+    <nav id="block-menu-block-10" class="block block-menu-block first last odd" role="navigation">
+
+        <h2 class="block__title block-title">Policies</h2>
+    
+  <ul class="menu-block-wrapper menu-block-10 menu-name-menu-footer-menu-2 parent-mlid-0 menu-level-1 menu" >
+  <li class="menu__item is-leaf first leaf menu-mlid-3921"><a href="/node/580141/" title="" class="menu__link">Capitol Security Protocol</a></li>
+<li class="menu__item is-leaf leaf menu-mlid-785"><a href="/open-records-requests" title="" class="menu__link">Open Records Requests &amp; Policy</a></li>
+<li class="menu__item is-leaf leaf menu-mlid-786"><a href="http://leg.colorado.gov/sites/default/files/privacypolicy.pdf" title="" class="menu__link">Privacy Policy</a></li>
+<li class="menu__item is-leaf leaf menu-mlid-3916"><a href="http://leg.colorado.gov/sites/default/files/publicwifi.pdf" title="" class="menu__link">Public Wi-Fi</a></li>
+<li class="menu__item is-leaf leaf menu-mlid-11851"><a href="https://leg.colorado.gov/sites/default/files/official_safety_protocols_for_the_general_assembly_during_the_covid-19_pandemic.pdf" title="" class="menu__link">Safety Protocols for the General Assembly</a></li>
+<li class="menu__item is-leaf leaf menu-mlid-4836"><a href="https://leg.colorado.gov/publications/colorado-legislative-branch-policy-services-persons-disabilities-including-grievance" title="" class="menu__link">Services for Persons with Disabilities and Grievance Resolution Procedures</a></li>
+<li class="menu__item is-leaf leaf menu-mlid-784"><a href="https://leg.colorado.gov/workplace-harassment-policy" title="" class="menu__link">Workplace Harassment Policy</a></li>
+<li class="menu__item is-leaf last leaf menu-mlid-11821"><a href="https://leg.colorado.gov/workplace-expectations" title="" class="menu__link">Workplace Expectations</a></li>
+</ul>
+
+</nav><!-- /.block -->
+  </div>
+        <div class="region region-footer-4">
+    <nav id="block-menu-block-11" class="block block-menu-block first last odd" role="navigation">
+
+        <h2 class="block__title block-title">For Legislators &amp; Staff</h2>
+    
+  <ul class="menu-block-wrapper menu-block-11 menu-name-menu-footer-menu-3 parent-mlid-0 menu-level-1 menu" >
+  <li class="menu__item is-leaf first leaf menu-mlid-789"><a href="https://sites.google.com/view/coga-ethics-tutorial/" title="" class="menu__link">Ethics Tutorial</a></li>
+<li class="menu__item is-leaf leaf menu-mlid-790"><a href="https://leg.colorado.gov/user/login" title="" class="menu__link">IT Login</a></li>
+<li class="menu__item is-leaf leaf menu-mlid-5506"><a href="/new-member-orientation" title="" class="menu__link">New Member Orientation</a></li>
+<li class="menu__item is-leaf leaf menu-mlid-7611"><a href="/social-calendar" title="" class="menu__link">Social Calendar</a></li>
+<li class="menu__item is-leaf last leaf menu-mlid-8056"><a href="/house-senate-rules" title="" class="menu__link">House and Senate Rules</a></li>
+</ul>
+
+</nav><!-- /.block -->
+  </div>
+    </div>
+  </div>
+</div>
+    </div>
+
+  </div>
+
+</div>
+
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+  <!-- Background of PhotoSwipe.
+       It's a separate element as animating opacity is faster than rgba(). -->
+  <div class="pswp__bg"></div>
+
+  <!-- Slides wrapper with overflow:hidden. -->
+  <div class="pswp__scroll-wrap">
+
+    <!-- Container that holds slides.
+        PhotoSwipe keeps only 3 of them in the DOM to save memory.
+        Don't modify these 3 pswp__item elements, data is added later on. -->
+    <div class="pswp__container">
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+    </div>
+
+    <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+    <div class="pswp__ui pswp__ui--hidden">
+
+      <div class="pswp__top-bar">
+
+        <!--  Controls are self-explanatory. Order can be changed. -->
+
+        <div class="pswp__counter"></div>
+
+        <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+        <button class="pswp__button pswp__button--share" title="Share"></button>
+
+        <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+        <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+        <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+        <!-- element will get class pswp preloader active when preloader is running -->
+        <div class="pswp__preloader">
+          <div class="pswp__preloader__icn">
+            <div class="pswp__preloader__cut">
+              <div class="pswp__preloader__donut"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+        <div class="pswp__share-tooltip"></div>
+      </div>
+
+      <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+      </button>
+
+      <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+      </button>
+
+      <div class="pswp__caption">
+        <div class="pswp__caption__center"></div>
+      </div>
+
+    </div>
+
+  </div>
+
+</div>    <div class="region region-page-bottom">
+    <div aria-live="polite" id="notification-bar-messages">
+  <div class="clearfix notification-bar-message notification-bar-status">
+  <div class="content-left"></div>
+  <div class="content"><p><a href="http://leg.colorado.gov/coronavirus">COVID-19 Resources</a></p>
+</div>
+  <div class="content-right">
+      </div>
+</div>
+</div>
+  </div>
+<script src="http://leg.colorado.gov/sites/default/files/js/js_GKetG7AIhRLJDAjb_zVYXisUkbXrV1L9Qv_yrQTHSsY.js"></script>
+<script type="text/javascript">window.NREUM||(NREUM={});NREUM.info={"beacon":"bam.nr-data.net","licenseKey":"48ca2afd60","applicationID":"65781041","transactionName":"NFxVNxBUD0pSU0FbCw0WdgAWXA5XHFlYUwMGZkQXG1kEZldVWVsSBks=","queueTime":0,"applicationTime":169,"atts":"GBtWQVhOHEQ=","errorBeacon":"bam.nr-data.net","agent":""}</script></body>
+</html>
