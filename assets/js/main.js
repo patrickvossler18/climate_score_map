@@ -40,9 +40,10 @@ var colorOther = 'hsl(0, 0%, 65%)';
 var colorMixed = '#9a23c1';
 
 var hoveredStateId;
-var layerName = 'state_upper';
-var layerAbbr = 'su';
-var styleMode = 'dots';
+var layerName = 'state_lower';
+var layerAbbr = 'sl';
+// var styleMode = 'dots';
+var styleMode = 'polygons';
 
 function getColorByParty(party) {
     if (['Democrat', 'Democratic-Farmer-Labor', 'Democrat/Progressive'].includes(party))
@@ -114,7 +115,7 @@ const onMouseMove = function(e) {
         map.getCanvas().style.cursor = 'pointer';
         if (hoveredStateId) {
             map.setFeatureState(
-                { source: 'district', sourceLayer: layerName + '_polygons', id: hoveredStateId },
+                { source: 'district_'+layerName, sourceLayer: layerName + '_polygons', id: hoveredStateId },
                 { hover: false }
             );
             var name1 = e.features[0].properties[layerAbbr + '_name_1'];
@@ -226,7 +227,7 @@ const onMouseMove = function(e) {
                     party8 +
                     '</h3>';
             }
-
+            console.log(e.features)
             var description =
                 '<h1>' + state + '-' + district + '</h1><div class="reps">' + reps + '</div>';
             popup
@@ -236,7 +237,7 @@ const onMouseMove = function(e) {
         }
         hoveredStateId = e.features[0].id;
         map.setFeatureState(
-            { source: 'district', sourceLayer: layerName + '_polygons', id: hoveredStateId },
+            { source: 'district_'+layerName, sourceLayer: layerName + '_polygons', id: hoveredStateId },
             { hover: true }
         );
     }
@@ -246,7 +247,7 @@ const onMouseLeave = function() {
     map.getCanvas().style.cursor = '';
     if (hoveredStateId) {
         map.setFeatureState(
-            { source: 'district', sourceLayer: layerName + '_polygons', id: hoveredStateId },
+            { source: 'district_'+layerName, sourceLayer: layerName + '_polygons', id: hoveredStateId },
             { hover: false }
         );
     }
@@ -287,7 +288,7 @@ const loadMap = function() {
         {
             id: 'district-polygons-fill',
             type: 'fill',
-            source: 'district',
+            source: 'district_'+layerName,
             'source-layer': layerName + '_polygons',
             paint: {
                 'fill-color': politicalColors(),
@@ -305,7 +306,7 @@ const loadMap = function() {
         {
             id: 'district-polygons-line',
             type: 'line',
-            source: 'district',
+            source: 'district_'+layerName,
             'source-layer': layerName + '_polygons',
             paint: {
                 'line-color': '#000',
@@ -327,7 +328,7 @@ const loadMap = function() {
         {
             id: 'district-polygons-highlight',
             type: 'line',
-            source: 'district',
+            source: 'district_'+layerName,
             'source-layer': layerName + '_polygons',
             paint: {
                 'line-color': '#000',
@@ -338,30 +339,30 @@ const loadMap = function() {
         'waterway-label'
     );
 
-    if (map.getLayer('district-points')) {
-        map.removeLayer('district-points');
-    }
+    // if (map.getLayer('district-points')) {
+    //     map.removeLayer('district-points');
+    // }
 
-    map.addLayer(
-        {
-            id: 'district-points',
-            type: 'circle',
-            source: 'district',
-            'source-layer': layerName + '_points',
-            paint: {
-                'circle-opacity': circleOpacity,
-                'circle-color': politicalColors(),
-                'circle-radius': ['interpolate', ['linear'], ['zoom'], 0, 2, 2, 2, 6, 2, 12, 4],
-                'circle-stroke-color': politicalColors(),
-                'circle-stroke-width': 0.5,
-                'circle-stroke-opacity': 1,
-            },
-            layout: {
-                visibility: styleMode === 'polygons' ? 'none' : 'visible',
-            },
-        },
-        'waterway-label'
-    );
+    // map.addLayer(
+    //     {
+    //         id: 'district-points',
+    //         type: 'circle',
+    //         source: 'district_'+layerName,
+    //         'source-layer': layerName + '_points',
+    //         paint: {
+    //             'circle-opacity': circleOpacity,
+    //             'circle-color': politicalColors(),
+    //             'circle-radius': ['interpolate', ['linear'], ['zoom'], 0, 2, 2, 2, 6, 2, 12, 4],
+    //             'circle-stroke-color': politicalColors(),
+    //             'circle-stroke-width': 0.5,
+    //             'circle-stroke-opacity': 1,
+    //         },
+    //         layout: {
+    //             visibility: styleMode === 'polygons' ? 'none' : 'visible',
+    //         },
+    //     },
+    //     'waterway-label'
+    // );
 };
 
 map.on('load', function() {
@@ -369,6 +370,8 @@ map.on('load', function() {
         type: 'geojson',
         data: '/data/us-states.json',
     });
+
+    
 
     map.addLayer(
         {
@@ -399,16 +402,33 @@ map.on('load', function() {
         'waterway-label'
     );
     
-    map.addSource('district', {
+    // map.addSource('district', {
+    //     type: 'vector',
+    //     // tiles: [location.origin + location.pathname + '/data/tiles/{z}/{x}/{y}.pbf'],
+    //     // tiles: [ location.origin + '/data/tiles/{z}/{x}/{y}.pbf'],
+    //     // tiles: ['https://azavea.github.io/election-results-map/' + '/data/tiles/{z}/{x}/{y}.pbf'],
+    //     minzoom: 1,
+    //     maxzoom: 8,
+    // });
+
+    map.addSource('district_state_upper', {
+        // upper data
         type: 'vector',
-        // tiles: [location.origin + location.pathname + '/data/tiles/{z}/{x}/{y}.pbf'],
-        tiles: [ location.origin + '/data/tiles/{z}/{x}/{y}.pbf'],
-        // tiles: ['https://azavea.github.io/election-results-map/' + '/data/tiles/{z}/{x}/{y}.pbf'],
-        minzoom: 1,
-        maxzoom: 8,
+        url: 'mapbox://patrickvossler.32coil2n'
+        // data: '/data/upper_data_combined.mbtiles'
+        // data: '/data/us-states.json',
+    });
+    map.addSource('district_state_lower', {
+        // upper data
+        type: 'vector',
+        url: 'mapbox://patrickvossler.7938os9w'
+        // url: location.origin + '/data/lower_data_combined_test.mbtiles'
+        // data: '/data/us-states.json',
     });
 
     loadMap();
-    loadDots();
-    loadSenate();
+    // loadDots();
+    loadPolygons();
+    // loadSenate();
+    loadHouse();
 });
