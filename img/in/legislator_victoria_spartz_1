@@ -24,7 +24,7 @@
 <h1>
 <span class="cf-error-type" data-translate="error">Error</span>
 <span class="cf-error-code">1020</span>
-<small class="heading-ray-id">Ray ID: 5ab9f3e0adf0e7f5 &bull; 2020-06-30 18:29:25 UTC</small>
+<small class="heading-ray-id">Ray ID: 5ac5ea11ca0777ac &bull; 2020-07-02 05:19:52 UTC</small>
 </h1>
 <h2 class="cf-subheadline">Access denied</h2>
 </div>
@@ -39,7 +39,7 @@
 </div>
 <div class="cf-error-footer cf-wrapper">
 <p>
-<span class="cf-footer-item">Cloudflare Ray ID: <strong>5ab9f3e0adf0e7f5</strong></span>
+<span class="cf-footer-item">Cloudflare Ray ID: <strong>5ac5ea11ca0777ac</strong></span>
 <span class="cf-footer-separator">&bull;</span>
 <span class="cf-footer-item"><span>Your IP</span>: 108.185.211.120</span>
 <span class="cf-footer-separator">&bull;</span>
