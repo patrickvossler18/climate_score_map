@@ -88,10 +88,10 @@ function loadPolygons() {
     map.setPaintProperty('district-polygons-fill', 'fill-opacity', 0.6)
         .setPaintProperty('district-polygons-line', 'line-opacity', 0.2)
         .setLayoutProperty('us-states-line', 'visibility', 'visible')
-        .setLayoutProperty('district-points', 'visibility', 'none')
-        .setLayoutProperty('district-points', 'visibility', 'none');
-    $buttonPolygons.classList.add('selected');
-    $buttonDots.classList.remove('selected');
+        // .setLayoutProperty('district-points', 'visibility', 'none')
+        // .setLayoutProperty('district-points', 'visibility', 'none');
+    // $buttonPolygons.classList.add('selected');
+    // $buttonDots.classList.remove('selected');
 }
 
 function loadHouse() {
@@ -111,6 +111,138 @@ function loadSenate() {
 }
 
 const onMouseMove = function(e) {
+    if (e.features.length > 0) {
+        map.getCanvas().style.cursor = 'pointer';
+        if (hoveredStateId) {
+            map.setFeatureState(
+                { source: 'district_'+layerName, sourceLayer: layerName + '_polygons', id: hoveredStateId },
+                { hover: false }
+            );
+        //     var name1 = e.features[0].properties[layerAbbr + '_name_1'];
+        //     var party1 = e.features[0].properties[layerAbbr + '_party_1'];
+        //     var name2 = e.features[0].properties[layerAbbr + '_name_2'];
+        //     var party2 = e.features[0].properties[layerAbbr + '_party_2'];
+        //     var name3 = e.features[0].properties[layerAbbr + '_name_3'];
+        //     var party3 = e.features[0].properties[layerAbbr + '_party_3'];
+        //     var name4 = e.features[0].properties[layerAbbr + '_name_4'];
+        //     var party4 = e.features[0].properties[layerAbbr + '_party_4'];
+        //     var name5 = e.features[0].properties[layerAbbr + '_name_5'];
+        //     var party5 = e.features[0].properties[layerAbbr + '_party_5'];
+        //     var name6 = e.features[0].properties[layerAbbr + '_name_6'];
+        //     var party6 = e.features[0].properties[layerAbbr + '_party_6'];
+        //     var name7 = e.features[0].properties[layerAbbr + '_name_7'];
+        //     var party7 = e.features[0].properties[layerAbbr + '_party_7'];
+        //     var name8 = e.features[0].properties[layerAbbr + '_name_8'];
+        //     var party8 = e.features[0].properties[layerAbbr + '_party_8'];
+
+        //     var state = e.features[0].properties.STATE;
+        //     var district = e.features[0].properties.DISTRICT_I;
+
+        //     var reps = '';
+
+        //     if (name1 !== 'NA' && name1 !== undefined) {
+        //         reps += '<h2>' + name1 + '</h2><h3 style="display: ';
+        //         reps += party1 === undefined ? 'none' : 'block';
+        //         reps +=
+        //             '"><div class="party-color" style="background: ' +
+        //             getColorByParty(party1) +
+        //             '"></div>' +
+        //             party1 +
+        //             '</h3>';
+        //     }
+
+        //     if (name2 !== 'NA' && name2 !== undefined) {
+        //         reps +=
+        //             '<h2>' +
+        //             name2 +
+        //             '</h2><h3><div class="party-color" style="background: ' +
+        //             getColorByParty(party2) +
+        //             '"></div>' +
+        //             party2 +
+        //             '</h3>';
+        //     }
+
+        //     if (name3 !== 'NA' && name3 !== undefined) {
+        //         reps +=
+        //             '<h2>' +
+        //             name3 +
+        //             '</h2><h3><div class="party-color" style="background: ' +
+        //             getColorByParty(party3) +
+        //             '"></div>' +
+        //             party3 +
+        //             '</h3>';
+        //     }
+
+        //     if (name4 !== 'NA' && name4 !== undefined) {
+        //         reps +=
+        //             '<h2>' +
+        //             name4 +
+        //             '</h2><h3><div class="party-color" style="background: ' +
+        //             getColorByParty(party4) +
+        //             '"></div>' +
+        //             party4 +
+        //             '</h3>';
+        //     }
+
+        //     if (name5 !== 'NA' && name5 !== undefined) {
+        //         reps +=
+        //             '<h2>' +
+        //             name5 +
+        //             '</h2><h3><div class="party-color" style="background: ' +
+        //             getColorByParty(party5) +
+        //             '"></div>' +
+        //             party5 +
+        //             '</h3>';
+        //     }
+
+        //     if (name6 !== 'NA' && name6 !== undefined) {
+        //         reps +=
+        //             '<h2>' +
+        //             name6 +
+        //             '</h2><h3><div class="party-color" style="background: ' +
+        //             getColorByParty(party6) +
+        //             '"></div>' +
+        //             party6 +
+        //             '</h3>';
+        //     }
+
+        //     if (name7 !== 'NA' && name7 !== undefined) {
+        //         reps +=
+        //             '<h2>' +
+        //             name7 +
+        //             '</h2><h3><div class="party-color" style="background: ' +
+        //             getColorByParty(party7) +
+        //             '"></div>' +
+        //             party7 +
+        //             '</h3>';
+        //     }
+
+        //     if (name8 !== 'NA' && name8 !== undefined) {
+        //         reps +=
+        //             '<h2>' +
+        //             name8 +
+        //             '</h2><h3><div class="party-color" style="background: ' +
+        //             getColorByParty(party8) +
+        //             '"></div>' +
+        //             party8 +
+        //             '</h3>';
+        //     }
+        //     var description =
+        //         '<h1>' + state + '-' + district + '</h1><div class="reps">' + reps + '</div>';
+        //     popup
+        //         .setLngLat(e.lngLat)
+        //         .setHTML(description)
+        //         .addTo(map);
+        }
+        hoveredStateId = e.features[0].id;
+        map.setFeatureState(
+            { source: 'district_'+layerName, sourceLayer: layerName + '_polygons', id: hoveredStateId },
+            { hover: true }
+        );
+    }
+};
+
+const onDistrictClick = function(e) {
     if (e.features.length > 0) {
         map.getCanvas().style.cursor = 'pointer';
         if (hoveredStateId) {
@@ -227,7 +359,6 @@ const onMouseMove = function(e) {
                     party8 +
                     '</h3>';
             }
-            console.log(e.features)
             var description =
                 '<h1>' + state + '-' + district + '</h1><div class="reps">' + reps + '</div>';
             popup
@@ -242,6 +373,7 @@ const onMouseMove = function(e) {
         );
     }
 };
+
 
 const onMouseLeave = function() {
     map.getCanvas().style.cursor = '';
@@ -278,7 +410,13 @@ const loadMap = function() {
         map.fitBounds([[xmax, ymax], [xmin, ymin]], { padding: 25 });
 
         loadPolygons();
+        // onMouseMove(e);
     });
+
+    map.on('click', 'district-polygons-fill', function(e){
+        onDistrictClick(e);
+    })
+
 
     if (map.getLayer('district-polygons-fill')) {
         map.removeLayer('district-polygons-fill');
