@@ -3,7 +3,7 @@ mapboxgl.accessToken =
 'pk.eyJ1IjoicGF0cmlja3Zvc3NsZXIiLCJhIjoiY2tjMHd0eTFrMHphMjJybG0yOTU1dDEzZyJ9.FsIqtdsHIru8Ay_0zmZYHw';
 
 var mapOrigin = {
-    zoom: 3.4,
+    zoom: 3,
     lng: -95.5,
     lat: 38,
 };
@@ -13,7 +13,8 @@ var map = new mapboxgl.Map({
     style: 'mapbox://styles/patrickvossler/ckc0ydvhi5h3v1iodhe5rgsjg',
     zoom: mapOrigin.zoom,
     center: [mapOrigin.lng, mapOrigin.lat],
-    maxZoom: 6.89
+    // maxZoom: 6.89
+    maxZoom: 8
 });
 
 map.dragRotate.disable();
@@ -44,6 +45,7 @@ var layerName = 'state_lower';
 var layerAbbr = 'sl';
 // var styleMode = 'dots';
 var styleMode = 'polygons';
+var zoomThreshold = 4;
 
 function getColorByParty(party) {
     if (['Democrat', 'Democratic-Farmer-Labor', 'Democrat/Progressive'].includes(party))
@@ -100,6 +102,16 @@ function loadHouse() {
     layerName = 'state_lower';
     layerAbbr = 'sl';
     loadMap();
+    if (map.getZoom() > zoomThreshold) {
+        map.setLayoutProperty('us-states-fill', 'visibility', 'none')
+        map.setLayoutProperty('district-polygons-fill', 'visibility', 'visible')
+        map.setLayoutProperty('district-polygons-line', 'visibility', 'visible')
+    } else {
+        map.setLayoutProperty('us-states-fill', 'visibility', 'visible')
+        map.setLayoutProperty('district-polygons-fill', 'visibility', 'none')
+        map.setLayoutProperty('district-polygons-line', 'visibility', 'none')
+        
+    }
 }
 
 function loadSenate() {
@@ -108,6 +120,16 @@ function loadSenate() {
     layerName = 'state_upper';
     layerAbbr = 'su';
     loadMap();
+    if (map.getZoom() > zoomThreshold) {
+        map.setLayoutProperty('us-states-fill', 'visibility', 'none')
+        map.setLayoutProperty('district-polygons-fill', 'visibility', 'visible')
+        map.setLayoutProperty('district-polygons-line', 'visibility', 'visible')
+    } else {
+        map.setLayoutProperty('us-states-fill', 'visibility', 'visible')
+        map.setLayoutProperty('district-polygons-fill', 'visibility', 'none')
+        map.setLayoutProperty('district-polygons-line', 'visibility', 'none')
+        
+    }
 }
 
 const onMouseMove = function(e) {
@@ -387,6 +409,50 @@ const onMouseLeave = function() {
     popup.remove();
 };
 
+
+map.on('mousemove', 'us-states-fill', function(e) {
+    if (e.features.length > 0) {
+        if (hoveredStateId) {
+            map.setFeatureState(
+                { source: 'us-states', id: hoveredStateId },
+                { hover: false }
+            );
+        }
+        hoveredStateId = e.features[0].id;
+        map.setFeatureState(
+            { source: 'us-states', id: hoveredStateId },
+            { hover: true }
+        );
+    }
+});
+ 
+// When the mouse leaves the state-fill layer, update the feature state of the
+// previously hovered feature.
+map.on('mouseleave', 'us-states-fill', function() {
+if (hoveredStateId) {
+map.setFeatureState(
+{ source: 'us-states', id: hoveredStateId },
+{ hover: false }
+);
+}
+hoveredStateId = null;
+});
+
+
+map.on('zoom', function() {
+    if (map.getZoom() > zoomThreshold) {
+        map.setLayoutProperty('us-states-fill', 'visibility', 'none')
+        map.setLayoutProperty('district-polygons-fill', 'visibility', 'visible')
+        map.setLayoutProperty('district-polygons-line', 'visibility', 'visible')
+    } else {
+        map.setLayoutProperty('us-states-fill', 'visibility', 'visible')
+        map.setLayoutProperty('district-polygons-fill', 'visibility', 'none')
+        map.setLayoutProperty('district-polygons-line', 'visibility', 'none')
+        
+    }
+});
+
+
 const loadMap = function() {
     map.on('mousemove', 'district-polygons-fill', function(e) {
         onMouseMove(e);
@@ -506,7 +572,7 @@ const loadMap = function() {
 map.on('load', function() {
     map.addSource('us-states', {
         type: 'geojson',
-        data: '/data/us-states.json',
+        data: '/data/us-states-id.json',
     });
 
     
@@ -516,8 +582,17 @@ map.on('load', function() {
             id: 'us-states-fill',
             type: 'fill',
             source: 'us-states',
-            paint: {
-                'fill-color': 'transparent',
+            // paint: {
+            //     'fill-color': 'transparent',
+            // },
+            'paint': {
+                'fill-color': '#627BC1',
+                'fill-opacity': [
+                'case',
+                ['boolean', ['feature-state', 'hover'], false],
+                1,
+                0.5
+                ]
             },
         },
         'waterway-label'
@@ -533,21 +608,13 @@ map.on('load', function() {
                 'line-opacity': 0.9,
                 'line-width': ['interpolate', ['linear'], ['zoom'], 0, 1, 4, 2, 6, 4, 8, 6],
             },
-            layout: {
-                visibility: 'none',
-            },
+            // layout: {
+            //     visibility: 'none',
+            // },
         },
         'waterway-label'
     );
     
-    // map.addSource('district', {
-    //     type: 'vector',
-    //     // tiles: [location.origin + location.pathname + '/data/tiles/{z}/{x}/{y}.pbf'],
-    //     // tiles: [ location.origin + '/data/tiles/{z}/{x}/{y}.pbf'],
-    //     // tiles: ['https://azavea.github.io/election-results-map/' + '/data/tiles/{z}/{x}/{y}.pbf'],
-    //     minzoom: 1,
-    //     maxzoom: 8,
-    // });
 
     map.addSource('district_state_upper', {
         // upper data
@@ -569,4 +636,9 @@ map.on('load', function() {
     loadPolygons();
     // loadSenate();
     loadHouse();
+    map.setLayoutProperty('us-states-fill', 'visibility', 'visible')
+    map.setLayoutProperty('us-states-line', 'visibility', 'visible')
+    map.setLayoutProperty('district-polygons-fill', 'visibility', 'none')
+    map.setLayoutProperty('district-polygons-line', 'visibility', 'none')
+
 });
