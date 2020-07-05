@@ -1,0 +1,518 @@
+{
+  "name": "Sarah Davis",
+  "aliases": [],
+  "lifetime_score": 56.0,
+  "yearly_scores": {
+    "2013": 78.0,
+    "2015": 63.0,
+    "2017": 17.0,
+    "2019": 80.0
+  },
+  "donation_link": "http://www.google.com",
+  "votes": [
+    {
+      "year": 2017,
+      "classification": "ABSENT",
+      "district": "48134L",
+      "roll_call": {
+        "number": "1",
+        "bill_number": "SB 570 ",
+        "title": "Tire Dumping",
+        "pro_env_decision": "YES",
+        "description": "SB570 provides a civil penalty for the illegal dumping of tires.",
+        "pos_vote_impact": null,
+        "neg_vote_impact": null
+      }
+    },
+    {
+      "year": 2017,
+      "classification": "PRO_ENVIRONMENT",
+      "district": "48134L",
+      "roll_call": {
+        "number": "2",
+        "bill_number": "SB 277",
+        "title": "Wind Energy",
+        "pro_env_decision": "NO",
+        "description": "SB277 eliminates state tax incentives for wind farms near military bases.",
+        "pos_vote_impact": null,
+        "neg_vote_impact": null
+      }
+    },
+    {
+      "year": 2017,
+      "classification": "ANTI_ENVIRONMENT",
+      "district": "48134L",
+      "roll_call": {
+        "number": "3",
+        "bill_number": "SB 1172",
+        "title": "Bee Protection",
+        "pro_env_decision": "NO",
+        "description": "SB 1172 preempts local governments from protecting bees by regulating seeds treated with neonicotinoids, a class of insecticide known to kill bees and other pollinating insects.",
+        "pos_vote_impact": null,
+        "neg_vote_impact": null
+      }
+    },
+    {
+      "year": 2017,
+      "classification": "ANTI_ENVIRONMENT",
+      "district": "48134L",
+      "roll_call": {
+        "number": "4",
+        "bill_number": "SB 1045",
+        "title": "Clean Air",
+        "pro_env_decision": "NO",
+        "description": "SB1045 reduces the rights of citizens in air pollution permitting cases.",
+        "pos_vote_impact": null,
+        "neg_vote_impact": null
+      }
+    },
+    {
+      "year": 2017,
+      "classification": "EXCUSED",
+      "district": "48134L",
+      "roll_call": {
+        "number": "5",
+        "bill_number": "HB 2533",
+        "title": "Pollution Lawsuits",
+        "pro_env_decision": "NO",
+        "description": "HB 2533 makes it more difficult for local governments and citizens to file civil suits that seek penalties for illegal pollution.",
+        "pos_vote_impact": null,
+        "neg_vote_impact": null
+      }
+    },
+    {
+      "year": 2017,
+      "classification": "EXCUSED",
+      "district": "48134L",
+      "roll_call": {
+        "number": "6",
+        "bill_number": "HB 1536, SB 2026",
+        "title": "Green Infrastructure",
+        "pro_env_decision": "YES",
+        "description": "The bills direct the state to study green stormwater management strategies such as green roofs and rainwater harvesting.",
+        "pos_vote_impact": null,
+        "neg_vote_impact": null
+      }
+    },
+    {
+      "year": 2017,
+      "classification": "ANTI_ENVIRONMENT",
+      "district": "48134L",
+      "roll_call": {
+        "number": "7H",
+        "bill_number": "HB 1818 Amd 10 (h.1)",
+        "title": "Fracking Penalties",
+        "pro_env_decision": "NO",
+        "description": "Amendment 10 increases penalties for oil and gas companies in violation of state environmental laws. The vote was on a motion to table the amendment.",
+        "pos_vote_impact": null,
+        "neg_vote_impact": null
+      }
+    },
+    {
+      "year": 2017,
+      "classification": "ANTI_ENVIRONMENT",
+      "district": "48134L",
+      "roll_call": {
+        "number": "8H",
+        "bill_number": "HB1818 Amd 13 (h.2)",
+        "title": "Fracking Waste",
+        "pro_env_decision": "NO",
+        "description": "Amendment 13 requires state oil and gas regulators to hold public hearings for proposed new fracking waste injection sites. The vote was on a motion to table the amendment.",
+        "pos_vote_impact": null,
+        "neg_vote_impact": null
+      }
+    },
+    {
+      "year": 2013,
+      "classification": "ANTI_ENVIRONMENT",
+      "district": "48134L",
+      "roll_call": {
+        "number": "1H",
+        "bill_number": "HB 994",
+        "title": "Nuclear subsidies: Make electric companies, not ratepayers, pay to decommission dirty and dangerous nuclear plants. ",
+        "pro_env_decision": "YES",
+        "description": "Amendment to HB 994 would have limited taxpayer liability for decommissioning nuclear power plants.",
+        "pos_vote_impact": null,
+        "neg_vote_impact": null
+      }
+    },
+    {
+      "year": 2013,
+      "classification": "PRO_ENVIRONMENT",
+      "district": "48134L",
+      "roll_call": {
+        "number": "2H",
+        "bill_number": "HB 4",
+        "title": "Save Texas Rivers: Maintain funding for water conservation. ",
+        "pro_env_decision": "YES",
+        "description": "Motion to maintain provision in HB 4 that at least 20 percent of state water funding go towards water conservation.",
+        "pos_vote_impact": null,
+        "neg_vote_impact": null
+      }
+    },
+    {
+      "year": 2013,
+      "classification": "ANTI_ENVIRONMENT",
+      "district": "48134L",
+      "roll_call": {
+        "number": "3H",
+        "bill_number": "HB 788",
+        "title": "Stopping Global Warming: Maintain state authority to reduce carbon pollution. ",
+        "pro_env_decision": "YES",
+        "description": "Amendment to HB 788 to maintain 20 year old statute authorizing the TCEQ to regulate global warming pollution.",
+        "pos_vote_impact": null,
+        "neg_vote_impact": null
+      }
+    },
+    {
+      "year": 2013,
+      "classification": "PRO_ENVIRONMENT",
+      "district": "48134L",
+      "roll_call": {
+        "number": "4H",
+        "bill_number": "HB 852",
+        "title": "Restore our Gulf: Save sharks from slaughter. ",
+        "pro_env_decision": "YES",
+        "description": "HB 852 bans the cruel and dangerous practice of killing sharks for their fins.",
+        "pos_vote_impact": null,
+        "neg_vote_impact": null
+      }
+    },
+    {
+      "year": 2013,
+      "classification": "PRO_ENVIRONMENT",
+      "district": "48134L",
+      "roll_call": {
+        "number": "5H",
+        "bill_number": "HB 2500",
+        "title": "Go Solar Texas: Clarify tax incentives for solar energy projects. ",
+        "pro_env_decision": "YES",
+        "description": "H.B. 2500 clarifies tax law to better support large-scale solar projects.",
+        "pos_vote_impact": null,
+        "neg_vote_impact": null
+      }
+    },
+    {
+      "year": 2013,
+      "classification": "PRO_ENVIRONMENT",
+      "district": "48134L",
+      "roll_call": {
+        "number": "6H",
+        "bill_number": "HB 2859",
+        "title": "Clean Air: Increase funding for county programs to reduce air pollution. ",
+        "pro_env_decision": "YES",
+        "description": "HB 2859 increased cap on funding for county-level air pollution programs to $7 million per year.",
+        "pos_vote_impact": null,
+        "neg_vote_impact": null
+      }
+    },
+    {
+      "year": 2013,
+      "classification": "PRO_ENVIRONMENT",
+      "district": "48134L",
+      "roll_call": {
+        "number": "7H",
+        "bill_number": "SB 198",
+        "title": "Save Texas Rivers: Stop HOAs from blocking use of drought-resistant landscapes. ",
+        "pro_env_decision": "YES",
+        "description": "SB 198 prohibits homeowners associations from blocking drought-tolerant xeriscapes.",
+        "pos_vote_impact": null,
+        "neg_vote_impact": null
+      }
+    },
+    {
+      "year": 2013,
+      "classification": "PRO_ENVIRONMENT",
+      "district": "48134L",
+      "roll_call": {
+        "number": "8H",
+        "bill_number": "SB 900",
+        "title": "Clean Water: Strengthen penalties for environmental violations by pipeline companies. ",
+        "pro_env_decision": "YES",
+        "description": "SB 900 raises Texas penalties for violations of pipeline safety laws from $10,000 to $200,000 per violation.",
+        "pos_vote_impact": null,
+        "neg_vote_impact": null
+      }
+    },
+    {
+      "year": 2013,
+      "classification": "PRO_ENVIRONMENT",
+      "district": "48134L",
+      "roll_call": {
+        "number": "9H",
+        "bill_number": "SB 1727",
+        "title": "Clean Air: Increase programs to reduce air pollution. ",
+        "pro_env_decision": "YES",
+        "description": "SB 1727 expanded the Texas Emissions Reduction Plan program to include other clean air incentives, including a rebate program to help Texans purchase electric vehicles.",
+        "pos_vote_impact": null,
+        "neg_vote_impact": null
+      }
+    },
+    {
+      "year": 2019,
+      "classification": "ANTI_ENVIRONMENT",
+      "district": "48134L",
+      "roll_call": {
+        "number": "1",
+        "bill_number": "HB 2771",
+        "title": "Fracking Wastewater",
+        "pro_env_decision": "NO",
+        "description": "HB 2771 (Lozano) sets the stage for allowing oil and gas companies to discharge fracking wastewater in to our rivers and aquifers. The bill was signed by the Governor.",
+        "pos_vote_impact": null,
+        "neg_vote_impact": null
+      }
+    },
+    {
+      "year": 2019,
+      "classification": "PRO_ENVIRONMENT",
+      "district": "48134L",
+      "roll_call": {
+        "number": "2",
+        "bill_number": "SJR 24",
+        "title": "State Parks",
+        "pro_env_decision": "YES",
+        "description": "SJR 24 (Kolkhorst) would amend the Texas constitution to guarantee sales taxes on sporting goods go to fund our state and local parks. The measure will now go before voters in the November 2019 general election.",
+        "pos_vote_impact": null,
+        "neg_vote_impact": null
+      }
+    },
+    {
+      "year": 2019,
+      "classification": "EXCUSED",
+      "district": "48134L",
+      "roll_call": {
+        "number": "3",
+        "bill_number": "HB 2826",
+        "title": "Environmental Enforcement",
+        "pro_env_decision": "NO",
+        "description": "HB 2826 (Bonnen, G) requires local governments to get permission from the Attorney General before hiring attorneys on a contingency fee, a move which could limit the ability of local governments to sue polluters. The bill was signed by the Governor.",
+        "pos_vote_impact": null,
+        "neg_vote_impact": null
+      }
+    },
+    {
+      "year": 2019,
+      "classification": "PRO_ENVIRONMENT",
+      "district": "48134L",
+      "roll_call": {
+        "number": "4",
+        "bill_number": "SB 649",
+        "title": "Recycling",
+        "pro_env_decision": "YES",
+        "description": "SB 649 (Zaffirini) directs the Texas Commission on Environmental Quality (TCEQ) to develop a plan to stimulate the use of recyclable materials as feedstock in processing and manufacturing. The bill passed and takes effect on 9/1/19.",
+        "pos_vote_impact": null,
+        "neg_vote_impact": null
+      }
+    },
+    {
+      "year": 2019,
+      "classification": "PRO_ENVIRONMENT",
+      "district": "48134L",
+      "roll_call": {
+        "number": "5",
+        "bill_number": "HB 907",
+        "title": "Concrete Plants",
+        "pro_env_decision": "YES",
+        "description": "HB 907 (Huberty) authorizes TCEQ to increase inspections of aggregate (a component of concrete) production facilities and assess higher penalties for violations. The bill was signed by the Governor.",
+        "pos_vote_impact": null,
+        "neg_vote_impact": null
+      }
+    },
+    {
+      "year": 2019,
+      "classification": "EXCUSED",
+      "district": "48134L",
+      "roll_call": {
+        "number": "6",
+        "bill_number": "HB 3745",
+        "title": "Clean Air",
+        "pro_env_decision": "YES",
+        "description": "HB 3745 (Bell) authorizes TCEQ to fully use fees collected for clean air to fund the Texas Emissions Reduction Plan (TERP). The bill was signed by the Governor.",
+        "pos_vote_impact": null,
+        "neg_vote_impact": null
+      }
+    },
+    {
+      "year": 2019,
+      "classification": "EXCUSED",
+      "district": "48134L",
+      "roll_call": {
+        "number": "7",
+        "bill_number": "HB 1059",
+        "title": "Green Infrastructure",
+        "pro_env_decision": "YES",
+        "description": "HB 1059 (Lucio) directs TCEQ to produce a biennial report on green stormwater infrastructure. The bill was vetoed by the Governor.",
+        "pos_vote_impact": null,
+        "neg_vote_impact": null
+      }
+    },
+    {
+      "year": 2019,
+      "classification": "EXCUSED",
+      "district": "48134L",
+      "roll_call": {
+        "number": "8H",
+        "bill_number": "HJR 82",
+        "title": "Oil subsidies",
+        "pro_env_decision": "NO",
+        "description": "HJR 82 (Craddick) would have directed additional state funds to build roads to support oil and gas production. The measure passed the House but died in the Senate.",
+        "pos_vote_impact": null,
+        "neg_vote_impact": null
+      }
+    },
+    {
+      "year": 2019,
+      "classification": "EXCUSED",
+      "district": "48134L",
+      "roll_call": {
+        "number": "9H",
+        "bill_number": "HB 2545",
+        "title": "Oil Subsidies",
+        "pro_env_decision": "NO",
+        "description": "HB 2545 (Guillen) would have created incentives for oil and gas companies to dump their wastewater in rivers and aquifers. The bill passed the House but died in the Senate",
+        "pos_vote_impact": null,
+        "neg_vote_impact": null
+      }
+    },
+    {
+      "year": 2019,
+      "classification": "PRO_ENVIRONMENT",
+      "district": "48134L",
+      "roll_call": {
+        "number": "10H",
+        "bill_number": "HB 1331",
+        "title": "Landfills",
+        "pro_env_decision": "YES",
+        "description": "HB 1331 (Thompson) increases fees on landfills, discouraging fly by night operators. The bill was signed by the Governor.",
+        "pos_vote_impact": null,
+        "neg_vote_impact": null
+      }
+    },
+    {
+      "year": 2015,
+      "classification": "PRO_ENVIRONMENT",
+      "district": "48134L",
+      "roll_call": {
+        "number": "1",
+        "bill_number": "HB1016",
+        "title": "Protecting Rivers",
+        "pro_env_decision": "YES",
+        "description": "HB1016 designates parts of the Nueces, Frio, Sabinal, San Marcos, and Comal Rivers as being of ‘unique ecological value’ to protect them from reservoir development.",
+        "pos_vote_impact": null,
+        "neg_vote_impact": null
+      }
+    },
+    {
+      "year": 2015,
+      "classification": "PRO_ENVIRONMENT",
+      "district": "48134L",
+      "roll_call": {
+        "number": "2",
+        "bill_number": "HB274",
+        "title": "Illegal Dumping",
+        "pro_env_decision": "YES",
+        "description": "HB274 increases the maximum fines for illegal dumping from $2,000 to $4,000.",
+        "pos_vote_impact": null,
+        "neg_vote_impact": null
+      }
+    },
+    {
+      "year": 2015,
+      "classification": "EXCUSED",
+      "district": "48134L",
+      "roll_call": {
+        "number": "3",
+        "bill_number": "SB709",
+        "title": "Citizen rights",
+        "pro_env_decision": "NO",
+        "description": "SB709 makes it easier for polluters to get permits from the state by placing assumption that draft permit meets legal and technical requirements and adequately protects the environment. Now, when a citizen or group challenges a pollution permit, the burden falls on them to prove otherwise.",
+        "pos_vote_impact": null,
+        "neg_vote_impact": null
+      }
+    },
+    {
+      "year": 2015,
+      "classification": "PRO_ENVIRONMENT",
+      "district": "48134L",
+      "roll_call": {
+        "number": "4",
+        "bill_number": "HB1794",
+        "title": "Pollution Penalties",
+        "pro_env_decision": "NO",
+        "description": "HB1794 limits the civil penalty for certain environmental violations in a suit brought by a local government. As a result, cities will likely be forced to bring fewer lawsuits against polluters.",
+        "pos_vote_impact": null,
+        "neg_vote_impact": null
+      }
+    },
+    {
+      "year": 2015,
+      "classification": "PRO_ENVIRONMENT",
+      "district": "48134L",
+      "roll_call": {
+        "number": "5",
+        "bill_number": "HB942",
+        "title": "Chemical Safety",
+        "pro_env_decision": "YES",
+        "description": "The explosion of a fertilizer plant in West in 2013 highlighted the dangers of ammonium nitrate. HB942 requires the owner or operator of facilities with ammonium nitrate to allow reasonable fire marshal safety inspections and implements new safety requirements.",
+        "pos_vote_impact": null,
+        "neg_vote_impact": null
+      }
+    },
+    {
+      "year": 2015,
+      "classification": "ANTI_ENVIRONMENT",
+      "district": "48134L",
+      "roll_call": {
+        "number": "6",
+        "bill_number": "HB40",
+        "title": "Fracking regulation",
+        "pro_env_decision": "NO",
+        "description": "HB40 prevents local governments from placing bans, limits, or regulations on oil and gas development in their municipality, leaving exclusive jurisdiction to the state. Outcome: Enacted",
+        "pos_vote_impact": null,
+        "neg_vote_impact": null
+      }
+    },
+    {
+      "year": 2015,
+      "classification": "ANTI_ENVIRONMENT",
+      "district": "48134L",
+      "roll_call": {
+        "number": "7H",
+        "bill_number": "HB40 Amd 6",
+        "title": "Hurricane Safety",
+        "pro_env_decision": "NO",
+        "description": "Amendment 6 would have allowed cities to require oil and gas companies to install subsurface safety valves to limit damage fromhurricanes. The vote was on a motion to table the amendment.",
+        "pos_vote_impact": null,
+        "neg_vote_impact": null
+      }
+    },
+    {
+      "year": 2015,
+      "classification": "ANTI_ENVIRONMENT",
+      "district": "48134L",
+      "roll_call": {
+        "number": "8H",
+        "bill_number": "HB2571",
+        "title": "Climate Planning",
+        "pro_env_decision": "YES",
+        "description": "HB2571 would have required the state climatologist to provide regular climate projection reports to the Legislative Budget Board for use by state agencies in strategic planning.",
+        "pos_vote_impact": null,
+        "neg_vote_impact": null
+      }
+    },
+    {
+      "year": 2015,
+      "classification": "PRO_ENVIRONMENT",
+      "district": "48134L",
+      "roll_call": {
+        "number": "9",
+        "bill_number": "HB14",
+        "title": "Clean Air",
+        "pro_env_decision": "YES",
+        "description": "HB14 would have extended the Texas emissions reduction plan, including the electric vehicle rebate program, to continue until 2023.",
+        "pos_vote_impact": null,
+        "neg_vote_impact": null
+      }
+    }
+  ]
+}

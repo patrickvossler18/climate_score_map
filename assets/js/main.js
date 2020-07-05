@@ -1,5 +1,4 @@
 mapboxgl.accessToken = 
-// 'pk.eyJ1IjoiYXphdmVhIiwiYSI6IkFmMFBYUUUifQ.eYn6znWt8NzYOa3OrWop8A';
 'pk.eyJ1IjoicGF0cmlja3Zvc3NsZXIiLCJhIjoiY2tjMHd0eTFrMHphMjJybG0yOTU1dDEzZyJ9.FsIqtdsHIru8Ay_0zmZYHw';
 
 var mapOrigin = {
@@ -90,10 +89,6 @@ function loadPolygons() {
     map.setPaintProperty('district-polygons-fill', 'fill-opacity', 0.6)
         .setPaintProperty('district-polygons-line', 'line-opacity', 0.2)
         .setLayoutProperty('us-states-line', 'visibility', 'visible')
-        // .setLayoutProperty('district-points', 'visibility', 'none')
-        // .setLayoutProperty('district-points', 'visibility', 'none');
-    // $buttonPolygons.classList.add('selected');
-    // $buttonDots.classList.remove('selected');
 }
 
 function loadHouse() {
@@ -140,121 +135,6 @@ const onMouseMove = function(e) {
                 { source: 'district_'+layerName, sourceLayer: layerName + '_polygons', id: hoveredStateId },
                 { hover: false }
             );
-        //     var name1 = e.features[0].properties[layerAbbr + '_name_1'];
-        //     var party1 = e.features[0].properties[layerAbbr + '_party_1'];
-        //     var name2 = e.features[0].properties[layerAbbr + '_name_2'];
-        //     var party2 = e.features[0].properties[layerAbbr + '_party_2'];
-        //     var name3 = e.features[0].properties[layerAbbr + '_name_3'];
-        //     var party3 = e.features[0].properties[layerAbbr + '_party_3'];
-        //     var name4 = e.features[0].properties[layerAbbr + '_name_4'];
-        //     var party4 = e.features[0].properties[layerAbbr + '_party_4'];
-        //     var name5 = e.features[0].properties[layerAbbr + '_name_5'];
-        //     var party5 = e.features[0].properties[layerAbbr + '_party_5'];
-        //     var name6 = e.features[0].properties[layerAbbr + '_name_6'];
-        //     var party6 = e.features[0].properties[layerAbbr + '_party_6'];
-        //     var name7 = e.features[0].properties[layerAbbr + '_name_7'];
-        //     var party7 = e.features[0].properties[layerAbbr + '_party_7'];
-        //     var name8 = e.features[0].properties[layerAbbr + '_name_8'];
-        //     var party8 = e.features[0].properties[layerAbbr + '_party_8'];
-
-        //     var state = e.features[0].properties.STATE;
-        //     var district = e.features[0].properties.DISTRICT_I;
-
-        //     var reps = '';
-
-        //     if (name1 !== 'NA' && name1 !== undefined) {
-        //         reps += '<h2>' + name1 + '</h2><h3 style="display: ';
-        //         reps += party1 === undefined ? 'none' : 'block';
-        //         reps +=
-        //             '"><div class="party-color" style="background: ' +
-        //             getColorByParty(party1) +
-        //             '"></div>' +
-        //             party1 +
-        //             '</h3>';
-        //     }
-
-        //     if (name2 !== 'NA' && name2 !== undefined) {
-        //         reps +=
-        //             '<h2>' +
-        //             name2 +
-        //             '</h2><h3><div class="party-color" style="background: ' +
-        //             getColorByParty(party2) +
-        //             '"></div>' +
-        //             party2 +
-        //             '</h3>';
-        //     }
-
-        //     if (name3 !== 'NA' && name3 !== undefined) {
-        //         reps +=
-        //             '<h2>' +
-        //             name3 +
-        //             '</h2><h3><div class="party-color" style="background: ' +
-        //             getColorByParty(party3) +
-        //             '"></div>' +
-        //             party3 +
-        //             '</h3>';
-        //     }
-
-        //     if (name4 !== 'NA' && name4 !== undefined) {
-        //         reps +=
-        //             '<h2>' +
-        //             name4 +
-        //             '</h2><h3><div class="party-color" style="background: ' +
-        //             getColorByParty(party4) +
-        //             '"></div>' +
-        //             party4 +
-        //             '</h3>';
-        //     }
-
-        //     if (name5 !== 'NA' && name5 !== undefined) {
-        //         reps +=
-        //             '<h2>' +
-        //             name5 +
-        //             '</h2><h3><div class="party-color" style="background: ' +
-        //             getColorByParty(party5) +
-        //             '"></div>' +
-        //             party5 +
-        //             '</h3>';
-        //     }
-
-        //     if (name6 !== 'NA' && name6 !== undefined) {
-        //         reps +=
-        //             '<h2>' +
-        //             name6 +
-        //             '</h2><h3><div class="party-color" style="background: ' +
-        //             getColorByParty(party6) +
-        //             '"></div>' +
-        //             party6 +
-        //             '</h3>';
-        //     }
-
-        //     if (name7 !== 'NA' && name7 !== undefined) {
-        //         reps +=
-        //             '<h2>' +
-        //             name7 +
-        //             '</h2><h3><div class="party-color" style="background: ' +
-        //             getColorByParty(party7) +
-        //             '"></div>' +
-        //             party7 +
-        //             '</h3>';
-        //     }
-
-        //     if (name8 !== 'NA' && name8 !== undefined) {
-        //         reps +=
-        //             '<h2>' +
-        //             name8 +
-        //             '</h2><h3><div class="party-color" style="background: ' +
-        //             getColorByParty(party8) +
-        //             '"></div>' +
-        //             party8 +
-        //             '</h3>';
-        //     }
-        //     var description =
-        //         '<h1>' + state + '-' + district + '</h1><div class="reps">' + reps + '</div>';
-        //     popup
-        //         .setLngLat(e.lngLat)
-        //         .setHTML(description)
-        //         .addTo(map);
         }
         hoveredStateId = e.features[0].id;
         map.setFeatureState(
@@ -267,9 +147,13 @@ const onMouseMove = function(e) {
 const onDistrictClick = function(e) {
     if (e.features.length > 0) {
         map.getCanvas().style.cursor = 'pointer';
-        if (hoveredStateId) {
+        // if (hoveredStateId) {
             map.setFeatureState(
                 { source: 'district_'+layerName, sourceLayer: layerName + '_polygons', id: hoveredStateId },
+                { hover: false }
+            );
+            map.setFeatureState(
+                { source: 'us-states', id: hoveredStateId },
                 { hover: false }
             );
             var name1 = e.features[0].properties[layerAbbr + '_name_1'];
@@ -387,10 +271,14 @@ const onDistrictClick = function(e) {
                 .setLngLat(e.lngLat)
                 .setHTML(description)
                 .addTo(map);
-        }
+        // }
         hoveredStateId = e.features[0].id;
         map.setFeatureState(
             { source: 'district_'+layerName, sourceLayer: layerName + '_polygons', id: hoveredStateId },
+            { hover: true }
+        );
+        map.setFeatureState(
+            { source: 'us-states', id: hoveredStateId },
             { hover: true }
         );
     }
@@ -404,15 +292,23 @@ const onMouseLeave = function() {
             { source: 'district_'+layerName, sourceLayer: layerName + '_polygons', id: hoveredStateId },
             { hover: false }
         );
+        map.setFeatureState(
+            { source: 'us-states', id: hoveredStateId },
+            { hover: false }
+        );
     }
     hoveredStateId = null;
-    popup.remove();
+    // popup.remove();
 };
 
 
 map.on('mousemove', 'us-states-fill', function(e) {
     if (e.features.length > 0) {
         if (hoveredStateId) {
+            map.setFeatureState(
+                { source: 'us-states', id: hoveredStateId },
+                { hover: false }
+            );
             map.setFeatureState(
                 { source: 'us-states', id: hoveredStateId },
                 { hover: false }
@@ -426,17 +322,6 @@ map.on('mousemove', 'us-states-fill', function(e) {
     }
 });
  
-// When the mouse leaves the state-fill layer, update the feature state of the
-// previously hovered feature.
-map.on('mouseleave', 'us-states-fill', function() {
-if (hoveredStateId) {
-map.setFeatureState(
-{ source: 'us-states', id: hoveredStateId },
-{ hover: false }
-);
-}
-hoveredStateId = null;
-});
 
 
 map.on('zoom', function() {
@@ -448,6 +333,7 @@ map.on('zoom', function() {
         map.setLayoutProperty('us-states-fill', 'visibility', 'visible')
         map.setLayoutProperty('district-polygons-fill', 'visibility', 'none')
         map.setLayoutProperty('district-polygons-line', 'visibility', 'none')
+        onMouseLeave();
         
     }
 });
@@ -456,10 +342,12 @@ map.on('zoom', function() {
 const loadMap = function() {
     map.on('mousemove', 'district-polygons-fill', function(e) {
         onMouseMove(e);
+
     });
 
     map.on('mouseleave', 'district-polygons-fill', function() {
         onMouseLeave();
+        map.getCanvas().style.cursor = 'text';
     });
 
     map.on('click', 'us-states-fill', function(e) {
@@ -543,30 +431,6 @@ const loadMap = function() {
         'waterway-label'
     );
 
-    // if (map.getLayer('district-points')) {
-    //     map.removeLayer('district-points');
-    // }
-
-    // map.addLayer(
-    //     {
-    //         id: 'district-points',
-    //         type: 'circle',
-    //         source: 'district_'+layerName,
-    //         'source-layer': layerName + '_points',
-    //         paint: {
-    //             'circle-opacity': circleOpacity,
-    //             'circle-color': politicalColors(),
-    //             'circle-radius': ['interpolate', ['linear'], ['zoom'], 0, 2, 2, 2, 6, 2, 12, 4],
-    //             'circle-stroke-color': politicalColors(),
-    //             'circle-stroke-width': 0.5,
-    //             'circle-stroke-opacity': 1,
-    //         },
-    //         layout: {
-    //             visibility: styleMode === 'polygons' ? 'none' : 'visible',
-    //         },
-    //     },
-    //     'waterway-label'
-    // );
 };
 
 map.on('load', function() {
