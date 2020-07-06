@@ -12,7 +12,6 @@ var map = new mapboxgl.Map({
     style: 'mapbox://styles/patrickvossler/ckc0ydvhi5h3v1iodhe5rgsjg',
     zoom: mapOrigin.zoom,
     center: [mapOrigin.lng, mapOrigin.lat],
-    // maxZoom: 6.89
     maxZoom: 8
 });
 
@@ -40,9 +39,9 @@ var colorOther = 'hsl(0, 0%, 65%)';
 var colorMixed = '#9a23c1';
 
 var hoveredStateId;
+var hoveredStateFillId;
 var layerName = 'state_lower';
 var layerAbbr = 'sl';
-// var styleMode = 'dots';
 var styleMode = 'polygons';
 var zoomThreshold = 4;
 
@@ -68,7 +67,7 @@ function politicalColors() {
 }
 
 var popup = new mapboxgl.Popup({
-    closeButton: false,
+    closeButton: true,
     closeOnClick: false,
     anchor: 'top-left',
 });
@@ -152,10 +151,10 @@ const onDistrictClick = function(e) {
                 { source: 'district_'+layerName, sourceLayer: layerName + '_polygons', id: hoveredStateId },
                 { hover: false }
             );
-            map.setFeatureState(
-                { source: 'us-states', id: hoveredStateId },
-                { hover: false }
-            );
+            // map.setFeatureState(
+            //     { source: 'us-states', id: hoveredStateId },
+            //     { hover: false }
+            // );
             var name1 = e.features[0].properties[layerAbbr + '_name_1'];
             var party1 = e.features[0].properties[layerAbbr + '_party_1'];
             var name2 = e.features[0].properties[layerAbbr + '_name_2'];
@@ -277,10 +276,10 @@ const onDistrictClick = function(e) {
             { source: 'district_'+layerName, sourceLayer: layerName + '_polygons', id: hoveredStateId },
             { hover: true }
         );
-        map.setFeatureState(
-            { source: 'us-states', id: hoveredStateId },
-            { hover: true }
-        );
+        // map.setFeatureState(
+        //     { source: 'us-states', id: hoveredStateId },
+        //     { hover: true }
+        // );
     }
 };
 
@@ -292,36 +291,13 @@ const onMouseLeave = function() {
             { source: 'district_'+layerName, sourceLayer: layerName + '_polygons', id: hoveredStateId },
             { hover: false }
         );
-        map.setFeatureState(
-            { source: 'us-states', id: hoveredStateId },
-            { hover: false }
-        );
     }
     hoveredStateId = null;
     // popup.remove();
 };
 
 
-map.on('mousemove', 'us-states-fill', function(e) {
-    if (e.features.length > 0) {
-        if (hoveredStateId) {
-            map.setFeatureState(
-                { source: 'us-states', id: hoveredStateId },
-                { hover: false }
-            );
-            map.setFeatureState(
-                { source: 'us-states', id: hoveredStateId },
-                { hover: false }
-            );
-        }
-        hoveredStateId = e.features[0].id;
-        map.setFeatureState(
-            { source: 'us-states', id: hoveredStateId },
-            { hover: true }
-        );
-    }
-});
- 
+
 
 
 map.on('zoom', function() {
@@ -350,6 +326,46 @@ const loadMap = function() {
         map.getCanvas().style.cursor = 'text';
     });
 
+    map.on('mousemove', 'us-states-fill', function(e) {
+    if (e.features.length > 0) {
+        if (hoveredStateFillId) {
+
+            map.setFeatureState(
+                { source: 'us-states', id: hoveredStateFillId },
+                { hover: false }
+            );
+            // also remove hover on Maine as well because for some reason it is not removing hover
+            map.setFeatureState(
+                { source: 'us-states', id: 0 },
+                { hover: false }
+            );
+
+        }
+        hoveredStateFillId = e.features[0].id;
+        map.setFeatureState(
+            { source: 'us-states', id: hoveredStateFillId },
+            { hover: true }
+        );
+        }
+    });
+
+    map.on('mouseleave', 'us-states-fill', function() {
+        map.getCanvas().style.cursor = '';
+        if (hoveredStateFillId) {
+            map.setFeatureState(
+                { source: 'us-states', id: hoveredStateFillId },
+                { hover: false }
+            );
+            // also remove hover on Maine as well because for some reason it is not removing hover
+            map.setFeatureState(
+                { source: 'us-states', id: 0 },
+                { hover: false }
+            );
+        }
+        hoveredStateFillId = null;
+        // popup.remove();
+    });
+
     map.on('click', 'us-states-fill', function(e) {
         popup.setLngLat({ lng: 0, lat: 0 });
 
@@ -364,7 +380,6 @@ const loadMap = function() {
         map.fitBounds([[xmax, ymax], [xmin, ymin]], { padding: 25 });
 
         loadPolygons();
-        // onMouseMove(e);
     });
 
     map.on('click', 'district-polygons-fill', function(e){
