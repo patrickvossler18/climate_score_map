@@ -1,5 +1,6 @@
-{
+var district_data =  [{
   "name": "Sarah Davis",
+  "district_geoid": "48134L",
   "aliases": [],
   "lifetime_score": 56.0,
   "yearly_scores": {
@@ -515,4 +516,4 @@
       }
     }
   ]
-}
+}]

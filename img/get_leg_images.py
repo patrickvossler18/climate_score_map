@@ -8,6 +8,9 @@ import pathlib
 import csv
 import glob
 import pandas as pd
+import us
+from num2words import num2words
+from word2number import w2n
 
 # start with this url, get all of the states from the options and then scrape the images
 starter_url = "https://openstates.org/ca/legislators/"
@@ -85,5 +88,27 @@ for state in state_list:
 # make the images smaller
 subprocess.call("img/resize_images.sh", shell=True)
 
-all_csvs_path = glob.glob("img/**/*.csv", recursive=True)
+all_csvs_path = glob.glob("/Users/patrick/nra_score_map/img/resized/**/*.csv", recursive=True)
 leg_image_info = pd.concat([pd.read_csv(path) for path in all_csvs_path])
+
+leg_image_info['image_filepath'] = leg_image_info['image_filepath'].str.replace("/Users/patrick/nra_score_map/","")
+leg_image_info['geoid'] = leg_image_info['state'].str.upper().map(lambda x: us.states.lookup(x).fips)
+leg_image_info.reset_index(inplace=True, drop=True)
+leg_image_info.to_json("/Users/patrick/nra_score_map/data/leg_image_info.json",orient='records')
+
+
+### read in csv of geo id info
+lower_info = pd.read_csv("/Users/patrick/nra_score_map/data/lower_id_info.csv")
+
+
+def convert_district_to_num(x):
+    found_int = re.match(r'(\d+)st|nd|rd|th', x)
+    if found_int is not None:
+        replacement = num2words(found_int.group(1),ordinal=True)
+        return f"{replacement} {x.split(' ')[1]}".lower()
+    else:
+        return x
+
+lower_info['NAME'].map(lambda x: convert_district_to_num(x)).unique()
+
+leg_image_info['district'].map(lambda x: w2n.word_to_num(str(x)))

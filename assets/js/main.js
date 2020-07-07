@@ -1,6 +1,7 @@
 mapboxgl.accessToken = 
 'pk.eyJ1IjoicGF0cmlja3Zvc3NsZXIiLCJhIjoiY2tjMHd0eTFrMHphMjJybG0yOTU1dDEzZyJ9.FsIqtdsHIru8Ay_0zmZYHw';
 
+
 var mapOrigin = {
     zoom: 3,
     lng: -95.5,
@@ -25,12 +26,10 @@ if (embed === 'true') {
     map.resize();
 }
 
-var $buttonDots = document.getElementById('button-dots');
 var $buttonPolygons = document.getElementById('button-polygon');
 var $buttonHouse = document.getElementById('button-house');
 var $buttonSenate = document.getElementById('button-senate');
 
-var circleOpacity = ['interpolate', ['linear'], ['zoom'], 0, 0.15, 3, 0.15, 6, 0.9];
 var lineOpacity = ['interpolate', ['linear'], ['zoom'], 0, 0, 4, 0, 6, 0.05];
 
 var colorDemocrat = '#2381C1';
@@ -44,6 +43,7 @@ var layerName = 'state_lower';
 var layerAbbr = 'sl';
 var styleMode = 'polygons';
 var zoomThreshold = 4;
+
 
 function getColorByParty(party) {
     if (['Democrat', 'Democratic-Farmer-Labor', 'Democrat/Progressive'].includes(party))
@@ -72,16 +72,6 @@ var popup = new mapboxgl.Popup({
     anchor: 'top-left',
 });
 
-function loadDots() {
-    styleMode = 'dots';
-    map.setPaintProperty('district-polygons-fill', 'fill-opacity', 0)
-        .setPaintProperty('district-polygons-line', 'line-opacity', lineOpacity)
-        .setLayoutProperty('district-points', 'visibility', 'visible')
-        .setLayoutProperty('district-points', 'visibility', 'visible')
-        .setLayoutProperty('us-states-line', 'visibility', 'none');
-    $buttonDots.classList.add('selected');
-    $buttonPolygons.classList.remove('selected');
-}
 
 function loadPolygons() {
     styleMode = 'polygons';
@@ -90,7 +80,7 @@ function loadPolygons() {
         .setLayoutProperty('us-states-line', 'visibility', 'visible')
 }
 
-function loadHouse() {
+function loadLowerHouse() {
     $buttonHouse.classList.add('selected');
     $buttonSenate.classList.remove('selected');
     layerName = 'state_lower';
@@ -108,7 +98,7 @@ function loadHouse() {
     }
 }
 
-function loadSenate() {
+function loadUpperHouse() {
     $buttonSenate.classList.add('selected');
     $buttonHouse.classList.remove('selected');
     layerName = 'state_upper';
@@ -126,7 +116,48 @@ function loadSenate() {
     }
 }
 
-const onMouseMove = function(e) {
+// When viewing at state level
+const onMouseMoveState = function(e){
+    if (e.features.length > 0) {
+        if (hoveredStateFillId) {
+
+            map.setFeatureState(
+                { source: 'us-states', id: hoveredStateFillId },
+                { hover: false }
+            );
+            // also remove hover on Maine as well because for some reason it is not removing hover
+            map.setFeatureState(
+                { source: 'us-states', id: 23 },
+                { hover: false }
+            );
+
+        }
+        hoveredStateFillId = e.features[0].id;
+        map.setFeatureState(
+            { source: 'us-states', id: hoveredStateFillId },
+            { hover: true }
+        );
+    }
+}
+
+const onMouseLeaveState = function(){
+    map.getCanvas().style.cursor = '';
+    if (hoveredStateFillId) {
+        map.setFeatureState(
+            { source: 'us-states', id: hoveredStateFillId },
+            { hover: false }
+        );
+        // also remove hover on Maine as well because for some reason it is not removing hover
+        map.setFeatureState(
+            { source: 'us-states', id: 23 },
+            { hover: false }
+        );
+    }
+    hoveredStateFillId = null;
+}
+
+// When viewing at district level
+const onMouseMoveDistrict = function(e) {
     if (e.features.length > 0) {
         map.getCanvas().style.cursor = 'pointer';
         if (hoveredStateId) {
@@ -143,148 +174,8 @@ const onMouseMove = function(e) {
     }
 };
 
-const onDistrictClick = function(e) {
-    if (e.features.length > 0) {
-        map.getCanvas().style.cursor = 'pointer';
-        // if (hoveredStateId) {
-            map.setFeatureState(
-                { source: 'district_'+layerName, sourceLayer: layerName + '_polygons', id: hoveredStateId },
-                { hover: false }
-            );
-            // map.setFeatureState(
-            //     { source: 'us-states', id: hoveredStateId },
-            //     { hover: false }
-            // );
-            var name1 = e.features[0].properties[layerAbbr + '_name_1'];
-            var party1 = e.features[0].properties[layerAbbr + '_party_1'];
-            var name2 = e.features[0].properties[layerAbbr + '_name_2'];
-            var party2 = e.features[0].properties[layerAbbr + '_party_2'];
-            var name3 = e.features[0].properties[layerAbbr + '_name_3'];
-            var party3 = e.features[0].properties[layerAbbr + '_party_3'];
-            var name4 = e.features[0].properties[layerAbbr + '_name_4'];
-            var party4 = e.features[0].properties[layerAbbr + '_party_4'];
-            var name5 = e.features[0].properties[layerAbbr + '_name_5'];
-            var party5 = e.features[0].properties[layerAbbr + '_party_5'];
-            var name6 = e.features[0].properties[layerAbbr + '_name_6'];
-            var party6 = e.features[0].properties[layerAbbr + '_party_6'];
-            var name7 = e.features[0].properties[layerAbbr + '_name_7'];
-            var party7 = e.features[0].properties[layerAbbr + '_party_7'];
-            var name8 = e.features[0].properties[layerAbbr + '_name_8'];
-            var party8 = e.features[0].properties[layerAbbr + '_party_8'];
-
-            var state = e.features[0].properties.STATE;
-            var district = e.features[0].properties.DISTRICT_I;
-
-            var reps = '';
-
-            if (name1 !== 'NA' && name1 !== undefined) {
-                reps += '<h2>' + name1 + '</h2><h3 style="display: ';
-                reps += party1 === undefined ? 'none' : 'block';
-                reps +=
-                    '"><div class="party-color" style="background: ' +
-                    getColorByParty(party1) +
-                    '"></div>' +
-                    party1 +
-                    '</h3>';
-            }
-
-            if (name2 !== 'NA' && name2 !== undefined) {
-                reps +=
-                    '<h2>' +
-                    name2 +
-                    '</h2><h3><div class="party-color" style="background: ' +
-                    getColorByParty(party2) +
-                    '"></div>' +
-                    party2 +
-                    '</h3>';
-            }
-
-            if (name3 !== 'NA' && name3 !== undefined) {
-                reps +=
-                    '<h2>' +
-                    name3 +
-                    '</h2><h3><div class="party-color" style="background: ' +
-                    getColorByParty(party3) +
-                    '"></div>' +
-                    party3 +
-                    '</h3>';
-            }
-
-            if (name4 !== 'NA' && name4 !== undefined) {
-                reps +=
-                    '<h2>' +
-                    name4 +
-                    '</h2><h3><div class="party-color" style="background: ' +
-                    getColorByParty(party4) +
-                    '"></div>' +
-                    party4 +
-                    '</h3>';
-            }
-
-            if (name5 !== 'NA' && name5 !== undefined) {
-                reps +=
-                    '<h2>' +
-                    name5 +
-                    '</h2><h3><div class="party-color" style="background: ' +
-                    getColorByParty(party5) +
-                    '"></div>' +
-                    party5 +
-                    '</h3>';
-            }
-
-            if (name6 !== 'NA' && name6 !== undefined) {
-                reps +=
-                    '<h2>' +
-                    name6 +
-                    '</h2><h3><div class="party-color" style="background: ' +
-                    getColorByParty(party6) +
-                    '"></div>' +
-                    party6 +
-                    '</h3>';
-            }
-
-            if (name7 !== 'NA' && name7 !== undefined) {
-                reps +=
-                    '<h2>' +
-                    name7 +
-                    '</h2><h3><div class="party-color" style="background: ' +
-                    getColorByParty(party7) +
-                    '"></div>' +
-                    party7 +
-                    '</h3>';
-            }
-
-            if (name8 !== 'NA' && name8 !== undefined) {
-                reps +=
-                    '<h2>' +
-                    name8 +
-                    '</h2><h3><div class="party-color" style="background: ' +
-                    getColorByParty(party8) +
-                    '"></div>' +
-                    party8 +
-                    '</h3>';
-            }
-            var description =
-                '<h1>' + state + '-' + district + '</h1><div class="reps">' + reps + '</div>';
-            popup
-                .setLngLat(e.lngLat)
-                .setHTML(description)
-                .addTo(map);
-        // }
-        hoveredStateId = e.features[0].id;
-        map.setFeatureState(
-            { source: 'district_'+layerName, sourceLayer: layerName + '_polygons', id: hoveredStateId },
-            { hover: true }
-        );
-        // map.setFeatureState(
-        //     { source: 'us-states', id: hoveredStateId },
-        //     { hover: true }
-        // );
-    }
-};
-
-
-const onMouseLeave = function() {
+// When viewing at district level
+const onMouseLeaveDistrict = function() {
     map.getCanvas().style.cursor = '';
     if (hoveredStateId) {
         map.setFeatureState(
@@ -293,15 +184,56 @@ const onMouseLeave = function() {
         );
     }
     hoveredStateId = null;
-    // popup.remove();
 };
 
+const onDistrictClick = function(e) {
+    if (e.features.length > 0) {
+        map.getCanvas().style.cursor = 'pointer';
+        map.setFeatureState(
+            { source: 'district_'+layerName, sourceLayer: layerName + '_polygons', id: hoveredStateId },
+            { hover: false }
+        );
+        var party = e.features[0].properties[layerAbbr + '_party_1']; // is this in our mock data?
+        var state = e.features[0].properties.STATE;
+        var district = e.features[0].properties.DISTRICT_I;
 
 
+        var geoId = e.features[0].properties.GEOID
 
+        // The following code assumes we have a json object called district_data with, well, district info
+        var matching_district = district_data.find(district => district.geoid === geoId);
+
+        var reps = '';
+
+        if (matching_district !== undefined) {
+            reps += '<h2>' + matching_district.incumbent.name + '</h2><h3 style="display: ';
+            reps += party === undefined ? 'none' : 'block';
+            reps +=
+                '"><div class="party-color" style="background: ' +
+                getColorByParty(party) +
+                '"></div>' +
+                party +
+                '</h3>';
+        }
+
+        
+        var description =
+            '<h1>' + state + '-' + district + '</h1><div class="reps">' + reps + '</div>';
+        popup
+            .setLngLat(e.lngLat)
+            .setHTML(description)
+            .addTo(map);
+        hoveredStateId = e.features[0].id;
+        map.setFeatureState(
+            { source: 'district_'+layerName, sourceLayer: layerName + '_polygons', id: hoveredStateId },
+            { hover: true }
+        );
+    }
+};
 
 map.on('zoom', function() {
     if (map.getZoom() > zoomThreshold) {
+        // If the user is zoomed in past our threshold, show the individual districts
         map.setLayoutProperty('us-states-fill', 'visibility', 'none')
         map.setLayoutProperty('district-polygons-fill', 'visibility', 'visible')
         map.setLayoutProperty('district-polygons-line', 'visibility', 'visible')
@@ -309,7 +241,7 @@ map.on('zoom', function() {
         map.setLayoutProperty('us-states-fill', 'visibility', 'visible')
         map.setLayoutProperty('district-polygons-fill', 'visibility', 'none')
         map.setLayoutProperty('district-polygons-line', 'visibility', 'none')
-        onMouseLeave();
+        onMouseLeaveDistrict();
         
     }
 });
@@ -317,56 +249,23 @@ map.on('zoom', function() {
 
 const loadMap = function() {
     map.on('mousemove', 'district-polygons-fill', function(e) {
-        onMouseMove(e);
-
+        onMouseMoveDistrict(e);
     });
 
     map.on('mouseleave', 'district-polygons-fill', function() {
-        onMouseLeave();
-        map.getCanvas().style.cursor = 'text';
+        onMouseLeaveDistrict();
     });
 
     map.on('mousemove', 'us-states-fill', function(e) {
-    if (e.features.length > 0) {
-        if (hoveredStateFillId) {
-
-            map.setFeatureState(
-                { source: 'us-states', id: hoveredStateFillId },
-                { hover: false }
-            );
-            // also remove hover on Maine as well because for some reason it is not removing hover
-            map.setFeatureState(
-                { source: 'us-states', id: 0 },
-                { hover: false }
-            );
-
-        }
-        hoveredStateFillId = e.features[0].id;
-        map.setFeatureState(
-            { source: 'us-states', id: hoveredStateFillId },
-            { hover: true }
-        );
-        }
+        onMouseMoveState(e);
     });
 
     map.on('mouseleave', 'us-states-fill', function() {
-        map.getCanvas().style.cursor = '';
-        if (hoveredStateFillId) {
-            map.setFeatureState(
-                { source: 'us-states', id: hoveredStateFillId },
-                { hover: false }
-            );
-            // also remove hover on Maine as well because for some reason it is not removing hover
-            map.setFeatureState(
-                { source: 'us-states', id: 0 },
-                { hover: false }
-            );
-        }
-        hoveredStateFillId = null;
-        // popup.remove();
+        onMouseLeaveState();
     });
 
     map.on('click', 'us-states-fill', function(e) {
+        // when user clicks the state, zoom in to show the state
         popup.setLngLat({ lng: 0, lat: 0 });
 
         var xmin = e.features[0].properties.xmin;
@@ -377,7 +276,7 @@ const loadMap = function() {
         // Previously, clicking on Alaska would result in map zooming to the full extent of the planet. This quick fix ensures that its bbox is on the same side of the planet and zooms in as the user would expect. Would need to enhance this if making a map that isn't focused on the US.
         xmax = xmax <= 0 ? xmax : -180;
 
-        map.fitBounds([[xmax, ymax], [xmin, ymin]], { padding: 25 });
+        map.fitBounds([[xmax, ymax], [xmin, ymin]], { padding: 2 });
 
         loadPolygons();
     });
@@ -391,6 +290,16 @@ const loadMap = function() {
         map.removeLayer('district-polygons-fill');
     }
 
+    var layers = map.getStyle().layers;
+    // Find the index of the first symbol layer in the map style
+    var firstSymbolId;
+    for (var i = 0; i < layers.length; i++) {
+        if (layers[i].type === 'symbol') {
+            firstSymbolId = layers[i].id;
+            break;
+        }
+    }
+
     map.addLayer(
         {
             id: 'district-polygons-fill',
@@ -402,7 +311,19 @@ const loadMap = function() {
                 'fill-opacity': styleMode === 'polygons' ? 0.6 : 0,
             },
         },
+        firstSymbolId,
         'waterway-label'
+    );
+
+    map.setFilter('district-polygons-fill', 
+        ['match',
+                ['get', 'GEOID'],
+                // the replace removes zero padding to make district id 033 match 33, for example
+                district_data.map(district => district.geoid),
+                true,
+                false 
+        ]
+        
     );
 
     if (map.getLayer('district-polygons-line')) {
@@ -420,10 +341,8 @@ const loadMap = function() {
                 'line-opacity': styleMode === 'polygons' ? 0.2 : lineOpacity,
                 'line-width': 1,
             },
-            // layout: {
-            //     visibility: styleMode === 'polygons' ? 'visible' : 'none'
-            // }
         },
+        firstSymbolId,
         'waterway-label'
     );
 
@@ -461,10 +380,7 @@ map.on('load', function() {
             id: 'us-states-fill',
             type: 'fill',
             source: 'us-states',
-            // paint: {
-            //     'fill-color': 'transparent',
-            // },
-            'paint': {
+            paint: {
                 'fill-color': '#627BC1',
                 'fill-opacity': [
                 'case',
@@ -476,7 +392,13 @@ map.on('load', function() {
         },
         'waterway-label'
     );
-
+    map.setFilter('us-states-fill', 
+        ['match',
+        ['get', 'abbr'], 
+        district_data.map(district => district.state_abbr),
+        true,
+        false 
+        ])
     map.addLayer(
         {
             id: 'us-states-line',
@@ -487,9 +409,6 @@ map.on('load', function() {
                 'line-opacity': 0.9,
                 'line-width': ['interpolate', ['linear'], ['zoom'], 0, 1, 4, 2, 6, 4, 8, 6],
             },
-            // layout: {
-            //     visibility: 'none',
-            // },
         },
         'waterway-label'
     );
@@ -499,22 +418,19 @@ map.on('load', function() {
         // upper data
         type: 'vector',
         url: 'mapbox://patrickvossler.32coil2n'
-        // data: '/data/upper_data_combined.mbtiles'
-        // data: '/data/us-states.json',
     });
     map.addSource('district_state_lower', {
         // upper data
         type: 'vector',
         url: 'mapbox://patrickvossler.7938os9w'
-        // url: location.origin + '/data/lower_data_combined_test.mbtiles'
-        // data: '/data/us-states.json',
     });
 
     loadMap();
-    // loadDots();
     loadPolygons();
-    // loadSenate();
-    loadHouse();
+    // show lower house by default
+    loadLowerHouse();
+
+    // when we first load the map, make sure only the states are visible, not the districts
     map.setLayoutProperty('us-states-fill', 'visibility', 'visible')
     map.setLayoutProperty('us-states-line', 'visibility', 'visible')
     map.setLayoutProperty('district-polygons-fill', 'visibility', 'none')
