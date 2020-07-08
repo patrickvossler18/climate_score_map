@@ -3,19 +3,19 @@ mapboxgl.accessToken =
 
 
 var mapOrigin = {
-    zoom: 3,
-    lng: -95.5,
-    lat: 38,
+    zoom: 3.48,
+    // lng: -95.5,
+    // lat: 38,
 };
 
 var map = new mapboxgl.Map({
     container: 'map',
     // style: 'mapbox://styles/patrickvossler/ckc0ydvhi5h3v1iodhe5rgsjg',
     // style: 'mapbox://styles/patrickvossler/ckcc7fav36ug51iqukp1vt6v8',
-    style:"mapbox://styles/patrickvossler/ckcc7fav36ug51iqukp1vt6v8/draft",
+    style:"mapbox://styles/patrickvossler/ckcc7fav36ug51iqukp1vt6v8",
     zoom: mapOrigin.zoom,
     // center: [mapOrigin.lng, mapOrigin.lat],
-    maxZoom: 8
+    // maxZoom: 8
 });
 
 map.dragRotate.disable();
@@ -28,10 +28,12 @@ if (embed === 'true') {
     map.resize();
 }
 
+var $buttonDots = document.getElementById('button-dots');
 var $buttonPolygons = document.getElementById('button-polygon');
 var $buttonHouse = document.getElementById('button-house');
 var $buttonSenate = document.getElementById('button-senate');
 
+var circleOpacity = ['interpolate', ['linear'], ['zoom'], 0, 0.15, 3, 0.15, 6, 0.9];
 var lineOpacity = ['interpolate', ['linear'], ['zoom'], 0, 0, 4, 0, 6, 0.05];
 
 var colorDemocrat = '#2381C1';
@@ -74,12 +76,25 @@ var popup = new mapboxgl.Popup({
     anchor: 'top-left',
 });
 
+function loadDots() {
+    styleMode = 'dots';
+    map.setPaintProperty('district-polygons-fill', 'fill-opacity', 0)
+        .setPaintProperty('district-polygons-line', 'line-opacity', lineOpacity)
+        // .setLayoutProperty('district-polygons-line', 'visibility', 'none')
+        .setLayoutProperty('district-points', 'visibility', 'visible')
+        .setLayoutProperty('district-points', 'visibility', 'visible')
+        // .setLayoutProperty('us-states-line', 'visibility', 'none');
+    $buttonDots.classList.add('selected');
+    $buttonPolygons.classList.remove('selected');
+}
 
 function loadPolygons() {
     styleMode = 'polygons';
     map.setPaintProperty('district-polygons-fill', 'fill-opacity', 0.6)
         .setPaintProperty('district-polygons-line', 'line-opacity', 0.2)
         .setLayoutProperty('us-states-line', 'visibility', 'visible')
+    $buttonPolygons.classList.add('selected');
+    $buttonDots.classList.remove('selected');
 }
 
 function loadLowerHouse() {
@@ -164,13 +179,13 @@ const onMouseMoveDistrict = function(e) {
         map.getCanvas().style.cursor = 'pointer';
         if (hoveredStateId) {
             map.setFeatureState(
-                { source: 'district_'+layerName, sourceLayer: layerName + '_polygons', id: hoveredStateId },
+                { source: 'district_'+layerName+ '_polygons', sourceLayer: layerName + '_polygons', id: hoveredStateId },
                 { hover: false }
             );
         }
         hoveredStateId = e.features[0].id;
         map.setFeatureState(
-            { source: 'district_'+layerName, sourceLayer: layerName + '_polygons', id: hoveredStateId },
+            { source: 'district_'+layerName+ '_polygons', sourceLayer: layerName + '_polygons', id: hoveredStateId },
             { hover: true }
         );
     }
@@ -181,7 +196,7 @@ const onMouseLeaveDistrict = function() {
     map.getCanvas().style.cursor = '';
     if (hoveredStateId) {
         map.setFeatureState(
-            { source: 'district_'+layerName, sourceLayer: layerName + '_polygons', id: hoveredStateId },
+            { source: 'district_'+layerName+ '_polygons', sourceLayer: layerName + '_polygons', id: hoveredStateId },
             { hover: false }
         );
     }
@@ -190,9 +205,10 @@ const onMouseLeaveDistrict = function() {
 
 const onDistrictClick = function(e) {
     if (e.features.length > 0) {
+        console.log(e.features[0].properties)
         map.getCanvas().style.cursor = 'pointer';
         map.setFeatureState(
-            { source: 'district_'+layerName, sourceLayer: layerName + '_polygons', id: hoveredStateId },
+            { source: 'district_'+layerName+ '_polygons', sourceLayer: layerName + '_polygons', id: hoveredStateId },
             { hover: false }
         );
         var party = e.features[0].properties[layerAbbr + '_party_1']; // is this in our mock data?
@@ -227,37 +243,9 @@ const onDistrictClick = function(e) {
             .addTo(map);
         hoveredStateId = e.features[0].id;
         map.setFeatureState(
-            { source: 'district_'+layerName, sourceLayer: layerName + '_polygons', id: hoveredStateId },
+            { source: 'district_'+layerName+ '_polygons', sourceLayer: layerName + '_polygons', id: hoveredStateId },
             { hover: true }
         );
-        function getCentroid(feature) {
-            var bounds = [];
-            var polygon;
-            var latitude;
-            var longitude;
-
-            for (var i = 0; i < feature.geometry.coordinates.length; i++) {
-                if (feature.geometry.coordinates.length === 1) {
-                    // Polygon coordinates[0][nodes]
-                    polygon = feature.geometry.coordinates[0];
-                } else {
-                    // Polygon coordinates[poly][0][nodes]
-                    polygon = feature.geometry.coordinates[i][0];
-                }
-
-                for (var j = 0; j < polygon.length; j++) {
-                    longitude = polygon[j][0];
-                    latitude = polygon[j][1];
-                    bounds.push([longitude,latitude])
-                }
-            }
-
-            return bounds;
-        }
-        poly_bounds = e.features[0]
-        var outline = turf.polygon([getCentroid(poly_bounds)]);
-        var centroid = turf.centroid(poly_bounds);
-        console.log(centroid)
     }
 };
 
@@ -267,6 +255,7 @@ map.on('zoom', function() {
         map.setLayoutProperty('us-states-fill', 'visibility', 'none')
         map.setLayoutProperty('district-polygons-fill', 'visibility', 'visible')
         map.setLayoutProperty('district-polygons-line', 'visibility', 'visible')
+        map.setLayoutProperty('district-points', 'visibility', 'visible')
     } else {
         map.setLayoutProperty('us-states-fill', 'visibility', 'visible')
         map.setLayoutProperty('district-polygons-fill', 'visibility', 'none')
@@ -344,7 +333,7 @@ const loadMap = function() {
 
         
 
-        loadPolygons();
+        // loadPolygons();
     });
 
     map.on('click', 'district-polygons-fill', function(e){
@@ -360,26 +349,34 @@ const loadMap = function() {
         {
             id: 'district-polygons-fill',
             type: 'fill',
-            source: 'district_'+layerName,
+            source: 'district_'+layerName + '_polygons',
             'source-layer': layerName + '_polygons',
             paint: {
                 'fill-color': politicalColors(),
                 'fill-opacity': styleMode === 'polygons' ? 0.6 : 0,
             },
+            // 'filter': ['in', '$type', ['literal', ['Polygon', 'MultiPolygon']]]
+            'filter': ['==', '$type', 'Polygon']
         },
 
     );
 
+    // These filters can probably be combined...
     map.setFilter('district-polygons-fill', 
         ['match',
-                ['get', 'GEOID'],
-                // the replace removes zero padding to make district id 033 match 33, for example
-                district_data.map(district => district.geoid),
-                true,
-                false 
+            ['get', 'GEOID'],
+            district_data.map(district => district.geoid),
+            true,
+            false 
         ]
-        
     );
+    // map.setFilter('district-polygons-fill', 
+    //     ["all",
+    //         ["in", "$type", 'Polygon']
+    //     ]
+        
+        
+    // );
 
     if (map.getLayer('district-polygons-line')) {
         map.removeLayer('district-polygons-line');
@@ -389,15 +386,24 @@ const loadMap = function() {
         {
             id: 'district-polygons-line',
             type: 'line',
-            source: 'district_'+layerName,
+            source: 'district_'+layerName + '_polygons',
             'source-layer': layerName + '_polygons',
             paint: {
                 'line-color': '#000',
                 'line-opacity': styleMode === 'polygons' ? 0.2 : lineOpacity,
                 'line-width': 1,
             },
+            // 'filter': ['in', '$type', ['literal', ['Polygon', 'MultiPolygon']]]
+            'filter': ['==', '$type', 'Polygon']
         },
-
+    );
+    map.setFilter('district-polygons-line', 
+        ['match',
+            ['get', 'GEOID'],
+            district_data.map(district => district.geoid),
+            true,
+            false 
+        ]
     );
 
     if (map.getLayer('district-polygons-highlight')) {
@@ -408,15 +414,79 @@ const loadMap = function() {
         {
             id: 'district-polygons-highlight',
             type: 'line',
-            source: 'district_'+layerName,
+            source: 'district_'+layerName + '_polygons',
             'source-layer': layerName + '_polygons',
             paint: {
                 'line-color': '#000',
                 'line-opacity': ['case', ['boolean', ['feature-state', 'hover'], false], 0.9, 0],
                 'line-width': 2,
             },
+            // 'filter': ['in', '$type', ['literal', ['Polygon', 'MultiPolygon']]]
+            'filter': ['==', '$type', 'Polygon']
         },
     );
+
+
+
+    if (map.getLayer('district-points')) {
+        map.removeLayer('district-points');
+    }
+
+    map.addLayer(
+        {
+            id: 'district-points',
+            type: 'circle',
+            source: 'district_'+layerName + '_points',
+            // 'source-layer': layerName + '_points',
+            'source-layer': 'lower_data_combined_pts_albers',
+            // 'source-layer': layerName + '_polygons',
+            paint: {
+                'circle-opacity': circleOpacity,
+                // 'circle-opacity': 0.9,
+                'circle-color': politicalColors(),
+                'circle-radius': ['interpolate', ['linear'], ['zoom'], 0, 4, 4, 6, 6, 8, 8, 12],
+                // 'circle-radius': 20,
+                'circle-stroke-color': politicalColors(),
+                'circle-stroke-width': 0.5,
+                'circle-stroke-opacity': 1,
+            },
+            layout: {
+                visibility: styleMode === 'polygons' ? 'none' : 'visible',
+            },
+            'filter' : ['==', '$type', 'Point']
+        }
+    );
+    map.setFilter('district-points',
+        ['all',
+            ['match',
+                ['get', 'GEOID'],
+                district_data.map(district => district.geoid),
+                true,
+                false 
+            ],
+            // ['match',
+            //     ['get', 'feature_type'],
+            //     "point",
+            //     true,
+            //     false 
+            // ]
+
+        ] 
+        // ['match',
+        //     ['get', 'GEOID'],
+        //     district_data.map(district => district.geoid),
+        //     true,
+        //     false 
+        // ]
+    );
+    // map.setFilter('district-points', 
+    //     ['match',
+    //         ['get', 'feature_type'],
+    //         "point",
+    //         true,
+    //         false 
+    //     ]
+    // );
 
 };
 
@@ -451,7 +521,7 @@ map.on('load', function() {
         district_data.map(district => district.state_abbr),
         true,
         false 
-        ])
+    ])
     map.addLayer(
         {
             id: 'us-states-line',
@@ -466,19 +536,50 @@ map.on('load', function() {
     );
     
 
-    map.addSource('district_state_upper', {
+    map.addSource('district_state_upper_polygons', {
         // upper data
         type: 'vector',
-        url: 'mapbox://patrickvossler.ddtirtni'
+        url: 'mapbox://patrickvossler.ddtirtni' // albers without points
+        // url: 'mapbox://patrickvossler.6ntnpb5b' // albers with points
+        // url: 'mapbox://patrickvossler.8bk3iilj' // albers feature collection
     });
-    map.addSource('district_state_lower', {
+    map.addSource('district_state_lower_polygons', {
         // lower data
         type: 'vector',
-        url: 'mapbox://patrickvossler.a41nsixd'
+        url: 'mapbox://patrickvossler.a41nsixd' // albers without points
+        // url: 'mapbox://patrickvossler.6hf645ds' // albers with points
+        // url: 'mapbox://patrickvossler.ck972o9o' // albers feature collection
     });
+
+    map.addSource('district_state_upper_points', {
+        // upper data
+        type: 'vector',
+        // url: 'mapbox://patrickvossler.ddtirtni' // albers without points
+        // url: 'mapbox://patrickvossler.6ntnpb5b' // albers with points
+        url: 'mapbox://patrickvossler.ckcdz6t480ew52fqgqyjocpx8-25z6t' // albers feature collection
+    });
+    map.addSource('district_state_lower_points', {
+        // lower data
+        type: 'vector',
+        // url: 'mapbox://patrickvossler.a41nsixd' // albers without points
+        // url: 'mapbox://patrickvossler.6hf645ds' // albers with points
+        // url: 'mapbox://patrickvossler.ck972o9o' // albers feature collection
+        url: 'mapbox://patrickvossler.ckcdys4br0luh23k48u4lxl9r-9ihs1'
+    });
+    // map.addSource('district_state_upper', {
+    //     // upper data
+    //     'type': 'geojson',
+    //     'data': '/data/upper_data_combined_points_albers.min.geojson'
+    // });
+    // map.addSource('district_state_lower', {
+    //     // lower data
+    //     'type': 'geojson',
+    //     'data': '/data/lower_data_combined_points_albers.min.geojson'
+    // });
 
     loadMap();
     loadPolygons();
+    // loadDots();
     // show lower house by default
     loadLowerHouse();
 
