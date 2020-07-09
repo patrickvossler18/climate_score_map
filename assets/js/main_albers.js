@@ -260,6 +260,7 @@ map.on('zoom', function() {
         map.setLayoutProperty('us-states-fill', 'visibility', 'visible')
         map.setLayoutProperty('district-polygons-fill', 'visibility', 'none')
         map.setLayoutProperty('district-polygons-line', 'visibility', 'none')
+        map.setLayoutProperty('district-points', 'visibility', 'none')
         onMouseLeaveDistrict();
         
     }
@@ -286,15 +287,6 @@ const loadMap = function() {
     map.on('click', 'us-states-fill', function(e) {
         // when user clicks the state, zoom in to show the state
         popup.setLngLat({ lng: 0, lat: 0 });
-        // var xmin = e.features[0].properties.xmin;
-        // var xmax = e.features[0].properties.xmax;
-        // var ymin = e.features[0].properties.ymin;
-        // var ymax = e.features[0].properties.ymax;
-
-        // // Previously, clicking on Alaska would result in map zooming to the full extent of the planet. This quick fix ensures that its bbox is on the same side of the planet and zooms in as the user would expect. Would need to enhance this if making a map that isn't focused on the US.
-        // xmax = xmax <= 0 ? xmax : -180;
-
-        // map.fitBounds([[xmax, ymax], [xmin, ymin]], { padding: 2 });
         function getPolygonBoundingBox(feature) {
             // bounds [xMin, yMin][xMax, yMax]
             var bounds = [[], []];
@@ -421,7 +413,6 @@ const loadMap = function() {
                 'line-opacity': ['case', ['boolean', ['feature-state', 'hover'], false], 0.9, 0],
                 'line-width': 2,
             },
-            // 'filter': ['in', '$type', ['literal', ['Polygon', 'MultiPolygon']]]
             'filter': ['==', '$type', 'Polygon']
         },
     );
@@ -437,7 +428,7 @@ const loadMap = function() {
             id: 'district-points',
             type: 'circle',
             source: 'district_'+layerName + '_points',
-            // 'source-layer': layerName + '_points',
+            // mapbox auto-generated this source-layer name
             'source-layer': 'lower_data_combined_pts_albers',
             // 'source-layer': layerName + '_polygons',
             paint: {
@@ -464,29 +455,9 @@ const loadMap = function() {
                 true,
                 false 
             ],
-            // ['match',
-            //     ['get', 'feature_type'],
-            //     "point",
-            //     true,
-            //     false 
-            // ]
 
         ] 
-        // ['match',
-        //     ['get', 'GEOID'],
-        //     district_data.map(district => district.geoid),
-        //     true,
-        //     false 
-        // ]
     );
-    // map.setFilter('district-points', 
-    //     ['match',
-    //         ['get', 'feature_type'],
-    //         "point",
-    //         true,
-    //         false 
-    //     ]
-    // );
 
 };
 
@@ -540,15 +511,12 @@ map.on('load', function() {
         // upper data
         type: 'vector',
         url: 'mapbox://patrickvossler.ddtirtni' // albers without points
-        // url: 'mapbox://patrickvossler.6ntnpb5b' // albers with points
-        // url: 'mapbox://patrickvossler.8bk3iilj' // albers feature collection
     });
     map.addSource('district_state_lower_polygons', {
         // lower data
         type: 'vector',
         url: 'mapbox://patrickvossler.a41nsixd' // albers without points
-        // url: 'mapbox://patrickvossler.6hf645ds' // albers with points
-        // url: 'mapbox://patrickvossler.ck972o9o' // albers feature collection
+
     });
 
     map.addSource('district_state_upper_points', {
@@ -566,20 +534,10 @@ map.on('load', function() {
         // url: 'mapbox://patrickvossler.ck972o9o' // albers feature collection
         url: 'mapbox://patrickvossler.ckcdys4br0luh23k48u4lxl9r-9ihs1'
     });
-    // map.addSource('district_state_upper', {
-    //     // upper data
-    //     'type': 'geojson',
-    //     'data': '/data/upper_data_combined_points_albers.min.geojson'
-    // });
-    // map.addSource('district_state_lower', {
-    //     // lower data
-    //     'type': 'geojson',
-    //     'data': '/data/lower_data_combined_points_albers.min.geojson'
-    // });
 
     loadMap();
     loadPolygons();
-    // loadDots();
+    loadDots();
     // show lower house by default
     loadLowerHouse();
 
