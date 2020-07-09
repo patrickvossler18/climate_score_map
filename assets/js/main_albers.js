@@ -429,8 +429,9 @@ const loadMap = function() {
             type: 'circle',
             source: 'district_'+layerName + '_points',
             // mapbox auto-generated this source-layer name
-            'source-layer': 'lower_data_combined_pts_albers',
+            // 'source-layer': 'lower_data_combined_pts_albers',
             // 'source-layer': layerName + '_polygons',
+            'source-layer': layerName + '_points',
             paint: {
                 'circle-opacity': circleOpacity,
                 // 'circle-opacity': 0.9,
@@ -522,17 +523,16 @@ map.on('load', function() {
     map.addSource('district_state_upper_points', {
         // upper data
         type: 'vector',
-        // url: 'mapbox://patrickvossler.ddtirtni' // albers without points
-        // url: 'mapbox://patrickvossler.6ntnpb5b' // albers with points
-        url: 'mapbox://patrickvossler.ckcdz6t480ew52fqgqyjocpx8-25z6t' // albers feature collection
+        // url: 'mapbox://patrickvossler.ckcdz6t480ew52fqgqyjocpx8-25z6t' // from uploading as dataset to mapbox
+        url: 'mapbox://patrickvossler.8x18qhiy' // geojson -> mbtiles via tippecanoe
+        // tippecanoe -o {}.mbtiles {}.geojson  -r1 -pk -pf --layer="state_upper_points" --read-parallel --force 
     });
     map.addSource('district_state_lower_points', {
         // lower data
         type: 'vector',
-        // url: 'mapbox://patrickvossler.a41nsixd' // albers without points
-        // url: 'mapbox://patrickvossler.6hf645ds' // albers with points
-        // url: 'mapbox://patrickvossler.ck972o9o' // albers feature collection
-        url: 'mapbox://patrickvossler.ckcdys4br0luh23k48u4lxl9r-9ihs1'
+        // url: 'mapbox://patrickvossler.ckcdys4br0luh23k48u4lxl9r-9ihs1' // from uploading as dataset to mapbox
+        url: 'mapbox://patrickvossler.6rz6anpq' // geojson -> mbtiles via tippecanoe
+        // tippecanoe -o {}.mbtiles {}.geojson  -r1 -pk -pf --layer="state_lower_points" --read-parallel --force 
     });
 
     loadMap();
