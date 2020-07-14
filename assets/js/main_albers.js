@@ -59,7 +59,8 @@ function getColorByParty(party) {
 function politicalColors() {
     return [
         'match',
-        ['get', layerAbbr + '_color'],
+        // ['get', layerAbbr + '_color'],
+        ['get', 'political_color'],
         '1',
         colorDemocrat,
         '2',
@@ -80,8 +81,7 @@ function loadDots() {
     styleMode = 'dots';
     map.setPaintProperty('district-polygons-fill', 'fill-opacity', 0)
         .setPaintProperty('district-polygons-line', 'line-opacity', lineOpacity)
-        // .setLayoutProperty('district-polygons-line', 'visibility', 'none')
-        .setLayoutProperty('district-points', 'visibility', 'visible')
+        .setLayoutProperty('district-polygons-line', 'visibility', 'visible')
         .setLayoutProperty('district-points', 'visibility', 'visible')
         // .setLayoutProperty('us-states-line', 'visibility', 'none');
     $buttonDots.classList.add('selected');
@@ -93,6 +93,7 @@ function loadPolygons() {
     map.setPaintProperty('district-polygons-fill', 'fill-opacity', 0.6)
         .setPaintProperty('district-polygons-line', 'line-opacity', 0.2)
         .setLayoutProperty('us-states-line', 'visibility', 'visible')
+        .setLayoutProperty('district-points', 'visibility', 'none')
     $buttonPolygons.classList.add('selected');
     $buttonDots.classList.remove('selected');
 }
@@ -107,10 +108,12 @@ function loadLowerHouse() {
         map.setLayoutProperty('us-states-fill', 'visibility', 'none')
         map.setLayoutProperty('district-polygons-fill', 'visibility', 'visible')
         map.setLayoutProperty('district-polygons-line', 'visibility', 'visible')
+        .setLayoutProperty('district-points', 'visibility', 'visible')
     } else {
         map.setLayoutProperty('us-states-fill', 'visibility', 'visible')
         map.setLayoutProperty('district-polygons-fill', 'visibility', 'none')
         map.setLayoutProperty('district-polygons-line', 'visibility', 'none')
+        .setLayoutProperty('district-points', 'visibility', 'none')
         
     }
 }
@@ -125,10 +128,12 @@ function loadUpperHouse() {
         map.setLayoutProperty('us-states-fill', 'visibility', 'none')
         map.setLayoutProperty('district-polygons-fill', 'visibility', 'visible')
         map.setLayoutProperty('district-polygons-line', 'visibility', 'visible')
+        .setLayoutProperty('district-points', 'visibility', 'visible')
     } else {
         map.setLayoutProperty('us-states-fill', 'visibility', 'visible')
         map.setLayoutProperty('district-polygons-fill', 'visibility', 'none')
         map.setLayoutProperty('district-polygons-line', 'visibility', 'none')
+        .setLayoutProperty('district-points', 'visibility', 'none')
         
     }
 }
@@ -211,7 +216,7 @@ const onDistrictClick = function(e) {
             { source: 'district_'+layerName+ '_polygons', sourceLayer: layerName + '_polygons', id: hoveredStateId },
             { hover: false }
         );
-        var party = e.features[0].properties[layerAbbr + '_party_1']; // is this in our mock data?
+        var party = e.features[0].properties['party']; // is this in our mock data? It is in our mapbox data if needed
         var state = e.features[0].properties.STATE;
         var district = e.features[0].properties.DISTRICT_I;
 
