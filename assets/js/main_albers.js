@@ -10,9 +10,8 @@ var mapOrigin = {
 
 var map = new mapboxgl.Map({
     container: 'map',
-    // style: 'mapbox://styles/patrickvossler/ckc0ydvhi5h3v1iodhe5rgsjg',
-    // style: 'mapbox://styles/patrickvossler/ckcc7fav36ug51iqukp1vt6v8',
-    style:"mapbox://styles/patrickvossler/ckcc7fav36ug51iqukp1vt6v8",
+    // style: 'mapbox://styles/patrickvossler/ckc0ydvhi5h3v1iodhe5rgsjg', // mercator
+    style:"mapbox://styles/patrickvossler/ckcc7fav36ug51iqukp1vt6v8", //albers
     zoom: mapOrigin.zoom,
     // center: [mapOrigin.lng, mapOrigin.lat],
     // maxZoom: 8
@@ -59,7 +58,6 @@ function getColorByParty(party) {
 function politicalColors() {
     return [
         'match',
-        // ['get', layerAbbr + '_color'],
         ['get', 'political_color'],
         '1',
         colorDemocrat,
@@ -83,7 +81,6 @@ function loadDots() {
         .setPaintProperty('district-polygons-line', 'line-opacity', lineOpacity)
         .setLayoutProperty('district-polygons-line', 'visibility', 'visible')
         .setLayoutProperty('district-points', 'visibility', 'visible')
-        // .setLayoutProperty('us-states-line', 'visibility', 'none');
     $buttonDots.classList.add('selected');
     $buttonPolygons.classList.remove('selected');
 }
@@ -147,7 +144,7 @@ const onMouseMoveState = function(e){
                 { source: 'us-states', id: hoveredStateFillId },
                 { hover: false }
             );
-            // also remove hover on Maine as well because for some reason it is not removing hover
+            // also remove hover on Maine as well because for some reason it is not removing hover normally
             map.setFeatureState(
                 { source: 'us-states', id: 23 },
                 { hover: false }
@@ -169,7 +166,7 @@ const onMouseLeaveState = function(){
             { source: 'us-states', id: hoveredStateFillId },
             { hover: false }
         );
-        // also remove hover on Maine as well because for some reason it is not removing hover
+        // also remove hover on Maine as well because for some reason it is not removing hover normally
         map.setFeatureState(
             { source: 'us-states', id: 23 },
             { hover: false }
@@ -367,13 +364,6 @@ const loadMap = function() {
             false 
         ]
     );
-    // map.setFilter('district-polygons-fill', 
-    //     ["all",
-    //         ["in", "$type", 'Polygon']
-    //     ]
-        
-        
-    // );
 
     if (map.getLayer('district-polygons-line')) {
         map.removeLayer('district-polygons-line');
@@ -390,7 +380,6 @@ const loadMap = function() {
                 'line-opacity': styleMode === 'polygons' ? 0.2 : lineOpacity,
                 'line-width': 1,
             },
-            // 'filter': ['in', '$type', ['literal', ['Polygon', 'MultiPolygon']]]
             'filter': ['==', '$type', 'Polygon']
         },
     );
@@ -528,14 +517,12 @@ map.on('load', function() {
     map.addSource('district_state_upper_points', {
         // upper data
         type: 'vector',
-        // url: 'mapbox://patrickvossler.ckcdz6t480ew52fqgqyjocpx8-25z6t' // from uploading as dataset to mapbox
         url: 'mapbox://patrickvossler.8x18qhiy' // geojson -> mbtiles via tippecanoe
         // tippecanoe -o {}.mbtiles {}.geojson  -r1 -pk -pf --layer="state_upper_points" --read-parallel --force 
     });
     map.addSource('district_state_lower_points', {
         // lower data
         type: 'vector',
-        // url: 'mapbox://patrickvossler.ckcdys4br0luh23k48u4lxl9r-9ihs1' // from uploading as dataset to mapbox
         url: 'mapbox://patrickvossler.6rz6anpq' // geojson -> mbtiles via tippecanoe
         // tippecanoe -o {}.mbtiles {}.geojson  -r1 -pk -pf --layer="state_lower_points" --read-parallel --force 
     });
