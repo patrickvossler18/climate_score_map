@@ -877,3 +877,72 @@ h2 {
     font-weight: 500;
     margin-bottom: 11px;
 }
+
+
+.navbar-donate {
+    color: white;
+    background-color: orange;
+    text-align: center;
+    text-decoration: none;
+    font-size: 14px;
+    border-radius: 10px;
+    border: none;
+}
+
+.intro-block {
+    padding: 50px 50px;
+}
+
+.intro-text-block {
+    padding: 50px 50px;
+}
+
+.intro-text {
+    font-size: 24px;
+}
+
+.intro-image {
+    /*** IMPORTANT
+    * 
+    * Remove this! when we get a real image!!!
+    *
+    ****/
+    min-width: 100%;
+}
+
+.intro-text-button {
+    color: white;
+    background-color: orange;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-size: 14px;
+    border-radius: 10px;
+    border: none;
+    background-image: none;
+}
+
+.map-title {
+    text-align: center
+}
+
+.map-subtitle {
+    text-align: center;
+}
+
+.faq {
+    text-align: center;
+    display: block;
+    padding: 50px 50px;
+}
+
+.map-list-selector {
+    text-align: center;
+}
+
+.map-div{
+    height: 600px;
+    width: 100%;
+    position: relative;
+    float: left;
+}
