@@ -454,7 +454,12 @@ const loadMap = function() {
                 'circle-opacity': circleOpacity,
                 // 'circle-opacity': 0.9,
                 'circle-color': politicalColors(),
-                'circle-radius': ['interpolate', ['linear'], ['zoom'], 0, 4, 4, 6, 6, 8, 8, 12],
+                'circle-radius': ['interpolate', ['linear'], ['zoom'],
+                    // When zoom is x, circle radius will be y
+                    // x,y
+                    5, 8,
+                    10, 16
+                ],
                 // 'circle-radius': 20,
                 'circle-stroke-color': politicalColors(),
                 'circle-stroke-width': 0.5,
