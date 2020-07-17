@@ -213,13 +213,28 @@ const onDistrictClick = function(e) {
         var state = e.features[0].properties.state;
         var district = e.features[0].properties.district_code;
         var incumbent_name = e.features[0].properties.incumbent_name;
+      
+        // TODO - Fill in real data here once we have it.
+        var climate_cabinet_ranking = "3";
+        var donate_url = "https://www.google.com";
+        var action_needed = "Flip the seat";
+        var race_label = "\"tossup\"";
+        var prev_winner = "Trump";
+        var prev_winner_percent = "15";
+        var key_votes = "[Examples of key climate votes]";
+
+        var donate_link = "<a href = " + donate_url + "> Donate to " + incumbent.name + " here.</a>"
+
 
         // This part can (should) be styled differently
         var reps = '';
 
-        reps += '<h2>' + incumbent_name + '</h2><h3 style="display: ';
 
-        
+        reps += '<h2>' + incumbent_name + '</h2><h3 style="display: ';
+        reps += '<h3>Climate Cabinet Ranking: #' + climate_cabinet_ranking + ' </h3>';
+        reps += '<h3>Action Needed: ' + action_needed + ' -- ' + donate_link + ' </h3>';
+        reps += '<br><h3>This race is a ' + race_label + '. ' + prev_winner + ' won it by ' + prev_winner_percent + '%.</h3>'; 
+        reps += '<br><h3> ' + incumbent_name + ' has voted ' + key_votes + '.';
         var description =
             '<h1>' + state + '-' + district + '</h1><div class="reps">' + reps + '</div>';
         popup
@@ -465,8 +480,13 @@ const loadMap = function() {
             paint: {
                 'circle-opacity': circleOpacity,
                 // 'circle-opacity': 0.9,
-                'circle-color': colorDemocrat,
-                'circle-radius': ['interpolate', ['linear'], ['zoom'], 0, 4, 4, 6, 6, 8, 8, 12],
+                'circle-color': politicalColors(),
+                'circle-radius': ['interpolate', ['linear'], ['zoom'],
+                    // When zoom is x, circle radius will be y
+                    // x,y
+                    5, 8,
+                    10, 16
+                ],
                 // 'circle-radius': 20,
                 'circle-stroke-color': colorDemocrat,
                 'circle-stroke-width': 0.5,
