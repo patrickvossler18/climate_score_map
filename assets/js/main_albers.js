@@ -228,15 +228,28 @@ const onDistrictClick = function(e) {
 
         var reps = '';
 
+
+        // TODO - Fill in real data here once we have it.
+        var climate_cabinet_ranking = "3";
+        var donate_url = "www.google.com";
+        var action_needed = "Flip the seat";
+        var race_label = "\"tossup\"";
+        var prev_winner = "Trump";
+        var prev_winner_percent = "15";
+        var key_votes = "[Examples of key climate votes]";
+
+        var donate_link = "<a href = " + donate_url + "> Donate to " + matching_district.incumbent.name + " here.</a>"
+
         if (matching_district !== undefined) {
             reps += '<h2>' + matching_district.incumbent.name + '</h2><h3 style="display: ';
             reps += party === undefined ? 'none' : 'block';
             reps +=
                 '"><div class="party-color" style="background: ' +
-                getColorByParty(party) +
-                '"></div>' +
-                party +
-                '</h3>';
+                getColorByParty(party) + '"></div>' + party + '</h3>';
+            reps += '<h3>Climate Cabinet Ranking: #' + climate_cabinet_ranking + ' </h3>';
+            reps += '<h3>Action Needed: ' + action_needed + ' -- ' + donate_link + ' </h3>';
+            reps += '<h3>This race is a ' + race_label + '. ' + prev_winner + ' won it by ' + prev_winner_percent + '%.</h3>'; 
+            reps += '<h3> ' + matching_district.incumbent.name + ' has voted ' + key_votes + '.';
         }
 
         
