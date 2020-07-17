@@ -248,8 +248,8 @@ const onDistrictClick = function(e) {
                 getColorByParty(party) + '"></div>' + party + '</h3>';
             reps += '<h3>Climate Cabinet Ranking: #' + climate_cabinet_ranking + ' </h3>';
             reps += '<h3>Action Needed: ' + action_needed + ' -- ' + donate_link + ' </h3>';
-            reps += '<h3>This race is a ' + race_label + '. ' + prev_winner + ' won it by ' + prev_winner_percent + '%.</h3>'; 
-            reps += '<h3> ' + matching_district.incumbent.name + ' has voted ' + key_votes + '.';
+            reps += '<br><h3>This race is a ' + race_label + '. ' + prev_winner + ' won it by ' + prev_winner_percent + '%.</h3>'; 
+            reps += '<br><h3> ' + matching_district.incumbent.name + ' has voted ' + key_votes + '.';
         }
 
         
