@@ -231,7 +231,7 @@ const onDistrictClick = function(e) {
 
         // TODO - Fill in real data here once we have it.
         var climate_cabinet_ranking = "3";
-        var donate_url = "www.google.com";
+        var donate_url = "https://www.google.com";
         var action_needed = "Flip the seat";
         var race_label = "\"tossup\"";
         var prev_winner = "Trump";
