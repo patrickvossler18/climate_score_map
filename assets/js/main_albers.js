@@ -10,12 +10,9 @@ var mapOrigin = {
 
 var map = new mapboxgl.Map({
     container: 'map',
-    // style: 'mapbox://styles/patrickvossler/ckc0ydvhi5h3v1iodhe5rgsjg',
-    // style: 'mapbox://styles/patrickvossler/ckcc7fav36ug51iqukp1vt6v8',
-    style:"mapbox://styles/patrickvossler/ckcc7fav36ug51iqukp1vt6v8",
+    // style: 'mapbox://styles/patrickvossler/ckc0ydvhi5h3v1iodhe5rgsjg', // mercator
+    style:"mapbox://styles/patrickvossler/ckcc7fav36ug51iqukp1vt6v8", //albers
     zoom: mapOrigin.zoom,
-    // center: [mapOrigin.lng, mapOrigin.lat],
-    // maxZoom: 8
 });
 
 map.dragRotate.disable();
@@ -59,7 +56,6 @@ function getColorByParty(party) {
 function politicalColors() {
     return [
         'match',
-        // ['get', layerAbbr + '_color'],
         ['get', 'political_color'],
         '1',
         colorDemocrat,
@@ -83,7 +79,6 @@ function loadDots() {
         .setPaintProperty('district-polygons-line', 'line-opacity', lineOpacity)
         .setLayoutProperty('district-polygons-line', 'visibility', 'visible')
         .setLayoutProperty('district-points', 'visibility', 'visible')
-        // .setLayoutProperty('us-states-line', 'visibility', 'none');
     $buttonDots.classList.add('selected');
     $buttonPolygons.classList.remove('selected');
 }
@@ -102,7 +97,6 @@ function loadLowerHouse() {
     $buttonHouse.classList.add('selected');
     $buttonSenate.classList.remove('selected');
     layerName = 'state_lower';
-    layerAbbr = 'sl';
     loadMap();
     if (map.getZoom() > zoomThreshold) {
         map.setLayoutProperty('us-states-fill', 'visibility', 'none')
@@ -122,7 +116,6 @@ function loadUpperHouse() {
     $buttonSenate.classList.add('selected');
     $buttonHouse.classList.remove('selected');
     layerName = 'state_upper';
-    layerAbbr = 'su';
     loadMap();
     if (map.getZoom() > zoomThreshold) {
         map.setLayoutProperty('us-states-fill', 'visibility', 'none')
@@ -147,7 +140,7 @@ const onMouseMoveState = function(e){
                 { source: 'us-states', id: hoveredStateFillId },
                 { hover: false }
             );
-            // also remove hover on Maine as well because for some reason it is not removing hover
+            // also remove hover on Maine as well because for some reason it is not removing hover normally
             map.setFeatureState(
                 { source: 'us-states', id: 23 },
                 { hover: false }
@@ -169,7 +162,7 @@ const onMouseLeaveState = function(){
             { source: 'us-states', id: hoveredStateFillId },
             { hover: false }
         );
-        // also remove hover on Maine as well because for some reason it is not removing hover
+        // also remove hover on Maine as well because for some reason it is not removing hover normally
         map.setFeatureState(
             { source: 'us-states', id: 23 },
             { hover: false }
@@ -184,13 +177,14 @@ const onMouseMoveDistrict = function(e) {
         map.getCanvas().style.cursor = 'pointer';
         if (hoveredStateId) {
             map.setFeatureState(
-                { source: 'district_'+layerName+ '_polygons', sourceLayer: layerName + '_polygons', id: hoveredStateId },
+                { source: 'state_districts',  
+                id: hoveredStateId },
                 { hover: false }
             );
         }
         hoveredStateId = e.features[0].id;
         map.setFeatureState(
-            { source: 'district_'+layerName+ '_polygons', sourceLayer: layerName + '_polygons', id: hoveredStateId },
+            { source: 'state_districts', id: hoveredStateId },
             { hover: true }
         );
     }
@@ -201,7 +195,7 @@ const onMouseLeaveDistrict = function() {
     map.getCanvas().style.cursor = '';
     if (hoveredStateId) {
         map.setFeatureState(
-            { source: 'district_'+layerName+ '_polygons', sourceLayer: layerName + '_polygons', id: hoveredStateId },
+            { source: 'state_districts', id: hoveredStateId },
             { hover: false }
         );
     }
@@ -213,22 +207,13 @@ const onDistrictClick = function(e) {
         console.log(e.features[0].properties)
         map.getCanvas().style.cursor = 'pointer';
         map.setFeatureState(
-            { source: 'district_'+layerName+ '_polygons', sourceLayer: layerName + '_polygons', id: hoveredStateId },
+            { source: 'state_districts', id: hoveredStateId },
             { hover: false }
         );
-        var party = e.features[0].properties['party']; // is this in our mock data? It is in our mapbox data if needed
-        var state = e.features[0].properties.STATE;
-        var district = e.features[0].properties.DISTRICT_I;
-
-
-        var geoId = e.features[0].properties.GEOID
-
-        // The following code assumes we have a json object called district_data with, well, district info
-        var matching_district = district_data.find(district => district.geoid === geoId);
-
-        var reps = '';
-
-
+        var state = e.features[0].properties.state;
+        var district = e.features[0].properties.district_code;
+        var incumbent_name = e.features[0].properties.incumbent_name;
+      
         // TODO - Fill in real data here once we have it.
         var climate_cabinet_ranking = "3";
         var donate_url = "https://www.google.com";
@@ -238,21 +223,18 @@ const onDistrictClick = function(e) {
         var prev_winner_percent = "15";
         var key_votes = "[Examples of key climate votes]";
 
-        var donate_link = "<a href = " + donate_url + "> Donate to " + matching_district.incumbent.name + " here.</a>"
+        var donate_link = "<a href = " + donate_url + "> Donate to " + incumbent.name + " here.</a>"
 
-        if (matching_district !== undefined) {
-            reps += '<h2>' + matching_district.incumbent.name + '</h2><h3 style="display: ';
-            reps += party === undefined ? 'none' : 'block';
-            reps +=
-                '"><div class="party-color" style="background: ' +
-                getColorByParty(party) + '"></div>' + party + '</h3>';
-            reps += '<h3>Climate Cabinet Ranking: #' + climate_cabinet_ranking + ' </h3>';
-            reps += '<h3>Action Needed: ' + action_needed + ' -- ' + donate_link + ' </h3>';
-            reps += '<br><h3>This race is a ' + race_label + '. ' + prev_winner + ' won it by ' + prev_winner_percent + '%.</h3>'; 
-            reps += '<br><h3> ' + matching_district.incumbent.name + ' has voted ' + key_votes + '.';
-        }
 
-        
+        // This part can (should) be styled differently
+        var reps = '';
+
+
+        reps += '<h2>' + incumbent_name + '</h2><h3 style="display: ';
+        reps += '<h3>Climate Cabinet Ranking: #' + climate_cabinet_ranking + ' </h3>';
+        reps += '<h3>Action Needed: ' + action_needed + ' -- ' + donate_link + ' </h3>';
+        reps += '<br><h3>This race is a ' + race_label + '. ' + prev_winner + ' won it by ' + prev_winner_percent + '%.</h3>'; 
+        reps += '<br><h3> ' + incumbent_name + ' has voted ' + key_votes + '.';
         var description =
             '<h1>' + state + '-' + district + '</h1><div class="reps">' + reps + '</div>';
         popup
@@ -261,11 +243,122 @@ const onDistrictClick = function(e) {
             .addTo(map);
         hoveredStateId = e.features[0].id;
         map.setFeatureState(
-            { source: 'district_'+layerName+ '_polygons', sourceLayer: layerName + '_polygons', id: hoveredStateId },
+            { source: 'state_districts', id: hoveredStateId },
             { hover: true }
         );
     }
 };
+
+const getDistrictShapes = function(district, albers=false) {
+    // TODO: Handle upper and lower legislatures
+    if(district['ccid'].indexOf("L") > 0){ 
+       // TODO: Select shape based on year
+       return district['shapes'].map(function(shape,i){
+            return(
+                {
+                    "type" : "Feature",
+                    "id": i,
+                    "properties": {
+                        "state": district['state_abbr'],
+                        "district_code": district['district_code'],
+                        "incumbent_name": district['incumbent']['name']
+                    },
+                    "geometry" : (albers ? projectToAlbersUsa(shape['geometry']) : shape['geometry'])
+                })
+            })
+        };
+}
+
+const getDistrictCentroid = function(district, albers=false){
+    // TODO: Handle upper and lower legislatures
+    if(district['ccid'].indexOf("L") > 0){ 
+        // TODO: Select shape based on year. Currently assuming we only have one shape in the array
+        return district['shapes'].map(function(shape,i){
+            return(
+                {
+                "type" : "Feature",
+                "id": i,
+                "properties": {
+                    "state": district['state_abbr'],
+                    "district_code": district['district_code'],
+                    "incumbent_name": district['incumbent']['name']
+                },
+                "geometry" : (albers ? getCentroid(projectToAlbersUsa(shape['geometry'])) : getCentroid(shape['geometry']))
+            })
+        })
+    };
+
+}
+
+const projectToAlbersUsa = function(geometry){
+    let R = 6378137.0 // radius of Earth in meters
+    var options = {
+        "forward": "albersUsa",
+        "reverse": "geoMercator",
+        "projections": {
+            "albersUsa": d3.geoAlbersUsa().translate([0, 0]).scale(R),
+            "geoMercator": d3.geoMercator().translate([0, 0]).scale(R)
+        }
+    };
+
+    return reproject(options,geometry)
+}
+
+const getPolygonBoundingBox = function(feature) {
+    // bounds [xMin, yMin][xMax, yMax]
+    var bounds = [[], []];
+    var polygon;
+    var latitude;
+    var longitude;
+
+    for (var i = 0; i < feature.geometry.coordinates.length; i++) {
+        if (feature.geometry.coordinates.length === 1) {
+            // Polygon coordinates[0][nodes]
+            polygon = feature.geometry.coordinates[0];
+        } else {
+            // Polygon coordinates[poly][0][nodes]
+            polygon = feature.geometry.coordinates[i][0];
+        }
+
+        for (var j = 0; j < polygon.length; j++) {
+            longitude = polygon[j][0];
+            latitude = polygon[j][1];
+
+            bounds[0][0] = bounds[0][0] < longitude ? bounds[0][0] : longitude;
+            bounds[1][0] = bounds[1][0] > longitude ? bounds[1][0] : longitude;
+            bounds[0][1] = bounds[0][1] < latitude ? bounds[0][1] : latitude;
+            bounds[1][1] = bounds[1][1] > latitude ? bounds[1][1] : latitude;
+        }
+    }
+
+    return bounds;
+}
+
+
+const getCentroid = function(geometry) {
+    var poly_bounds = [];
+    var polygon;
+    var latitude;
+    var longitude;
+
+    for (var i = 0; i < geometry.coordinates.length; i++) {
+        if (geometry.coordinates.length === 1) {
+            // Polygon coordinates[0][nodes]
+            polygon = geometry.coordinates[0];
+        } else {
+            // Polygon coordinates[poly][0][nodes]
+            polygon = geometry.coordinates[i][0];
+        }
+
+        for (var j = 0; j < polygon.length; j++) {
+            longitude = polygon[j][0];
+            latitude = polygon[j][1];
+            poly_bounds.push([longitude,latitude])
+        }
+    }
+    var outline = turf.polygon([poly_bounds]);
+    return turf.centroid(outline)['geometry'];
+}
 
 map.on('zoom', function() {
     if (map.getZoom() > zoomThreshold) {
@@ -283,6 +376,8 @@ map.on('zoom', function() {
         
     }
 });
+
+
 
 
 const loadMap = function() {
@@ -305,35 +400,7 @@ const loadMap = function() {
     map.on('click', 'us-states-fill', function(e) {
         // when user clicks the state, zoom in to show the state
         popup.setLngLat({ lng: 0, lat: 0 });
-        function getPolygonBoundingBox(feature) {
-            // bounds [xMin, yMin][xMax, yMax]
-            var bounds = [[], []];
-            var polygon;
-            var latitude;
-            var longitude;
-
-            for (var i = 0; i < feature.geometry.coordinates.length; i++) {
-                if (feature.geometry.coordinates.length === 1) {
-                    // Polygon coordinates[0][nodes]
-                    polygon = feature.geometry.coordinates[0];
-                } else {
-                    // Polygon coordinates[poly][0][nodes]
-                    polygon = feature.geometry.coordinates[i][0];
-                }
-
-                for (var j = 0; j < polygon.length; j++) {
-                    longitude = polygon[j][0];
-                    latitude = polygon[j][1];
-
-                    bounds[0][0] = bounds[0][0] < longitude ? bounds[0][0] : longitude;
-                    bounds[1][0] = bounds[1][0] > longitude ? bounds[1][0] : longitude;
-                    bounds[0][1] = bounds[0][1] < latitude ? bounds[0][1] : latitude;
-                    bounds[1][1] = bounds[1][1] > latitude ? bounds[1][1] : latitude;
-                }
-            }
-
-            return bounds;
-        }
+        
 
 
         var bounds = getPolygonBoundingBox(e.features[0]);
@@ -341,9 +408,6 @@ const loadMap = function() {
             padding: 20
         });
 
-        
-
-        // loadPolygons();
     });
 
     map.on('click', 'district-polygons-fill', function(e){
@@ -354,39 +418,18 @@ const loadMap = function() {
     if (map.getLayer('district-polygons-fill')) {
         map.removeLayer('district-polygons-fill');
     }
-
     map.addLayer(
         {
             id: 'district-polygons-fill',
             type: 'fill',
-            source: 'district_'+layerName + '_polygons',
-            'source-layer': layerName + '_polygons',
+            source: 'state_districts',
             paint: {
-                'fill-color': politicalColors(),
+                'fill-color': colorDemocrat,
                 'fill-opacity': styleMode === 'polygons' ? 0.6 : 0,
             },
-            // 'filter': ['in', '$type', ['literal', ['Polygon', 'MultiPolygon']]]
-            'filter': ['==', '$type', 'Polygon']
         },
-
     );
 
-    // These filters can probably be combined...
-    map.setFilter('district-polygons-fill', 
-        ['match',
-            ['get', 'GEOID'],
-            district_data.map(district => district.geoid),
-            true,
-            false 
-        ]
-    );
-    // map.setFilter('district-polygons-fill', 
-    //     ["all",
-    //         ["in", "$type", 'Polygon']
-    //     ]
-        
-        
-    // );
 
     if (map.getLayer('district-polygons-line')) {
         map.removeLayer('district-polygons-line');
@@ -396,42 +439,30 @@ const loadMap = function() {
         {
             id: 'district-polygons-line',
             type: 'line',
-            source: 'district_'+layerName + '_polygons',
-            'source-layer': layerName + '_polygons',
+            source: 'state_districts',
+            // 'source-layer': layerName + '_polygons',
             paint: {
                 'line-color': '#000',
-                'line-opacity': styleMode === 'polygons' ? 0.2 : lineOpacity,
+                'line-opacity': styleMode === 'polygons' ? 0.6 : lineOpacity,
                 'line-width': 1,
             },
-            // 'filter': ['in', '$type', ['literal', ['Polygon', 'MultiPolygon']]]
-            'filter': ['==', '$type', 'Polygon']
         },
     );
-    map.setFilter('district-polygons-line', 
-        ['match',
-            ['get', 'GEOID'],
-            district_data.map(district => district.geoid),
-            true,
-            false 
-        ]
-    );
+
 
     if (map.getLayer('district-polygons-highlight')) {
         map.removeLayer('district-polygons-highlight');
     }
-
     map.addLayer(
         {
             id: 'district-polygons-highlight',
             type: 'line',
-            source: 'district_'+layerName + '_polygons',
-            'source-layer': layerName + '_polygons',
+            source: 'state_districts',
             paint: {
                 'line-color': '#000',
                 'line-opacity': ['case', ['boolean', ['feature-state', 'hover'], false], 0.9, 0],
                 'line-width': 2,
             },
-            'filter': ['==', '$type', 'Polygon']
         },
     );
 
@@ -445,11 +476,7 @@ const loadMap = function() {
         {
             id: 'district-points',
             type: 'circle',
-            source: 'district_'+layerName + '_points',
-            // mapbox auto-generated this source-layer name
-            // 'source-layer': 'lower_data_combined_pts_albers',
-            // 'source-layer': layerName + '_polygons',
-            'source-layer': layerName + '_points',
+            source: 'state_districts_pts',
             paint: {
                 'circle-opacity': circleOpacity,
                 // 'circle-opacity': 0.9,
@@ -461,7 +488,7 @@ const loadMap = function() {
                     10, 16
                 ],
                 // 'circle-radius': 20,
-                'circle-stroke-color': politicalColors(),
+                'circle-stroke-color': colorDemocrat,
                 'circle-stroke-width': 0.5,
                 'circle-stroke-opacity': 1,
             },
@@ -470,17 +497,6 @@ const loadMap = function() {
             },
             'filter' : ['==', '$type', 'Point']
         }
-    );
-    map.setFilter('district-points',
-        ['all',
-            ['match',
-                ['get', 'GEOID'],
-                district_data.map(district => district.geoid),
-                true,
-                false 
-            ],
-
-        ] 
     );
 
 };
@@ -529,34 +545,24 @@ map.on('load', function() {
             },
         },
     );
+
+
+    map.addSource('state_districts',{
+        type: 'geojson',
+        data: {
+                'type': 'FeatureCollection',
+                'features': district_data.map(district => getDistrictShapes(district, true)).flat()
+            }
+    });
+
+    map.addSource('state_districts_pts',{
+    type: 'geojson',
+    data: {
+            'type': 'FeatureCollection',
+            'features': district_data.map(district => getDistrictCentroid(district, true)).flat()
+        }
+    });
     
-
-    map.addSource('district_state_upper_polygons', {
-        // upper data
-        type: 'vector',
-        url: 'mapbox://patrickvossler.ddtirtni' // albers without points
-    });
-    map.addSource('district_state_lower_polygons', {
-        // lower data
-        type: 'vector',
-        url: 'mapbox://patrickvossler.a41nsixd' // albers without points
-
-    });
-
-    map.addSource('district_state_upper_points', {
-        // upper data
-        type: 'vector',
-        // url: 'mapbox://patrickvossler.ckcdz6t480ew52fqgqyjocpx8-25z6t' // from uploading as dataset to mapbox
-        url: 'mapbox://patrickvossler.8x18qhiy' // geojson -> mbtiles via tippecanoe
-        // tippecanoe -o {}.mbtiles {}.geojson  -r1 -pk -pf --layer="state_upper_points" --read-parallel --force 
-    });
-    map.addSource('district_state_lower_points', {
-        // lower data
-        type: 'vector',
-        // url: 'mapbox://patrickvossler.ckcdys4br0luh23k48u4lxl9r-9ihs1' // from uploading as dataset to mapbox
-        url: 'mapbox://patrickvossler.6rz6anpq' // geojson -> mbtiles via tippecanoe
-        // tippecanoe -o {}.mbtiles {}.geojson  -r1 -pk -pf --layer="state_lower_points" --read-parallel --force 
-    });
 
     loadMap();
     loadPolygons();
