@@ -210,27 +210,33 @@ const onDistrictClick = function(e) {
             { source: 'state_districts', id: hoveredStateId },
             { hover: false }
         );
-        var state = e.features[0].properties.state;
-        var district = e.features[0].properties.district_code;
-        var incumbent_name = e.features[0].properties.incumbent_name;
+        var district_properties = e.features[0].properties;
+        var state = district_properties.state;
+        var district = district_properties.district_code;
+        var incumbent_name = district_properties.incumbent_name;
       
         // TODO - Fill in real data here once we have it.
         var climate_cabinet_ranking = "3";
-        var donate_url = "https://www.google.com";
-        var action_needed = "Flip the seat";
+        
+        // TBD: for deciding action needed, we can compare lifetime scores?
+        var action_needed = district_properties.incumbent_lifetime_score < district_properties.opponent_lifetime_score ? "Flip the seat": "Hold the seat";
+        var donate_url = district_properties.incumbent_lifetime_score < district_properties.opponent_lifetime_score ? district_properties.opponent_donate_url : district_properties.incumbent_donate_url;
+        // TBD: do we have data on local election results?
         var race_label = "\"tossup\"";
-        var prev_winner = "Trump";
-        var prev_winner_percent = "15";
+        // only saying which party won
+        var prev_winner = district_properties.prev_natl_election_winner;
+        var prev_winner_percent = Math.round(district_properties.prev_natl_election_winner_percent * 100,2);
+        // we have this in the mock data but not clear how to display this.
         var key_votes = "[Examples of key climate votes]";
-
-        var donate_link = "<a href = " + donate_url + "> Donate to " + incumbent.name + " here.</a>"
+        var donation_name = district_properties.incumbent_lifetime_score < district_properties.opponent_lifetime_score ? district_properties.opponent_name : district_properties.incumbent_name;
+        var donate_link = "<a href = " + donate_url + "> Donate to " + donation_name + " here.</a>";
 
 
         // This part can (should) be styled differently
         var reps = '';
 
 
-        reps += '<h2>' + incumbent_name + '</h2><h3 style="display: ';
+        reps += '<h2>' + incumbent_name + '</h2>';
         reps += '<h3>Climate Cabinet Ranking: #' + climate_cabinet_ranking + ' </h3>';
         reps += '<h3>Action Needed: ' + action_needed + ' -- ' + donate_link + ' </h3>';
         reps += '<br><h3>This race is a ' + race_label + '. ' + prev_winner + ' won it by ' + prev_winner_percent + '%.</h3>'; 
@@ -259,10 +265,23 @@ const getDistrictShapes = function(district, albers=false) {
                     "type" : "Feature",
                     "id": i,
                     "properties": {
-                        "state": district['state_abbr'],
-                        "district_code": district['district_code'],
-                        "incumbent_name": district['incumbent']['name']
-                    },
+                    "state": district['state_abbr'],
+                    "district_code": district['district_code'],
+                    // incumbent info
+                    "incumbent_name": district['incumbent']['name'],
+                    "incumbent_donate_url": district['incumbent']['donation_link'],
+                    "incumbent_lifetime_score": district['incumbent']['lifetime_score'],
+                    // opponent_info
+                    "opponent_name": district["opponent"]['name'],
+                    "opponent_donate_url": district["opponent"]['donation_link'],
+                    "opponent_lifetime_score": district["opponent"]['lifetime_score'],
+                    "climate_cabinet_ranking": district['cc_ranking'],
+                    // election info (assuming most recent national election first in the array)
+                    "prev_natl_election_winner": (district.elections[0]["dem_prop"] > district.elections[0]["rep_prop"]) ? "Democrats" : "Republicans",
+                    "prev_natl_election_winner_percent": Math.abs(district.elections[0]["dem_prop"] - district.elections[0]["rep_prop"]),
+                    "prev_natl_election_year": district.elections[0]['year']
+
+                },
                     "geometry" : (albers ? projectToAlbersUsa(shape['geometry']) : shape['geometry'])
                 })
             })
@@ -281,7 +300,20 @@ const getDistrictCentroid = function(district, albers=false){
                 "properties": {
                     "state": district['state_abbr'],
                     "district_code": district['district_code'],
-                    "incumbent_name": district['incumbent']['name']
+                    // incumbent info
+                    "incumbent_name": district['incumbent']['name'],
+                    "incumbent_donate_url": district['incumbent']['donation_link'],
+                    "incumbent_lifetime_score": district['incumbent']['lifetime_score'],
+                    // opponent_info
+                    "opponent_name": district["opponent"]['name'],
+                    "opponent_donate_url": district["opponent"]['donation_link'],
+                    "opponent_lifetime_score": district["opponent"]['lifetime_score'],
+                    "climate_cabinet_ranking": district['cc_ranking'],
+                    // election info (assuming most recent national election first in the array)
+                    "prev_natl_election_winner": (district.elections[0]["dem_prop"] > district.elections[0]["rep_prop"]) ? "Democrats" : "Republicans",
+                    "prev_natl_election_winner_percent": (district.elections[0]["dem_prop"] > district.elections[0]["rep_prop"]) ? district.elections[0]["dem_prop"] : district.elections[0]["rep_prop"],
+                    "prev_natl_election_year": district.elections[0]['year']
+
                 },
                 "geometry" : (albers ? getCentroid(projectToAlbersUsa(shape['geometry'])) : getCentroid(shape['geometry']))
             })
@@ -480,7 +512,7 @@ const loadMap = function() {
             paint: {
                 'circle-opacity': circleOpacity,
                 // 'circle-opacity': 0.9,
-                'circle-color': politicalColors(),
+                'circle-color': colorDemocrat,
                 'circle-radius': ['interpolate', ['linear'], ['zoom'],
                     // When zoom is x, circle radius will be y
                     // x,y

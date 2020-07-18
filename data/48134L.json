@@ -5664,7 +5664,7 @@ var district_data =  [{
   "opponent": {
     "name": "Ann Johnson",
     "aliases": [],
-    "lifetime_score": null,
+    "lifetime_score": 10.0, // this was modified from the original which was null
     "yearly_scores": null,
     "donation_link": "http://www.google.com",
     "votes": []

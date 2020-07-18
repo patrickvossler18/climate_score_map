@@ -31,9 +31,8 @@
   <script src="https://d3js.org/d3-geo.v1.min.js"></script>
   <script src="https://d3js.org/d3-geo-projection.v2.min.js"></script>
 
-  <!-- js for map -->
-  <script src="assets/js/projection.js"></script>
-  <script src="assets/js/main_albers.js"></script>
+  <script src="https://cdn.polyfill.io/v2/polyfill.min.js"></script>
+
   
 
   <link rel="stylesheet" href="assets/css/main.css">
@@ -126,10 +125,14 @@
 			<p><b> Should I donate to the above races?</b> </p>
 			<p> Yes!! That's why we put this whole thing together!!! </p>
 		</div>
-	</div>  
-  <script src="https://cdn.polyfill.io/v2/polyfill.min.js"></script>
-  <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.50.0/mapbox-gl.js'></script>
+	</div> 
+  <!-- mock data -->
   <script src="data/48134L.json"></script>
+  <!-- mapbox -->
+  <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.50.0/mapbox-gl.js'></script>
+  <!-- js for map -->
+  <script src="assets/js/projection.js"></script>
+  <script src="assets/js/main_albers.js"></script>
   
 </body>
 
