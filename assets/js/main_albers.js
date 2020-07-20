@@ -40,8 +40,7 @@ var colorMixed = '#9a23c1';
 
 var hoveredStateId;
 var hoveredStateFillId;
-var layerName = 'state_lower';
-var layerAbbr = 'sl';
+var houseName = 'lower';
 var styleMode = 'polygons';
 
 
@@ -79,8 +78,8 @@ function loadDots() {
     //     .setPaintProperty('district-polygons-line', 'line-opacity', lineOpacity)
     //     .setLayoutProperty('district-polygons-line', 'visibility', 'visible')
         .setLayoutProperty('district-points', 'visibility', 'visible')
-    $buttonDots.classList.add('selected');
-    $buttonPolygons.classList.remove('selected');
+    // $buttonDots.classList.add('selected');
+    // $buttonPolygons.classList.remove('selected');
 }
 
 function loadPolygons() {
@@ -97,7 +96,7 @@ function loadPolygons() {
 function loadLowerHouse() {
     $buttonHouse.classList.add('selected');
     $buttonSenate.classList.remove('selected');
-    layerName = 'state_lower';
+    houseName = 'lower';
     loadMap();
     // if (map.getZoom() > zoomThreshold) {
    
@@ -117,7 +116,7 @@ function loadLowerHouse() {
 function loadUpperHouse() {
     $buttonSenate.classList.add('selected');
     $buttonHouse.classList.remove('selected');
-    layerName = 'state_upper';
+    houseName = 'upper';
     loadMap();
     map.setLayoutProperty('us-states-fill', 'visibility', 'visible')
         .setLayoutProperty('district-points', 'visibility', 'visible')
@@ -261,69 +260,66 @@ const onDistrictClick = function(e) {
 
 const getDistrictShapes = function(district, albers=false) {
     // TODO: Handle upper and lower legislatures
-    if(district['ccid'].indexOf("L") > 0){ 
-       // TODO: Select shape based on year
-       return district['shapes'].map(function(shape,i){
-            return(
-                {
-                    "type" : "Feature",
-                    "id": i + 1, // doing this to avoid 0 == false in Javascript
-                    "properties": {
-                    "state": district['state_abbr'],
-                    "district_code": district['district_code'],
-                    // incumbent info
-                    "incumbent_name": district['incumbent']['name'],
-                    "incumbent_donate_url": district['incumbent']['donation_link'],
-                    "incumbent_lifetime_score": district['incumbent']['lifetime_score'],
-                    // opponent_info
-                    "opponent_name": district["opponent"]['name'],
-                    "opponent_donate_url": district["opponent"]['donation_link'],
-                    "opponent_lifetime_score": district["opponent"]['lifetime_score'],
-                    "climate_cabinet_ranking": district['cc_ranking'],
-                    // election info (assuming most recent national election first in the array)
-                    "prev_natl_election_winner": (district.elections[0]["dem_prop"] > district.elections[0]["rep_prop"]) ? "Democrats" : "Republicans",
-                    "prev_natl_election_winner_percent": Math.abs(district.elections[0]["dem_prop"] - district.elections[0]["rep_prop"]),
-                    "prev_natl_election_year": district.elections[0]['year']
+    // TODO: Select shape based on year
+   return district['shapes'].map(function(shape,i){
+        return(
+            {
+                "type" : "Feature",
+                "id": i + 1, // doing this to avoid 0 == false in Javascript
+                "properties": {
+                "state": district['state_abbr'],
+                "district_code": district['district_code'],
+                "which_house" : district['ccid'].indexOf("L") > 0 ? "lower" : "upper",
+                // incumbent info
+                "incumbent_name": district['incumbent']['name'],
+                "incumbent_donate_url": district['incumbent']['donation_link'],
+                "incumbent_lifetime_score": district['incumbent']['lifetime_score'],
+                // opponent_info
+                "opponent_name": district["opponent"]['name'],
+                "opponent_donate_url": district["opponent"]['donation_link'],
+                "opponent_lifetime_score": district["opponent"]['lifetime_score'],
+                "climate_cabinet_ranking": district['cc_ranking'],
+                // election info (assuming most recent national election first in the array)
+                "prev_natl_election_winner": (district.elections[0]["dem_prop"] > district.elections[0]["rep_prop"]) ? "Democrats" : "Republicans",
+                "prev_natl_election_winner_percent": Math.abs(district.elections[0]["dem_prop"] - district.elections[0]["rep_prop"]),
+                "prev_natl_election_year": district.elections[0]['year']
 
-                },
-                    "geometry" : (albers ? projectToAlbersUsa(shape['geometry']) : shape['geometry'])
-                })
+            },
+                "geometry" : (albers ? projectToAlbersUsa(shape['geometry']) : shape['geometry'])
             })
-        };
+        })
 }
 
 const getDistrictCentroid = function(district, albers=false){
     // TODO: Handle upper and lower legislatures
-    if(district['ccid'].indexOf("L") > 0){ 
         // TODO: Select shape based on year. Currently assuming we only have one shape in the array
-        return district['shapes'].map(function(shape,i){
-            return(
-                {
-                "type" : "Feature",
-                "id": i + 1, // doing this to avoid 0 == false in Javascript
-                "properties": {
-                    "state": district['state_abbr'],
-                    "district_code": district['district_code'],
-                    // incumbent info
-                    "incumbent_name": district['incumbent']['name'],
-                    "incumbent_donate_url": district['incumbent']['donation_link'],
-                    "incumbent_lifetime_score": district['incumbent']['lifetime_score'],
-                    // opponent_info
-                    "opponent_name": district["opponent"]['name'],
-                    "opponent_donate_url": district["opponent"]['donation_link'],
-                    "opponent_lifetime_score": district["opponent"]['lifetime_score'],
-                    "climate_cabinet_ranking": district['cc_ranking'],
-                    // election info (assuming most recent national election first in the array)
-                    "prev_natl_election_winner": (district.elections[0]["dem_prop"] > district.elections[0]["rep_prop"]) ? "Democrats" : "Republicans",
-                    "prev_natl_election_winner_percent": (district.elections[0]["dem_prop"] > district.elections[0]["rep_prop"]) ? district.elections[0]["dem_prop"] : district.elections[0]["rep_prop"],
-                    "prev_natl_election_year": district.elections[0]['year']
+    return district['shapes'].map(function(shape,i){
+        return(
+            {
+            "type" : "Feature",
+            "id": i + 1, // doing this to avoid 0 == false in Javascript
+            "properties": {
+                "state": district['state_abbr'],
+                "district_code": district['district_code'],
+                "which_house" : district['ccid'].indexOf("L") > 0 ? "lower" : "upper",
+                // incumbent info
+                "incumbent_name": district['incumbent']['name'],
+                "incumbent_donate_url": district['incumbent']['donation_link'],
+                "incumbent_lifetime_score": district['incumbent']['lifetime_score'],
+                // opponent_info
+                "opponent_name": district["opponent"]['name'],
+                "opponent_donate_url": district["opponent"]['donation_link'],
+                "opponent_lifetime_score": district["opponent"]['lifetime_score'],
+                "climate_cabinet_ranking": district['cc_ranking'],
+                // election info (assuming most recent national election first in the array)
+                "prev_natl_election_winner": (district.elections[0]["dem_prop"] > district.elections[0]["rep_prop"]) ? "Democrats" : "Republicans",
+                "prev_natl_election_winner_percent": (district.elections[0]["dem_prop"] > district.elections[0]["rep_prop"]) ? district.elections[0]["dem_prop"] : district.elections[0]["rep_prop"],
+                "prev_natl_election_year": district.elections[0]['year']
 
-                },
-                "geometry" : (albers ? getCentroid(projectToAlbersUsa(shape['geometry'])) : getCentroid(shape['geometry']))
-            })
+            },
+            "geometry" : (albers ? getCentroid(projectToAlbersUsa(shape['geometry'])) : getCentroid(shape['geometry']))
         })
-    };
-
+    })
 }
 
 const projectToAlbersUsa = function(geometry){
@@ -539,9 +535,17 @@ const loadMap = function() {
             layout: {
                 visibility: styleMode === 'polygons' ? 'none' : 'visible',
             },
-            'filter' : ['==', '$type', 'Point']
+            'filter' : ['==', 'which_house', houseName]
         }
     );
+
+    // map.setFilter('district-points', 
+    //     ['match',
+    //     ['get', 'which_house'], 
+    //     district_data.map(district => district.state_abbr),
+    //     true,
+    //     false 
+    // ])
 
 };
 
@@ -574,7 +578,8 @@ map.on('load', function() {
     map.setFilter('us-states-fill', 
         ['match',
         ['get', 'abbr'], 
-        district_data.map(district => district.state_abbr),
+        // remove duplicate states if we have multiple races of interest in the same state
+        [... new Set(district_data.map(district => district.state_abbr))], 
         true,
         false 
     ])
@@ -597,6 +602,14 @@ map.on('load', function() {
         },
     );
 
+    map.setFilter('us-states-fill', 
+        ['match',
+        ['get', 'abbr'], 
+        // remove duplicate states if we have multiple races of interest in the same state
+        [... new Set(district_data.map(district => district.state_abbr))], 
+        true,
+        false 
+    ])
 
     map.addSource('state_districts',{
         type: 'geojson',
