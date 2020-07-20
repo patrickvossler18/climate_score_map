@@ -229,6 +229,7 @@ const onDistrictClick = function(e) {
         // only saying which party won
         var prev_winner = district_properties.prev_natl_election_winner;
         var prev_winner_percent = Math.round(district_properties.prev_natl_election_winner_percent * 100,2);
+        var prev_election_year = district_properties.prev_natl_election_year;
         // we have this in the mock data but not clear how to display this.
         var key_votes = "[Examples of key climate votes]";
         var donation_name = district_properties.incumbent_lifetime_score < district_properties.opponent_lifetime_score ? district_properties.opponent_name : district_properties.incumbent_name;
@@ -242,7 +243,7 @@ const onDistrictClick = function(e) {
         reps += '<h2>' + incumbent_name + '</h2>';
         reps += '<h3>Climate Cabinet Ranking: #' + climate_cabinet_ranking + ' </h3>';
         reps += '<h3>Action Needed: ' + action_needed + ' -- ' + donate_link + ' </h3>';
-        reps += '<br><h3>This race is a ' + race_label + '. ' + prev_winner + ' won it by ' + prev_winner_percent + '%.</h3>'; 
+        reps += '<br><h3>This race is a ' + race_label + '. ' + prev_winner + ' won it by ' + prev_winner_percent + '% in ' + prev_election_year+'. </h3>'; 
         reps += '<br><h3> ' + incumbent_name + ' has voted ' + key_votes + '.';
         var description =
             '<h1>' + state + '-' + district + '</h1><div class="reps">' + reps + '</div>';
@@ -269,7 +270,7 @@ const getDistrictShapes = function(district, albers=false) {
                 "properties": {
                 "state": district['state_abbr'],
                 "district_code": district['district_code'],
-                "which_house" : district['ccid'].indexOf("L") > 0 ? "lower" : "upper",
+                "which_house" : district['ccid'].indexOf("L") > -1 ? "lower" : "upper",
                 // incumbent info
                 "incumbent_name": district['incumbent']['name'],
                 "incumbent_donate_url": district['incumbent']['donation_link'],
@@ -301,7 +302,7 @@ const getDistrictCentroid = function(district, albers=false){
             "properties": {
                 "state": district['state_abbr'],
                 "district_code": district['district_code'],
-                "which_house" : district['ccid'].indexOf("L") > 0 ? "lower" : "upper",
+                "which_house" : district['ccid'].indexOf("L") > -1 ? "lower" : "upper",
                 // incumbent info
                 "incumbent_name": district['incumbent']['name'],
                 "incumbent_donate_url": district['incumbent']['donation_link'],
