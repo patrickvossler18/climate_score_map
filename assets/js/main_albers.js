@@ -206,57 +206,59 @@ const onMouseLeaveDistrict = function() {
 };
 
 const onDistrictClick = function(e) {
-    if (e.features.length > 0) {
-        console.log(e.features[0].properties)
-        map.getCanvas().style.cursor = 'pointer';
-        map.setFeatureState(
-            { source: 'state_districts_pts', id: hoveredStateId },
-            { hover: false }
-        );
-        var district_properties = e.features[0].properties;
-        var state = district_properties.state;
-        var district = district_properties.district_code;
-        var incumbent_name = district_properties.incumbent_name;
-      
-        // TODO - Fill in real data here once we have it.
-        var climate_cabinet_ranking = "3";
-        
-        // TBD: for deciding action needed, we can compare lifetime scores?
-        var action_needed = district_properties.incumbent_lifetime_score < district_properties.opponent_lifetime_score ? "Flip the seat": "Hold the seat";
-        var donate_url = district_properties.incumbent_lifetime_score < district_properties.opponent_lifetime_score ? district_properties.opponent_donate_url : district_properties.incumbent_donate_url;
-        // TBD: do we have data on local election results?
-        var race_label = "\"tossup\"";
-        // only saying which party won
-        var prev_winner = district_properties.prev_natl_election_winner;
-        var prev_winner_percent = Math.round(district_properties.prev_natl_election_winner_percent * 100,2);
-        var prev_election_year = district_properties.prev_natl_election_year;
-        // we have this in the mock data but not clear how to display this.
-        var key_votes = "[Examples of key climate votes]";
-        var donation_name = district_properties.incumbent_lifetime_score < district_properties.opponent_lifetime_score ? district_properties.opponent_name : district_properties.incumbent_name;
-        var donate_link = "<a href = " + donate_url + "> Donate to " + donation_name + " here.</a>";
+    if (e.features.length == 0) return;
+    map.getCanvas().style.cursor = 'pointer';
+    map.setFeatureState(
+        { source: 'state_districts_pts', id: hoveredStateId },
+        { hover: false }
+    );
+    var district_properties = e.features[0].properties;
+  
+    // TODO - Fill in real data here once we have it.
+    var is_incumbent = district_properties.incumbent_lifetime_score > district_properties.opponent_lifetime_score;
+    // TBD: for deciding action needed, we can compare lifetime scores?
+
+    // only saying which party won
+    var prev_winner = district_properties.prev_natl_election_winner;
+    var prev_winner_percent = Math.round(district_properties.prev_natl_election_winner_percent * 100,2);
+    var prev_election_year = district_properties.prev_natl_election_year;
+    // we have this in the mock data but not clear how to display this.
+    var donation_name = district_properties.incumbent_lifetime_score < district_properties.opponent_lifetime_score ? district_properties.opponent_name : district_properties.incumbent_name;
+    var donate_link = "<a href = " + donate_url + "> Donate to " + donation_name + " here.</a>";
 
 
-        // This part can (should) be styled differently
-        var reps = '';
+    // This part can (should) be styled differently
+    var reps = '';
+
+    var candidate_name = is_incumbent ? district_properties.incumbent_name : district_properties.opponent_name;
+    console.log(candidate_name);
+    var district = district_properties.name;    
+    reps += '<h2 class="card_intro">' + candidate_name + ', ' + 
+        (is_incumbent ? 'incumbent ' : 'candidate') + ' for ' + district + '</h2>';
+
+    reps += '<h3 class="cc_ranking">Climate Cabinet Ranking: #' + district_properties.climate_cabinet_ranking + ' </h3>';
+
+    var action_needed = is_incumbent ? "Flip the seat": "Hold the seat";
+    var donate_url = is_incumbent ?
+        district_properties.opponent_donate_url : district_properties.incumbent_donate_url;
+    reps += '<h3>Action Needed: ' + action_needed + ' -- ' + donate_link + ' </h3>';
 
 
-        reps += '<h2>' + incumbent_name + '</h2>';
-        reps += '<h3>Climate Cabinet Ranking: #' + climate_cabinet_ranking + ' </h3>';
-        reps += '<h3>Action Needed: ' + action_needed + ' -- ' + donate_link + ' </h3>';
-        reps += '<br><h3>This race is a ' + race_label + '. ' + prev_winner + ' won it by ' + prev_winner_percent + '% in ' + prev_election_year+'. </h3>'; 
-        reps += '<br><h3> ' + incumbent_name + ' has voted ' + key_votes + '.';
-        var description =
-            '<h1>' + state + '-' + district + '</h1><div class="reps">' + reps + '</div>';
-        popup
-            .setLngLat(e.lngLat)
-            .setHTML(description)
-            .addTo(map);
-        hoveredStateId = e.features[0].id;
-        map.setFeatureState(
-            { source: 'state_districts_pts', id: hoveredStateId },
-            { hover: true }
-        );
-    }
+    // TBD: do we have data on local election results?
+    var race_label = "\"tossup\"";
+    reps += '<br><h3>This race is a ' + race_label + '. ' + prev_winner + ' won it by ' + prev_winner_percent + '% in ' + prev_election_year+'. </h3>'; 
+
+    var key_votes = "[Examples of key climate votes]";    
+    reps += '<br><h3> ' + candidate_name + ' has voted ' + key_votes + '.';
+    popup
+        .setLngLat(e.lngLat)
+        .setHTML(reps)
+        .addTo(map);
+    hoveredStateId = e.features[0].id;
+    map.setFeatureState(
+        { source: 'state_districts_pts', id: hoveredStateId },
+        { hover: true }
+    );
 };
 
 const getDistrictShapes = function(district, albers=false) {
@@ -269,6 +271,7 @@ const getDistrictShapes = function(district, albers=false) {
                 "properties": {
                     "state": district['state_abbr'],
                     "district_code": district['district_code'],
+                    "name": district['name'],
                     "which_house" : district['ccid'].indexOf("L") > -1 ? "lower" : "upper",
                     // incumbent info
                     "incumbent_name": district['incumbent']['name'],
@@ -278,7 +281,7 @@ const getDistrictShapes = function(district, albers=false) {
                     "opponent_name": district["opponent"]['name'],
                     "opponent_donate_url": district["opponent"]['donation_link'],
                     "opponent_lifetime_score": district["opponent"]['lifetime_score'],
-                    "climate_cabinet_ranking": district['cc_ranking'],
+                    "climate_cabinet_ranking": district['cc_ranking'],                    
                     // election info (assuming most recent national election first in the array)
                     "prev_natl_election_winner": (district.elections[0]["dem_prop"] > district.elections[0]["rep_prop"]) ? "Democrats" : "Republicans",
                     "prev_natl_election_winner_percent": Math.abs(district.elections[0]["dem_prop"] - district.elections[0]["rep_prop"]),
@@ -299,6 +302,7 @@ const getDistrictCentroid = function(district, albers=false){
                 "properties": {
                     "state": district['state_abbr'],
                     "district_code": district['district_code'],
+                    "name": district['name'],
                     "which_house" : district['ccid'].indexOf("L") > -1 ? "lower" : "upper",
                     // incumbent info
                     "incumbent_name": district['incumbent']['name'],
@@ -309,6 +313,7 @@ const getDistrictCentroid = function(district, albers=false){
                     "opponent_donate_url": district["opponent"]['donation_link'],
                     "opponent_lifetime_score": district["opponent"]['lifetime_score'],
                     "climate_cabinet_ranking": district['cc_ranking'],
+                    "climate_cabinet_score": district['cc_score'],
                     // election info (assuming most recent national election first in the array)
                     "prev_natl_election_winner": (district.elections[0]["dem_prop"] > district.elections[0]["rep_prop"]) ? "Democrats" : "Republicans",
                     "prev_natl_election_winner_percent": (district.elections[0]["dem_prop"] > district.elections[0]["rep_prop"]) ? district.elections[0]["dem_prop"] : district.elections[0]["rep_prop"],
