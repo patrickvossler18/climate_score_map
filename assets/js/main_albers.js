@@ -623,7 +623,9 @@ map.on('load', function() {
         type: 'geojson',
         data: {
                 'type': 'FeatureCollection',
-                'features': flattenDistrictDataIntoGeoJSON(district_data.map(district => getDistrictShapes(district, true)))
+                'features': flattenDistrictDataIntoGeoJSON(
+                    district_data.map(district => getDistrictShapes(district, true))
+                )
             }
     });
 
@@ -632,7 +634,9 @@ map.on('load', function() {
         type: 'geojson',
         data: {
                 'type': 'FeatureCollection',
-                'features': flattenDistrictDataIntoGeoJSON(district_data.map(district => getDistrictCentroid(district, true)))
+                'features': flattenDistrictDataIntoGeoJSON(
+                    district_data.map(district => getDistrictCentroid(district, true))
+                )
             }
     });
 
