@@ -608,21 +608,31 @@ map.on('load', function() {
         false 
     ])
 
-    // map.addSource('state_districts',{
-    //     type: 'geojson',
-    //     data: {
-    //             'type': 'FeatureCollection',
-    //             'features': district_data.map(district => getDistrictShapes(district, true)).flat()
-    //         }
-    // });
+    // What's returned is an object, and we need an array of objects.
+    const flattenDistrictDataIntoGeoJSON = function(obj) {
+        var features = [];
+        // In order to get the length of an object, we need to get the keys, then get their length - we
+        // can't just get it directly.
+        for (var i = 0; i < Object.keys(obj).length; ++i) {
+            features.push(obj[i][0]);
+        }
+        return features;
+    }
 
-// TODO(jnmorgan) - debug
-console.log(district_data.map(district => getDistrictCentroid(district, true)).flat())
+    map.addSource('state_districts',{
+        type: 'geojson',
+        data: {
+                'type': 'FeatureCollection',
+                'features': flattenDistrictDataIntoGeoJSON(district_data.map(district => getDistrictShapes(district, true)))
+            }
+    });
+
+
     map.addSource('state_districts_pts',{
         type: 'geojson',
         data: {
                 'type': 'FeatureCollection',
-                'features': district_data.map(district => getDistrictCentroid(district, true))
+                'features': flattenDistrictDataIntoGeoJSON(district_data.map(district => getDistrictCentroid(district, true)))
             }
     });
 
