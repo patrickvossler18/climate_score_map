@@ -555,7 +555,7 @@ map.on('load', function() {
     map.addSource('us-states', {
         type: 'geojson',
         // data: '/data/us-states-id.json',
-        data: us_states_id_albers
+        data: us_states_id_albers[0]
     });
 
     
