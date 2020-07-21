@@ -180,14 +180,14 @@ const onMouseMoveDistrict = function(e) {
         map.getCanvas().style.cursor = 'pointer';
         if (hoveredStateId) {
             map.setFeatureState(
-                { source: 'state_districts',  
+                { source: 'state_districts_pts',  
                 id: hoveredStateId },
                 { hover: false }
             );
         }
         hoveredStateId = e.features[0].id;
         map.setFeatureState(
-            { source: 'state_districts', id: hoveredStateId },
+            { source: 'state_districts_pts', id: hoveredStateId },
             { hover: true }
         );
     }
@@ -198,7 +198,7 @@ const onMouseLeaveDistrict = function() {
     // map.getCanvas().style.cursor = '';
     if (hoveredStateId) {
         map.setFeatureState(
-            { source: 'state_districts', id: hoveredStateId },
+            { source: 'state_districts_pts', id: hoveredStateId },
             { hover: false }
         );
     }
@@ -210,7 +210,7 @@ const onDistrictClick = function(e) {
         console.log(e.features[0].properties)
         map.getCanvas().style.cursor = 'pointer';
         map.setFeatureState(
-            { source: 'state_districts', id: hoveredStateId },
+            { source: 'state_districts_pts', id: hoveredStateId },
             { hover: false }
         );
         var district_properties = e.features[0].properties;
@@ -253,7 +253,7 @@ const onDistrictClick = function(e) {
             .addTo(map);
         hoveredStateId = e.features[0].id;
         map.setFeatureState(
-            { source: 'state_districts', id: hoveredStateId },
+            { source: 'state_districts_pts', id: hoveredStateId },
             { hover: true }
         );
     }
@@ -263,40 +263,37 @@ const getDistrictShapes = function(district, albers=false) {
     // TODO: Handle upper and lower legislatures
     // TODO: Select shape based on year
    return district['shapes'].map(function(shape,i){
-        return(
-            {
+        return({
                 "type" : "Feature",
                 "id": i + 1, // doing this to avoid 0 == false in Javascript
                 "properties": {
-                "state": district['state_abbr'],
-                "district_code": district['district_code'],
-                "which_house" : district['ccid'].indexOf("L") > -1 ? "lower" : "upper",
-                // incumbent info
-                "incumbent_name": district['incumbent']['name'],
-                "incumbent_donate_url": district['incumbent']['donation_link'],
-                "incumbent_lifetime_score": district['incumbent']['lifetime_score'],
-                // opponent_info
-                "opponent_name": district["opponent"]['name'],
-                "opponent_donate_url": district["opponent"]['donation_link'],
-                "opponent_lifetime_score": district["opponent"]['lifetime_score'],
-                "climate_cabinet_ranking": district['cc_ranking'],
-                // election info (assuming most recent national election first in the array)
-                "prev_natl_election_winner": (district.elections[0]["dem_prop"] > district.elections[0]["rep_prop"]) ? "Democrats" : "Republicans",
-                "prev_natl_election_winner_percent": Math.abs(district.elections[0]["dem_prop"] - district.elections[0]["rep_prop"]),
-                "prev_natl_election_year": district.elections[0]['year']
-
-            },
+                    "state": district['state_abbr'],
+                    "district_code": district['district_code'],
+                    "which_house" : district['ccid'].indexOf("L") > -1 ? "lower" : "upper",
+                    // incumbent info
+                    "incumbent_name": district['incumbent']['name'],
+                    "incumbent_donate_url": district['incumbent']['donation_link'],
+                    "incumbent_lifetime_score": district['incumbent']['lifetime_score'],
+                    // opponent_info
+                    "opponent_name": district["opponent"]['name'],
+                    "opponent_donate_url": district["opponent"]['donation_link'],
+                    "opponent_lifetime_score": district["opponent"]['lifetime_score'],
+                    "climate_cabinet_ranking": district['cc_ranking'],
+                    // election info (assuming most recent national election first in the array)
+                    "prev_natl_election_winner": (district.elections[0]["dem_prop"] > district.elections[0]["rep_prop"]) ? "Democrats" : "Republicans",
+                    "prev_natl_election_winner_percent": Math.abs(district.elections[0]["dem_prop"] - district.elections[0]["rep_prop"]),
+                    "prev_natl_election_year": district.elections[0]['year']
+                },
                 "geometry" : (albers ? projectToAlbersUsa(shape['geometry']) : shape['geometry'])
             })
         })
-}
+};
 
 const getDistrictCentroid = function(district, albers=false){
     // TODO: Handle upper and lower legislatures
-        // TODO: Select shape based on year. Currently assuming we only have one shape in the array
+    // TODO: Select shape based on year. Currently assuming we only have one shape in the array
     return district['shapes'].map(function(shape,i){
-        return(
-            {
+        return({
                 "type" : "Feature",
                 "id": i + 1, // doing this to avoid 0 == false in Javascript
                 "properties": {
@@ -316,12 +313,11 @@ const getDistrictCentroid = function(district, albers=false){
                     "prev_natl_election_winner": (district.elections[0]["dem_prop"] > district.elections[0]["rep_prop"]) ? "Democrats" : "Republicans",
                     "prev_natl_election_winner_percent": (district.elections[0]["dem_prop"] > district.elections[0]["rep_prop"]) ? district.elections[0]["dem_prop"] : district.elections[0]["rep_prop"],
                     "prev_natl_election_year": district.elections[0]['year']
-
                 },
                 "geometry" : (albers ? getCentroid(projectToAlbersUsa(shape['geometry'])) : getCentroid(shape['geometry']))
             })
-    })
-}
+        })
+};
 
 const projectToAlbersUsa = function(geometry){
     let R = 6378137.0 // radius of Earth in meters
@@ -455,7 +451,7 @@ const loadMap = function() {
         {
             id: 'district-polygons-fill',
             type: 'fill',
-            source: 'state_districts',
+            source: 'state_districts_pts',
             paint: {
                 'fill-color': colorDemocrat,
                 'fill-opacity': styleMode === 'polygons' ? 0.6 : 0,
@@ -472,7 +468,7 @@ const loadMap = function() {
         {
             id: 'district-polygons-line',
             type: 'line',
-            source: 'state_districts',
+            source: 'state_districts_pts',
             // 'source-layer': layerName + '_polygons',
             paint: {
                 'line-color': '#000',
@@ -490,7 +486,7 @@ const loadMap = function() {
         {
             id: 'district-polygons-highlight',
             type: 'line',
-            source: 'state_districts',
+            source: 'state_districts_pts',
             paint: {
                 'line-color': '#000',
                 'line-opacity': ['case', ['boolean', ['feature-state', 'hover'], false], 0.9, 0],
@@ -509,7 +505,7 @@ const loadMap = function() {
         {
             id: 'district-points',
             type: 'circle',
-            source: 'state_districts',
+            source: 'state_districts_pts',
             paint: {
                 // 'circle-opacity': circleOpacity,
                 'circle-opacity':
@@ -554,7 +550,7 @@ map.on('load', function() {
     map.addSource('us-states', {
         type: 'geojson',
         // data: '/data/us-states-id.json',
-        data: '/data/us-states-id_albers.json'
+        data: us_states_id_albers
     });
 
     
@@ -612,22 +608,23 @@ map.on('load', function() {
         false 
     ])
 
-    map.addSource('state_districts',{
+    // map.addSource('state_districts',{
+    //     type: 'geojson',
+    //     data: {
+    //             'type': 'FeatureCollection',
+    //             'features': district_data.map(district => getDistrictShapes(district, true)).flat()
+    //         }
+    // });
+
+// TODO(jnmorgan) - debug
+console.log(district_data.map(district => getDistrictCentroid(district, true)).flat())
+    map.addSource('state_districts_pts',{
         type: 'geojson',
         data: {
                 'type': 'FeatureCollection',
-                'features': district_data.map(district => getDistrictShapes(district, true)).flat()
+                'features': district_data.map(district => getDistrictCentroid(district, true))
             }
     });
-
-    map.addSource('state_districts',{
-    type: 'geojson',
-    data: {
-            'type': 'FeatureCollection',
-            'features': district_data.map(district => getDistrictCentroid(district, true)).flat()
-        }
-    });
-    
 
     loadMap();
     // loadPolygons();
@@ -640,5 +637,4 @@ map.on('load', function() {
     map.setLayoutProperty('us-states-line', 'visibility', 'visible')
     map.setLayoutProperty('district-polygons-fill', 'visibility', 'none')
     map.setLayoutProperty('district-polygons-line', 'visibility', 'none')
-
 });
