@@ -180,14 +180,14 @@ const onMouseMoveDistrict = function(e) {
         map.getCanvas().style.cursor = 'pointer';
         if (hoveredStateId) {
             map.setFeatureState(
-                { source: 'state_districts_pts',  
+                { source: 'state_districts',  
                 id: hoveredStateId },
                 { hover: false }
             );
         }
         hoveredStateId = e.features[0].id;
         map.setFeatureState(
-            { source: 'state_districts_pts', id: hoveredStateId },
+            { source: 'state_districts', id: hoveredStateId },
             { hover: true }
         );
     }
@@ -198,7 +198,7 @@ const onMouseLeaveDistrict = function() {
     // map.getCanvas().style.cursor = '';
     if (hoveredStateId) {
         map.setFeatureState(
-            { source: 'state_districts_pts', id: hoveredStateId },
+            { source: 'state_districts', id: hoveredStateId },
             { hover: false }
         );
     }
@@ -210,7 +210,7 @@ const onDistrictClick = function(e) {
         console.log(e.features[0].properties)
         map.getCanvas().style.cursor = 'pointer';
         map.setFeatureState(
-            { source: 'state_districts_pts', id: hoveredStateId },
+            { source: 'state_districts', id: hoveredStateId },
             { hover: false }
         );
         var district_properties = e.features[0].properties;
@@ -253,7 +253,7 @@ const onDistrictClick = function(e) {
             .addTo(map);
         hoveredStateId = e.features[0].id;
         map.setFeatureState(
-            { source: 'state_districts_pts', id: hoveredStateId },
+            { source: 'state_districts', id: hoveredStateId },
             { hover: true }
         );
     }
@@ -297,29 +297,29 @@ const getDistrictCentroid = function(district, albers=false){
     return district['shapes'].map(function(shape,i){
         return(
             {
-            "type" : "Feature",
-            "id": i + 1, // doing this to avoid 0 == false in Javascript
-            "properties": {
-                "state": district['state_abbr'],
-                "district_code": district['district_code'],
-                "which_house" : district['ccid'].indexOf("L") > -1 ? "lower" : "upper",
-                // incumbent info
-                "incumbent_name": district['incumbent']['name'],
-                "incumbent_donate_url": district['incumbent']['donation_link'],
-                "incumbent_lifetime_score": district['incumbent']['lifetime_score'],
-                // opponent_info
-                "opponent_name": district["opponent"]['name'],
-                "opponent_donate_url": district["opponent"]['donation_link'],
-                "opponent_lifetime_score": district["opponent"]['lifetime_score'],
-                "climate_cabinet_ranking": district['cc_ranking'],
-                // election info (assuming most recent national election first in the array)
-                "prev_natl_election_winner": (district.elections[0]["dem_prop"] > district.elections[0]["rep_prop"]) ? "Democrats" : "Republicans",
-                "prev_natl_election_winner_percent": (district.elections[0]["dem_prop"] > district.elections[0]["rep_prop"]) ? district.elections[0]["dem_prop"] : district.elections[0]["rep_prop"],
-                "prev_natl_election_year": district.elections[0]['year']
+                "type" : "Feature",
+                "id": i + 1, // doing this to avoid 0 == false in Javascript
+                "properties": {
+                    "state": district['state_abbr'],
+                    "district_code": district['district_code'],
+                    "which_house" : district['ccid'].indexOf("L") > -1 ? "lower" : "upper",
+                    // incumbent info
+                    "incumbent_name": district['incumbent']['name'],
+                    "incumbent_donate_url": district['incumbent']['donation_link'],
+                    "incumbent_lifetime_score": district['incumbent']['lifetime_score'],
+                    // opponent_info
+                    "opponent_name": district["opponent"]['name'],
+                    "opponent_donate_url": district["opponent"]['donation_link'],
+                    "opponent_lifetime_score": district["opponent"]['lifetime_score'],
+                    "climate_cabinet_ranking": district['cc_ranking'],
+                    // election info (assuming most recent national election first in the array)
+                    "prev_natl_election_winner": (district.elections[0]["dem_prop"] > district.elections[0]["rep_prop"]) ? "Democrats" : "Republicans",
+                    "prev_natl_election_winner_percent": (district.elections[0]["dem_prop"] > district.elections[0]["rep_prop"]) ? district.elections[0]["dem_prop"] : district.elections[0]["rep_prop"],
+                    "prev_natl_election_year": district.elections[0]['year']
 
-            },
-            "geometry" : (albers ? getCentroid(projectToAlbersUsa(shape['geometry'])) : getCentroid(shape['geometry']))
-        })
+                },
+                "geometry" : (albers ? getCentroid(projectToAlbersUsa(shape['geometry'])) : getCentroid(shape['geometry']))
+            })
     })
 }
 
@@ -509,7 +509,7 @@ const loadMap = function() {
         {
             id: 'district-points',
             type: 'circle',
-            source: 'state_districts_pts',
+            source: 'state_districts',
             paint: {
                 // 'circle-opacity': circleOpacity,
                 'circle-opacity':
@@ -620,7 +620,7 @@ map.on('load', function() {
             }
     });
 
-    map.addSource('state_districts_pts',{
+    map.addSource('state_districts',{
     type: 'geojson',
     data: {
             'type': 'FeatureCollection',
