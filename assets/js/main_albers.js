@@ -43,7 +43,6 @@ var hoveredStateFillId;
 var houseName = 'lower';
 var styleMode = 'polygons';
 
-
 function getColorByParty(party) {
     if (['Democrat', 'Democratic-Farmer-Labor', 'Democrat/Progressive'].includes(party))
         return colorDemocrat;
@@ -65,11 +64,9 @@ function politicalColors() {
     ];
 }
 
-var popup = new mapboxgl.Popup({
-    closeButton: true,
-    closeOnClick: true,
-    // anchor: 'top-left',
-});
+// This popup appears to the right of the map and contains
+// all of the candidate info.
+var popup = document.getElementById("floating-card");
 
 function loadDots() {
     styleMode = 'dots';
@@ -250,10 +247,10 @@ const onDistrictClick = function(e) {
 
     var key_votes = "[Examples of key climate votes]";    
     reps += '<br><h3> ' + candidate_name + ' has voted ' + key_votes + '.';
-    popup
-        .setLngLat(e.lngLat)
-        .setHTML(reps)
-        .addTo(map);
+   
+    // Override all inner html of the popup.
+    popup.innerHTML = reps;
+
     hoveredStateId = e.features[0].id;
     map.setFeatureState(
         { source: 'state_districts_pts', id: hoveredStateId },
@@ -432,11 +429,6 @@ const loadMap = function() {
     });
 
     map.on('click', 'us-states-fill', function(e) {
-        // when user clicks the state, zoom in to show the state
-        popup.setLngLat({ lng: 0, lat: 0 });
-        
-
-
         var bounds = getPolygonBoundingBox(e.features[0]);
         map.fitBounds(bounds, {
             padding: 20
