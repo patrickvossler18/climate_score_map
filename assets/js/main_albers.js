@@ -219,6 +219,7 @@ const onDistrictClick = function(e) {
     var prev_winner = district_properties.prev_natl_election_winner;
     var prev_winner_percent = Math.round(district_properties.prev_natl_election_winner_percent * 100,2);
     var prev_election_year = district_properties.prev_natl_election_year;
+
     // we have this in the mock data but not clear how to display this.
     var donation_name = district_properties.incumbent_lifetime_score < district_properties.opponent_lifetime_score ? district_properties.opponent_name : district_properties.incumbent_name;
     var donate_link = "<a href = " + donate_url + "> Donate to " + donation_name + " here.</a>";
@@ -228,25 +229,25 @@ const onDistrictClick = function(e) {
     var reps = '';
 
     var candidate_name = is_incumbent ? district_properties.incumbent_name : district_properties.opponent_name;
-    console.log(candidate_name);
-    var district = district_properties.name;    
-    reps += '<h2 class="card_intro">' + candidate_name + ', ' + 
-        (is_incumbent ? 'incumbent ' : 'candidate') + ' for ' + district + '</h2>';
 
-    reps += '<h3 class="cc_ranking">Climate Cabinet Ranking: #' + district_properties.climate_cabinet_ranking + ' </h3>';
+    var district = district_properties.name;    
+    reps += '<h5 class="card_intro">' + candidate_name + ', ' + 
+        (is_incumbent ? 'incumbent ' : 'candidate') + ' for ' + district + '</h5>';
+
+    reps += '<h3 class="text-block-2">Climate Cabinet Ranking: #' + district_properties.climate_cabinet_ranking + ' </h6>';
 
     var action_needed = is_incumbent ? "Flip the seat": "Hold the seat";
     var donate_url = is_incumbent ?
         district_properties.opponent_donate_url : district_properties.incumbent_donate_url;
-    reps += '<h3>Action Needed: ' + action_needed + ' -- ' + donate_link + ' </h3>';
+    reps += '<h6>Action Needed: ' + action_needed + ' -- ' + donate_link + ' </h6>';
 
 
     // TBD: do we have data on local election results?
     var race_label = "\"tossup\"";
-    reps += '<br><h3>This race is a ' + race_label + '. ' + prev_winner + ' won it by ' + prev_winner_percent + '% in ' + prev_election_year+'. </h3>'; 
+    reps += '<br><h6>This race is a ' + race_label + '. ' + prev_winner + ' won it by ' + prev_winner_percent + '% in ' + prev_election_year+'. </h6>'; 
 
     var key_votes = "[Examples of key climate votes]";    
-    reps += '<br><h3> ' + candidate_name + ' has voted ' + key_votes + '.';
+    reps += '<br><h6> ' + candidate_name + ' has voted ' + key_votes + '. </h6>';
    
     // Override all inner html of the popup.
     popup.innerHTML = reps;
