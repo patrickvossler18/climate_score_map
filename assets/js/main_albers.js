@@ -228,13 +228,20 @@ const onDistrictClick = function(e) {
     // This part can (should) be styled differently
     var reps = '';
 
+    // Candidate Image. Not currently populated, so no we sub in the climate cabinet pic.
+    var img_src = "https://uploads-ssl.webflow.com/5f13afc0ce36dff9a4e6a640/5f1424fd860f156c851130d7_ClimCab-Logo.png";
+    reps += '<img width="373" src="' + img_src + '" alt="" sizes="(max-width: 479px) 159.796875px, (max-width: 767px) 37vw, (max-width: 991px) 286px, 373px" class="image-4">';
+
     var candidate_name = is_incumbent ? district_properties.incumbent_name : district_properties.opponent_name;
 
     var district = district_properties.name;    
-    reps += '<h5 class="card_intro">' + candidate_name + ', ' + 
+    reps += '<h5 class="card_intro heading-4">' + candidate_name + ', ' + 
         (is_incumbent ? 'incumbent ' : 'candidate') + ' for ' + district + '</h5>';
 
-    reps += '<h3 class="text-block-2">Climate Cabinet Ranking: #' + district_properties.climate_cabinet_ranking + ' </h6>';
+    reps += '<div class="div-block-2">' + 
+            '<img src="https://uploads-ssl.webflow.com/5f13afc0ce36dff9a4e6a640/5f14e3b5b156a21f896d6fd5_StateChamber.png"' +
+            'width="47" alt="" class="image-5"><div class="text-block-2">Climate Cabinet Ranking: #' +
+            district_properties.climate_cabinet_ranking + ' </div></div>';
 
     var action_needed = is_incumbent ? "Flip the seat": "Hold the seat";
     var donate_url = is_incumbent ?
@@ -244,10 +251,10 @@ const onDistrictClick = function(e) {
 
     // TBD: do we have data on local election results?
     var race_label = "\"tossup\"";
-    reps += '<br><h6>This race is a ' + race_label + '. ' + prev_winner + ' won it by ' + prev_winner_percent + '% in ' + prev_election_year+'. </h6>'; 
+    reps += '<br><p class="paragraph-4">This race is a ' + race_label + '. ' + prev_winner + ' won it by ' + prev_winner_percent + '% in ' + prev_election_year+'. </p>'; 
 
     var key_votes = "[Examples of key climate votes]";    
-    reps += '<br><h6> ' + candidate_name + ' has voted ' + key_votes + '. </h6>';
+    reps += '<br><p class="paragraph-4> ' + candidate_name + ' has voted ' + key_votes + '. </p>';
    
     // Override all inner html of the popup.
     popup.innerHTML = reps;
