@@ -13,8 +13,11 @@ var map = new mapboxgl.Map({
     // style: 'mapbox://styles/patrickvossler/ckc0ydvhi5h3v1iodhe5rgsjg', // mercator
     style:"mapbox://styles/patrickvossler/ckcc7fav36ug51iqukp1vt6v8", //albers
     zoom: mapOrigin.zoom,
+    attributionControl: false
+
 });
 
+map.addControl(new mapboxgl.AttributionControl(), 'bottom-right');
 map.dragRotate.disable();
 map.touchZoomRotate.disableRotation();
 
