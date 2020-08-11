@@ -20,6 +20,7 @@ var map = new mapboxgl.Map({
 map.addControl(new mapboxgl.AttributionControl(), 'bottom-right');
 map.dragRotate.disable();
 map.touchZoomRotate.disableRotation();
+map.scrollZoom.disable();
 
 var url = new URL(window.location.href);
 var embed = url.searchParams.get('embed');
