@@ -22,7 +22,7 @@ var map = new mapboxgl.Map({
 });
 
 map.addControl(new mapboxgl.AttributionControl(), 'bottom-right');
-map.addControl(new mapboxgl.NavigationControl());
+map.addControl(new mapboxgl.NavigationControl(), 'top-left');
 map.dragRotate.disable();
 map.touchZoomRotate.disableRotation();
 map.scrollZoom.disable();
