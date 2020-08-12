@@ -17,10 +17,14 @@ var map = new mapboxgl.Map({
     // style: 'mapbox://styles/patrickvossler/ckc0ydvhi5h3v1iodhe5rgsjg', // mercator
     style:"mapbox://styles/patrickvossler/ckcc7fav36ug51iqukp1vt6v8", //albers
     zoom: mapOrigin.zoom,
+    attributionControl: false
+
 });
 
+map.addControl(new mapboxgl.AttributionControl(), 'bottom-right');
 map.dragRotate.disable();
 map.touchZoomRotate.disableRotation();
+map.scrollZoom.disable();
 
 var url = new URL(window.location.href);
 var embed = url.searchParams.get('embed');
@@ -29,10 +33,10 @@ if (embed === 'true') {
     map.resize();
 }
 
-var $buttonDots = document.getElementById('button-dots');
-var $buttonPolygons = document.getElementById('button-polygon');
-var $buttonHouse = document.getElementById('button-house');
-var $buttonSenate = document.getElementById('button-senate');
+// var $buttonDots = document.getElementById('button-dots');
+// var $buttonPolygons = document.getElementById('button-polygon');
+// var $buttonHouse = document.getElementById('button-house');
+// var $buttonSenate = document.getElementById('button-senate');
 
 var circleOpacity = ['interpolate', ['linear'], ['zoom'], 0, 0.15, 3, 0.15, 6, 0.9];
 var lineOpacity = ['interpolate', ['linear'], ['zoom'], 0, 0, 4, 0, 6, 0.05];
@@ -90,13 +94,13 @@ function loadPolygons() {
     //     .setPaintProperty('district-polygons-line', 'line-opacity', 0.2)
         .setLayoutProperty('us-states-line', 'visibility', 'visible')
         .setLayoutProperty('district-points', 'visibility', 'none')
-    $buttonPolygons.classList.add('selected');
-    $buttonDots.classList.remove('selected');
+    // $buttonPolygons.classList.add('selected');
+    // $buttonDots.classList.remove('selected');
 }
 
 function loadLowerHouse() {
-    $buttonHouse.classList.add('selected');
-    $buttonSenate.classList.remove('selected');
+    // $buttonHouse.classList.add('selected');
+    // $buttonSenate.classList.remove('selected');
     houseName = 'lower';
     loadMap();
     // if (map.getZoom() > zoomThreshold) {
@@ -115,8 +119,8 @@ function loadLowerHouse() {
 }
 
 function loadUpperHouse() {
-    $buttonSenate.classList.add('selected');
-    $buttonHouse.classList.remove('selected');
+    // $buttonSenate.classList.add('selected');
+    // $buttonHouse.classList.remove('selected');
     houseName = 'upper';
     loadMap();
     map.setLayoutProperty('us-states-fill', 'visibility', 'visible')
@@ -557,7 +561,7 @@ const loadMap = function() {
             layout: {
                 visibility: styleMode === 'polygons' ? 'none' : 'visible',
             },
-            'filter' : ['==', 'which_house', houseName]
+            // 'filter' : ['==', 'which_house', houseName]
         }
     );
 
@@ -669,7 +673,7 @@ map.on('load', function() {
     // loadPolygons();
     loadDots();
     // show lower house by default
-    loadLowerHouse();
+    // loadLowerHouse();
 
     // when we first load the map, make sure only the states are visible, not the districts
     map.setLayoutProperty('us-states-fill', 'visibility', 'visible')
