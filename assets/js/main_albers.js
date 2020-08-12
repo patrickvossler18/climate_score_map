@@ -1,6 +1,10 @@
 mapboxgl.accessToken = 
 'pk.eyJ1IjoicGF0cmlja3Zvc3NsZXIiLCJhIjoiY2tjMHd0eTFrMHphMjJybG0yOTU1dDEzZyJ9.FsIqtdsHIru8Ay_0zmZYHw';
 
+// District Data comes from a var imported from top_20.js in index.html.
+// Here, we convert it from a dict of key to value to an array without the
+// key, since we don't need it.
+district_data = Object.values(district_data); 
 
 var mapOrigin = {
     zoom: 3.48,
@@ -212,7 +216,12 @@ const onDistrictClick = function(e) {
     var district_properties = e.features[0].properties;
   
     // TODO - Fill in real data here once we have it.
-    var is_incumbent = district_properties.incumbent_lifetime_score > district_properties.opponent_lifetime_score;
+    var is_incumbent = false;
+    if (district_properties.incumbent_lifetime_score && district_properties.oponent_lifetime_score) {
+       is_incumbent = district_properties.incumbent_lifetime_score > district_properties.opponent_lifetime_score;
+    } else if (district_properties.incumbent_lifetime_score) {
+	is_incumbent = true;
+   }
     // TBD: for deciding action needed, we can compare lifetime scores?
 
     // only saying which party won
@@ -250,8 +259,10 @@ const onDistrictClick = function(e) {
 
 
     // TBD: do we have data on local election results?
-    var race_label = "\"tossup\"";
-    reps += '<br><p class="paragraph-4">This race is a ' + race_label + '. ' + prev_winner + ' won it by ' + prev_winner_percent + '% in ' + prev_election_year+'. </p>'; 
+    if (prev_winner && prev_winner_percent && prev_election_year) {
+    	var race_label = "\"tossup\"";
+    	reps += '<br><p class="paragraph-4">This race is a ' + race_label + '. ' + prev_winner + ' won it by ' + prev_winner_percent + '% in ' + prev_election_year+'. </p>'; 
+    }
 
     var key_votes = "[Examples of key climate votes]";    
     reps += '<br><p class="paragraph-4> ' + candidate_name + ' has voted ' + key_votes + '. </p>';
@@ -270,63 +281,70 @@ const getDistrictShapes = function(district, albers=false) {
     // TODO: Handle upper and lower legislatures
     // TODO: Select shape based on year
    return district['shapes'].map(function(shape,i){
-        return({
-                "type" : "Feature",
-                "id": i + 1, // doing this to avoid 0 == false in Javascript
-                "properties": {
-                    "state": district['state_abbr'],
-                    "district_code": district['district_code'],
-                    "name": district['name'],
-                    "which_house" : district['ccid'].indexOf("L") > -1 ? "lower" : "upper",
-                    // incumbent info
-                    "incumbent_name": district['incumbent']['name'],
-                    "incumbent_donate_url": district['incumbent']['donation_link'],
-                    "incumbent_lifetime_score": district['incumbent']['lifetime_score'],
-                    // opponent_info
-                    "opponent_name": district["opponent"]['name'],
-                    "opponent_donate_url": district["opponent"]['donation_link'],
-                    "opponent_lifetime_score": district["opponent"]['lifetime_score'],
-                    "climate_cabinet_ranking": district['cc_ranking'],                    
-                    // election info (assuming most recent national election first in the array)
-                    "prev_natl_election_winner": (district.elections[0]["dem_prop"] > district.elections[0]["rep_prop"]) ? "Democrats" : "Republicans",
-                    "prev_natl_election_winner_percent": Math.abs(district.elections[0]["dem_prop"] - district.elections[0]["rep_prop"]),
-                    "prev_natl_election_year": district.elections[0]['year']
-                },
-                "geometry" : (albers ? projectToAlbersUsa(shape['geometry']) : shape['geometry'])
-            })
-        })
+        var response = {};
+        response.type = "Feature";
+        response.id = i + 1 // doing this to avoid 0 == false in Javascript
+        response.properties = {};
+        response.properties.state = district.state_abbr;
+        response.properties.district_code = district.district_code;
+        response.properties.name = district.name;
+        response.properties.which_house = district.ccid.indexOf("L") > -1 ? "lower" : "upper";
+	response.properties.climate_cabinet_ranking = district.cc_ranking;
+        if (district.elections && district.elections[0]) {
+		response.properties.prev_natl_election_winner = (district.elections[0]["dem_prop"] > district.elections[0]["rep_prop"]) ? "Democrats" : "Republicans";
+		response.properties.prev_natl_election_winner_percent = Math.abs(district.elections[0]["dem_prop"] - district.elections[0]["rep_prop"]);
+     		response.properties.prev_natl_election_year = district.elections[0].year;
+       } 
+       if (district.incumbent) {
+		var incumbent = district.incumbent;
+		response.properties.incumbent_name = incumbent.name;
+        	response.properties.incumbent_lifetime_score = incumbent.lifetime_score;
+		response.properties.incumbent_donate_url = incumbent.donation_link;
+	} 
+        if (district.opoonent) {
+		var opponent = district.opponent;
+		response.properties.opponent_name = opponent.name;
+		response.properties.opponent_lifetime_score = opponent.lifetime_score;
+		response.properties.opponent_donate_url = district.opponent.donation_link;
+        }
+        response.geometry =  (albers ? projectToAlbersUsa(shape['geometry']) : shape['geometry']);
+        return response;
+    })
 };
 
 const getDistrictCentroid = function(district, albers=false){
     // TODO: Handle upper and lower legislatures
     // TODO: Select shape based on year. Currently assuming we only have one shape in the array
     return district['shapes'].map(function(shape,i){
-        return({
-                "type" : "Feature",
-                "id": i + 1, // doing this to avoid 0 == false in Javascript
-                "properties": {
-                    "state": district['state_abbr'],
-                    "district_code": district['district_code'],
-                    "name": district['name'],
-                    "which_house" : district['ccid'].indexOf("L") > -1 ? "lower" : "upper",
-                    // incumbent info
-                    "incumbent_name": district['incumbent']['name'],
-                    "incumbent_donate_url": district['incumbent']['donation_link'],
-                    "incumbent_lifetime_score": district['incumbent']['lifetime_score'],
-                    // opponent_info
-                    "opponent_name": district["opponent"]['name'],
-                    "opponent_donate_url": district["opponent"]['donation_link'],
-                    "opponent_lifetime_score": district["opponent"]['lifetime_score'],
-                    "climate_cabinet_ranking": district['cc_ranking'],
-                    "climate_cabinet_score": district['cc_score'],
-                    // election info (assuming most recent national election first in the array)
-                    "prev_natl_election_winner": (district.elections[0]["dem_prop"] > district.elections[0]["rep_prop"]) ? "Democrats" : "Republicans",
-                    "prev_natl_election_winner_percent": (district.elections[0]["dem_prop"] > district.elections[0]["rep_prop"]) ? district.elections[0]["dem_prop"] : district.elections[0]["rep_prop"],
-                    "prev_natl_election_year": district.elections[0]['year']
-                },
-                "geometry" : (albers ? getCentroid(projectToAlbersUsa(shape['geometry'])) : getCentroid(shape['geometry']))
-            })
-        })
+        var response = {};
+        response.type = "Feature";
+        response.id = i + 1 // doing this to avoid 0 == false in Javascript
+        response.properties = {};
+        response.properties.state = district.state_abbr;
+        response.properties.district_code = district.district_code;
+        response.properties.name = district.name;
+        response.properties.which_house = district.ccid.indexOf("L") > -1 ? "lower" : "upper";
+	response.properties.climate_cabinet_ranking = district.cc_ranking;
+        if (district.elections && district.elections[0]) {
+		response.properties.prev_natl_election_winner = (district.elections[0]["dem_prop"] > district.elections[0]["rep_prop"]) ? "Democrats" : "Republicans";
+		response.properties.prev_natl_election_winner_percent = Math.abs(district.elections[0]["dem_prop"] - district.elections[0]["rep_prop"]);
+     		response.properties.prev_natl_election_year = district.elections[0].year;
+       } 
+       if (district.incumbent) {
+		var incumbent = district.incumbent;
+		response.properties.incumbent_name = incumbent.name;
+        	response.properties.incumbent_lifetime_score = incumbent.lifetime_score;
+		response.properties.incumbent_donate_url = incumbent.donation_link;
+	} 
+        if (district.opoonent) {
+		var opponent = district.opponent;
+		response.properties.opponent_name = opponent.name;
+		response.properties.opponent_lifetime_score = opponent.lifetime_score;
+		response.properties.opponent_donate_url = district.opponent.donation_link;
+        }
+        response.geometry = (albers ? getCentroid(projectToAlbersUsa(shape.geometry)) : getCentroid(shape.geometry));
+        return response;
+    })
 };
 
 const projectToAlbersUsa = function(geometry){
@@ -379,21 +397,23 @@ const getCentroid = function(geometry) {
     var polygon;
     var latitude;
     var longitude;
-
     for (var i = 0; i < geometry.coordinates.length; i++) {
         if (geometry.coordinates.length === 1) {
-            // Polygon coordinates[0][nodes]
-            polygon = geometry.coordinates[0];
+           // Polygon coordinates[0][nodes]
+           polygon = geometry.coordinates[0];
         } else {
             // Polygon coordinates[poly][0][nodes]
+	    // HACK - Currently, some data is not formatted the same as others.
+	    // So skip it for now.
+	    return null;
             polygon = geometry.coordinates[i][0];
         }
-
         for (var j = 0; j < polygon.length; j++) {
             longitude = polygon[j][0];
             latitude = polygon[j][1];
             poly_bounds.push([longitude,latitude])
         }
+
     }
     var outline = turf.polygon([poly_bounds]);
     return turf.centroid(outline)['geometry'];

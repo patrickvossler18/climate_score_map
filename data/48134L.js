@@ -1,4 +1,4 @@
-var district_data =  [
+var fake_district_data =  [
   {
   "_id": "5f0398966e28263037fb71ce",
   "_cls": "Region.StateLegDistLower",
