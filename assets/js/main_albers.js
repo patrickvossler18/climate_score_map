@@ -34,11 +34,6 @@ if (embed === 'true') {
     map.resize();
 }
 
-// var $buttonDots = document.getElementById('button-dots');
-// var $buttonPolygons = document.getElementById('button-polygon');
-// var $buttonHouse = document.getElementById('button-house');
-// var $buttonSenate = document.getElementById('button-senate');
-
 var circleOpacity = ['interpolate', ['linear'], ['zoom'], 0, 0.15, 3, 0.15, 6, 0.9];
 var lineOpacity = ['interpolate', ['linear'], ['zoom'], 0, 0, 4, 0, 6, 0.05];
 
@@ -80,65 +75,9 @@ var popup = document.getElementById("floating-card");
 function loadDots() {
     styleMode = 'dots';
     map
-    // .setPaintProperty('district-polygons-fill', 'fill-opacity', 0)
-    //     .setPaintProperty('district-polygons-line', 'line-opacity', lineOpacity)
-    //     .setLayoutProperty('district-polygons-line', 'visibility', 'visible')
         .setLayoutProperty('district-points', 'visibility', 'visible')
-    // $buttonDots.classList.add('selected');
-    // $buttonPolygons.classList.remove('selected');
 }
 
-function loadPolygons() {
-    styleMode = 'polygons';
-    map
-    // .setPaintProperty('district-polygons-fill', 'fill-opacity', 0.6)
-    //     .setPaintProperty('district-polygons-line', 'line-opacity', 0.2)
-        .setLayoutProperty('us-states-line', 'visibility', 'visible')
-        .setLayoutProperty('district-points', 'visibility', 'none')
-    // $buttonPolygons.classList.add('selected');
-    // $buttonDots.classList.remove('selected');
-}
-
-function loadLowerHouse() {
-    // $buttonHouse.classList.add('selected');
-    // $buttonSenate.classList.remove('selected');
-    houseName = 'lower';
-    loadMap();
-    // if (map.getZoom() > zoomThreshold) {
-   
-        // map.setLayoutProperty('us-states-fill', 'visibility', 'none')
-        // map.setLayoutProperty('district-polygons-fill', 'visibility', 'visible')
-        // map.setLayoutProperty('district-polygons-line', 'visibility', 'visible')
-        
-        map.setLayoutProperty('us-states-fill', 'visibility', 'visible')
-           .setLayoutProperty('district-points', 'visibility', 'visible')
-        // map.setLayoutProperty('district-polygons-fill', 'visibility', 'none')
-        // map.setLayoutProperty('district-polygons-line', 'visibility', 'none')
-    //     .setLayoutProperty('district-points', 'visibility', 'none')
-        
-    // }
-}
-
-function loadUpperHouse() {
-    // $buttonSenate.classList.add('selected');
-    // $buttonHouse.classList.remove('selected');
-    houseName = 'upper';
-    loadMap();
-    map.setLayoutProperty('us-states-fill', 'visibility', 'visible')
-        .setLayoutProperty('district-points', 'visibility', 'visible')
-    // if (map.getZoom() > zoomThreshold) {
-    //     map.setLayoutProperty('us-states-fill', 'visibility', 'none')
-    //     map.setLayoutProperty('district-polygons-fill', 'visibility', 'visible')
-    //     map.setLayoutProperty('district-polygons-line', 'visibility', 'visible')
-    //     .setLayoutProperty('district-points', 'visibility', 'visible')
-    // } else {
-    //     map.setLayoutProperty('us-states-fill', 'visibility', 'visible')
-    //     map.setLayoutProperty('district-polygons-fill', 'visibility', 'none')
-    //     map.setLayoutProperty('district-polygons-line', 'visibility', 'none')
-    //     .setLayoutProperty('district-points', 'visibility', 'none')
-        
-    // }
-}
 
 // When viewing at state level
 const onMouseMoveState = function(e){
@@ -201,7 +140,6 @@ const onMouseMoveDistrict = function(e) {
 
 // When viewing at district level
 const onMouseLeaveDistrict = function() {
-    // map.getCanvas().style.cursor = '';
     if (hoveredStateId) {
         map.setFeatureState(
             { source: 'state_districts_pts', id: hoveredStateId },
@@ -280,41 +218,6 @@ const onDistrictClick = function(e) {
         { source: 'state_districts_pts', id: hoveredStateId },
         { hover: true }
     );
-};
-
-const getDistrictShapes = function(district, albers=false) {
-    // TODO: Handle upper and lower legislatures
-    // TODO: Select shape based on year
-   return district['shapes'].map(function(shape,i){
-        var response = {};
-        response.type = "Feature";
-        response.id = i + 1 // doing this to avoid 0 == false in Javascript
-        response.properties = {};
-        response.properties.state = district.state_abbr;
-        response.properties.district_code = district.district_code;
-        response.properties.name = district.name;
-        response.properties.which_house = district.ccid.indexOf("L") > -1 ? "lower" : "upper";
-	response.properties.climate_cabinet_ranking = district.cc_ranking;
-        if (district.elections && district.elections[0]) {
-		response.properties.prev_natl_election_winner = (district.elections[0]["dem_prop"] > district.elections[0]["rep_prop"]) ? "Democrats" : "Republicans";
-		response.properties.prev_natl_election_winner_percent = Math.abs(district.elections[0]["dem_prop"] - district.elections[0]["rep_prop"]);
-     		response.properties.prev_natl_election_year = district.elections[0].year;
-       } 
-       if (district.incumbent) {
-		var incumbent = district.incumbent;
-		response.properties.incumbent_name = incumbent.name;
-        	response.properties.incumbent_lifetime_score = incumbent.lifetime_score;
-		response.properties.incumbent_donate_url = incumbent.donation_link;
-	} 
-        if (district.opoonent) {
-		var opponent = district.opponent;
-		response.properties.opponent_name = opponent.name;
-		response.properties.opponent_lifetime_score = opponent.lifetime_score;
-		response.properties.opponent_donate_url = district.opponent.donation_link;
-        }
-        response.geometry =  (albers ? projectToAlbersUsa(shape['geometry']) : shape['geometry']);
-        return response;
-    })
 };
 
 const getDistrictCentroid = function(district, albers=false){
@@ -423,26 +326,6 @@ const getCentroid = function(geometry) {
     var outline = turf.polygon([poly_bounds]);
     return turf.centroid(outline)['geometry'];
 }
-
-// map.on('zoom', function() {
-//     if (map.getZoom() > zoomThreshold) {
-//         // If the user is zoomed in past our threshold, show the individual districts
-//         map.setLayoutProperty('us-states-fill', 'visibility', 'none')
-//         map.setLayoutProperty('district-polygons-fill', 'visibility', 'visible')
-//         map.setLayoutProperty('district-polygons-line', 'visibility', 'visible')
-//         map.setLayoutProperty('district-points', 'visibility', 'visible')
-//     } else {
-//         map.setLayoutProperty('us-states-fill', 'visibility', 'visible')
-//         map.setLayoutProperty('district-polygons-fill', 'visibility', 'none')
-//         map.setLayoutProperty('district-polygons-line', 'visibility', 'none')
-//         map.setLayoutProperty('district-points', 'visibility', 'none')
-//         onMouseLeaveDistrict();
-        
-//     }
-// });
-
-
-
 
 const loadMap = function() {
     map.on('mousemove', 'district-points', function(e) {
@@ -566,14 +449,6 @@ const loadMap = function() {
         }
     );
 
-    // map.setFilter('district-points', 
-    //     ['match',
-    //     ['get', 'which_house'], 
-    //     district_data.map(district => district.state_abbr),
-    //     true,
-    //     false 
-    // ])
-
 };
 
 map.on('load', function() {
@@ -583,8 +458,6 @@ map.on('load', function() {
         data: us_states_id_albers[0]
     });
 
-    
-
     map.addLayer(
         {
             id: 'us-states-fill',
@@ -593,12 +466,6 @@ map.on('load', function() {
             paint: {
                 'fill-color': '#627BC1',
                 'fill-opacity': 0
-                // [
-                // 'case',
-                // ['boolean', ['feature-state', 'hover'], false],
-                // 1,
-                // 0.5
-                // ]
             },
         },
     );
@@ -618,7 +485,6 @@ map.on('load', function() {
             paint: {
                 'line-color': '#000',
                 'line-opacity': 0.9,
-                // 'line-width': ['interpolate', ['linear'], ['zoom'], 0, 1, 4, 2, 6, 4, 8, 6],
                 'line-width': [
                     'case',
                     ['boolean', ['feature-state', 'hover'], false],
@@ -649,17 +515,6 @@ map.on('load', function() {
         return features;
     }
 
-    map.addSource('state_districts',{
-        type: 'geojson',
-        data: {
-                'type': 'FeatureCollection',
-                'features': flattenDistrictDataIntoGeoJSON(
-                    district_data.map(district => getDistrictShapes(district, true))
-                )
-            }
-    });
-
-
     map.addSource('state_districts_pts',{
         type: 'geojson',
         data: {
@@ -671,10 +526,7 @@ map.on('load', function() {
     });
 
     loadMap();
-    // loadPolygons();
     loadDots();
-    // show lower house by default
-    // loadLowerHouse();
 
     // when we first load the map, make sure only the states are visible, not the districts
     map.setLayoutProperty('us-states-fill', 'visibility', 'visible')
