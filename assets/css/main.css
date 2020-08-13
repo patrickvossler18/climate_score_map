@@ -954,3 +954,7 @@ h2 {
 .cc_ranking{
     color: orange;    
 }
+
+.mapxboxgl-canvas {
+    outline: none !important;
+}
