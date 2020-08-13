@@ -47,27 +47,6 @@ var hoveredStateFillId;
 var houseName = 'lower';
 var styleMode = 'polygons';
 
-function getColorByParty(party) {
-    if (['Democrat', 'Democratic-Farmer-Labor', 'Democrat/Progressive'].includes(party))
-        return colorDemocrat;
-    else if (['Republican'].includes(party)) return colorRepublican;
-    else return colorOther;
-}
-
-function politicalColors() {
-    return [
-        'match',
-        ['get', 'political_color'],
-        '1',
-        colorDemocrat,
-        '2',
-        colorRepublican,
-        '3',
-        colorMixed,
-        colorOther,
-    ];
-}
-
 // This popup appears to the right of the map and contains
 // all of the candidate info.
 var popup = document.getElementById("floating-card");
