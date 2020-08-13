@@ -443,8 +443,8 @@ map.on('load', function() {
             type: 'fill',
             source: 'us-states',
             paint: {
-                'fill-color': '#627BC1',
-                'fill-opacity': 0
+                'fill-color': '#c36c27',
+                'fill-opacity': 1
             },
         },
     );
