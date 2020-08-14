@@ -441,14 +441,6 @@ map.on('load', function() {
             },
         },
     );
-    map.setFilter('us-states-fill', 
-        ['match',
-        ['get', 'abbr'], 
-        // remove duplicate states if we have multiple races of interest in the same state
-        [... new Set(district_data.map(district => district.state_abbr))], 
-        true,
-        false 
-    ])
     map.addLayer(
         {
             id: 'us-states-line',
@@ -466,15 +458,6 @@ map.on('load', function() {
             },
         },
     );
-
-    map.setFilter('us-states-fill', 
-        ['match',
-        ['get', 'abbr'], 
-        // remove duplicate states if we have multiple races of interest in the same state
-        [... new Set(district_data.map(district => district.state_abbr))], 
-        true,
-        false 
-    ])
 
     // What's returned is an object, and we need an array of objects.
     const flattenDistrictDataIntoGeoJSON = function(obj) {
