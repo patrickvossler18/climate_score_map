@@ -62,7 +62,6 @@ function loadDots() {
 const onMouseMoveState = function(e){
     if (e.features.length > 0) {
         if (hoveredStateFillId) {
-
             map.setFeatureState(
                 { source: 'us-states', id: hoveredStateFillId },
                 { hover: false }
@@ -137,7 +136,6 @@ const onDistrictClick = function(e) {
     );
     var district_properties = e.features[0].properties;
   
-    // TODO - Fill in real data here once we have it.
     var is_incumbent = false;
     if (district_properties.incumbent_lifetime_score && district_properties.oponent_lifetime_score) {
        is_incumbent = district_properties.incumbent_lifetime_score > district_properties.opponent_lifetime_score;
@@ -150,16 +148,10 @@ const onDistrictClick = function(e) {
     var prev_winner = district_properties.prev_natl_election_winner;
     var prev_winner_percent = Math.round(district_properties.prev_natl_election_winner_percent * 100,2);
     var prev_election_year = district_properties.prev_natl_election_year;
-
-    // we have this in the mock data but not clear how to display this.
-    var donation_name = district_properties.incumbent_lifetime_score < district_properties.opponent_lifetime_score ? district_properties.opponent_name : district_properties.incumbent_name;
-    var donate_link = "<a href = " + donate_url + "> Donate to " + donation_name + " here.</a>";
-
-
-    // This part can (should) be styled differently
+    
     var reps = '';
 
-    // Candidate Image. Not currently populated, so no we sub in the climate cabinet pic.
+    // TODO: Candidate Image. Not currently populated, so no we sub in the climate cabinet pic.
     var img_src = "https://uploads-ssl.webflow.com/5f13afc0ce36dff9a4e6a640/5f1424fd860f156c851130d7_ClimCab-Logo.png";
     reps += '<img width="373" src="' + img_src + '" alt="" sizes="(max-width: 479px) 159.796875px, (max-width: 767px) 37vw, (max-width: 991px) 286px, 373px" class="image-4">';
 
@@ -176,7 +168,8 @@ const onDistrictClick = function(e) {
 
     var action_needed = is_incumbent ? "Flip the seat": "Hold the seat";
     var donate_url = is_incumbent ?
-        district_properties.opponent_donate_url : district_properties.incumbent_donate_url;
+        district_properties.incumbent_donate_url : district_properties.opponent_donate_url;
+    var donate_link = "<a href = " + donate_url + "> Donate to " + candidate_name + " here.</a>";
     reps += '<h6>Action Needed: ' + action_needed + ' -- ' + donate_link + ' </h6>';
 
 
