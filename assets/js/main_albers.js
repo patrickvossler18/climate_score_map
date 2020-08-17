@@ -409,9 +409,9 @@ const loadMap = function() {
                     10, 16
                 ],
                 // 'circle-radius': 20,
-                'circle-stroke-color': colorDemocrat,
+                'circle-stroke-color': '#000',
                 'circle-stroke-width': 0.5,
-                'circle-stroke-opacity': 1
+                'circle-stroke-opacity': 0.75
                 
             },
             layout: {
