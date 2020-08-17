@@ -401,7 +401,7 @@ const loadMap = function() {
                 0.4
                 ],
                 // 'circle-opacity': 0.9,
-                'circle-color': colorDemocrat,
+                'circle-color': '#000',
                 'circle-radius': ['interpolate', ['linear'], ['zoom'],
                     // When zoom is x, circle radius will be y
                     // x,y
