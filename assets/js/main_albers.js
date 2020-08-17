@@ -398,7 +398,7 @@ const loadMap = function() {
                 'case',
                 ['boolean', ['feature-state', 'hover'], false],
                 1,
-                0.4
+                0.75
                 ],
                 // 'circle-opacity': 0.9,
                 'circle-color': '#000',
