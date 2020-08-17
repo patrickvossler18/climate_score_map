@@ -447,7 +447,7 @@ map.on('load', function() {
             type: 'line',
             source: 'us-states',
             paint: {
-                'line-color': '#000',
+                'line-color': '#FFF',
                 'line-opacity': 0.9,
                 'line-width': [
                     'case',
