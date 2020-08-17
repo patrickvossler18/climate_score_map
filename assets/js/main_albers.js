@@ -12,12 +12,21 @@ var mapOrigin = {
     // lat: 38,
 };
 
+// got these bounds using map.fitBounds(turf.bbox(us_states_id_albers[0]), {padding: 20});
+var bounds = [
+        [-29.62723161264651, -14.135507266203689],
+        [26.315476155372494,13.760911540652828]
+      ];
+
+
+
 var map = new mapboxgl.Map({
     container: 'map',
     // style: 'mapbox://styles/patrickvossler/ckc0ydvhi5h3v1iodhe5rgsjg', // mercator
     style:"mapbox://styles/patrickvossler/ckcc7fav36ug51iqukp1vt6v8", //albers
     zoom: mapOrigin.zoom,
-    attributionControl: false
+    attributionControl: false,
+    maxBounds: bounds // prevents users from panning and zooming outside of bounding box
 
 });
 
@@ -424,6 +433,7 @@ const loadMap = function() {
 };
 
 map.on('load', function() {
+    map.fitBounds(turf.bbox(us_states_id_albers[0]), {padding: 20});
     map.addSource('us-states', {
         type: 'geojson',
         // data: '/data/us-states-id.json',
