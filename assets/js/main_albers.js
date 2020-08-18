@@ -175,19 +175,21 @@ const onDistrictClick = function(e) {
 
     // TODO: Candidate Image. Not currently populated, so no we sub in the climate cabinet pic.
     var img_src = "https://uploads-ssl.webflow.com/5f13afc0ce36dff9a4e6a640/5f1424fd860f156c851130d7_ClimCab-Logo.png";
-    reps += '<div class="img-div">' + '<img src="' + img_src + '" alt="" class="image-11"></div>';
+    reps += '<div class="photo-div">' + '<img src="' + img_src + '" alt="" class="image-11"></div>';
 
     var candidate_name = is_incumbent ? district_properties.incumbent_name : district_properties.opponent_name;
 
     var district = district_properties.name;
-    // First major div chunk.
+    // Basic Candidate Info
     reps += '<div class="candidate-info">' + 
             '<img src="https://uploads-ssl.webflow.com/5f149275ce02e1caf8d6a2ef/5f3419033a168c32da9db220_22_climate-cabinate-icons-' +
             party + '.png" alt="" class="party-logo">' + 
             '<div class="text-block-5">' + (is_incumbent ? 'Incumbent ' : 'Candidate') + '</div>' +
             '<h5 class="candidate-name">' + candidate_name + '</h5>' + 
-            '<div class="text-block-4">' + district + '</div>' +
-            '<div class="div-block-11"><div class="columns-2 w-row"><div class="w-col w-col-6">' +
+            '<div class="text-block-4">' + district + '</div></div>';
+
+    // Climate Cabinet Scores for Candidate
+    reps += '<div class="div-block-11"><div class="columns-2 w-row"><div class="w-col w-col-6">' +
             // Climate Cabinet Score
             '<img src="https://uploads-ssl.webflow.com/5f13afc0ce36dff9a4e6a640/5f37f70dc3b70c05d3c1213a_Icons-Score-Grey.png"' +
             ' alt="" class="image-9"><div class="icon-name">Climate Cabinet Score</div><div class="text-block-7">' +
