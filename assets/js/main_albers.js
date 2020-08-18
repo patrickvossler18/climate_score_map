@@ -190,9 +190,9 @@ const onDistrictClick = function(e) {
     reps += '<div class="candidate-info">' + 
             '<img src="https://uploads-ssl.webflow.com/5f149275ce02e1caf8d6a2ef/5f3419033a168c32da9db220_22_climate-cabinate-icons-' +
             party + '.png" alt="" class="party-logo">' + 
-            '<div class="text-block-5">' + (is_incumbent ? 'Incumbent ' : 'Candidate') + '</div>' +
-            '<h5 class="candidate-name">' + candidate_name + '</h5>' + 
-            '<div class="text-block-4">' + district + '</div></div>';
+            '<div class="text-block-5" style="align-self:center;justify-self:center;">' + (is_incumbent ? 'Incumbent ' : 'Candidate') + '</div>' +
+            '<h5 class="candidate-name" style="align-self:center;justify-self:center;">' + candidate_name + '</h5>' + 
+            '<div class="text-block-4" style="align-self:center;justify-self:center;">' + district + '</div></div>';
 
     // Climate Cabinet Scores for Candidate
     reps += '<div class="div-block-11"><div class="columns-2 w-row"><div class="w-col w-col-6">' +
@@ -243,7 +243,6 @@ const onDistrictClick = function(e) {
     // Donate Button
     var donate_url = is_incumbent ?
         district_properties.incumbent_donate_url : district_properties.opponent_donate_url;
-        console.log(donate_url);
     reps +=  '<div class="container-7 w-container"><div class="div-block-17"><a href="/spotlight-legend" target="_blank"' +
              'class="link-block w-inline-block"><div class="div-block-18">' +
              '<img src="https://uploads-ssl.webflow.com/5f13afc0ce36dff9a4e6a640/5f39d82ead458c7c81426b4e_Icons-Info-Grey.png"' + 
