@@ -179,8 +179,8 @@ const onDistrictClick = function(e) {
     // TODO - add this data to dataset?
     var party = "PARTY";
 
-    // TODO: Candidate Image. Not currently populated, so no we sub in the climate cabinet pic.
-    var img_src = "https://uploads-ssl.webflow.com/5f13afc0ce36dff9a4e6a640/5f1424fd860f156c851130d7_ClimCab-Logo.png";
+    // TODO: Candidate Image. Not currently populated, so no we sub in a generic pic.
+    var img_src = "https://uploads-ssl.webflow.com/5f149275ce02e1caf8d6a2ef/5f3419033a168c57f59db21f_22_twitter-avi-gender-balanced-figure.png";
     reps += '<div class="photo-div">' + '<img src="' + img_src + '" alt="" class="image-11"></div>';
 
     var candidate_name = is_incumbent ? district_properties.incumbent_name : district_properties.opponent_name;
