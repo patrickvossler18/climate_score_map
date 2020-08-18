@@ -204,7 +204,7 @@ const onDistrictClick = function(e) {
             '<img src="https://uploads-ssl.webflow.com/5f13afc0ce36dff9a4e6a640/5f37f70c17c81a205af52f7b_Icons-Rank-Grey.png"' +
             'alt="" class="image-12"><div class="icon-name">Climate Cabinet Rank</div><div class="text-block-9">' +
             climate_cabinet_ranking + '</div></div></div></div>' + 
-            '<div class="div-block-12"><div class="columns-2 w-row"><div class="w-col w-col-6">' +
+            '<div class="div-block-12"><div class="columns-2-copy w-row"><div class="w-col w-col-6">' +
             // Candidate status
             '<img src="https://uploads-ssl.webflow.com/5f13afc0ce36dff9a4e6a640/5f37f70d39ae744b0fedb7db_Icons-Trump-Status-Grey.png"' +
             ' alt="" class="image-9"><div class="icon-name">Climate Cabinet Score</div><div class="text-block-7">' +
