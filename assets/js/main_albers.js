@@ -4,7 +4,7 @@ mapboxgl.accessToken =
 // District Data comes from a var imported from top_20.js in index.html.
 // Here, we convert it from a dict of key to value to an array without the
 // key, since we don't need it.
-district_data = Object.values(district_data); 
+district_data = Object.values(top_district_data).concat(Object.values(bottom_district_data)); 
 
 var mapOrigin = {
     zoom: 3.48,
@@ -146,47 +146,107 @@ const onDistrictClick = function(e) {
     var district_properties = e.features[0].properties;
   
     var is_incumbent = false;
-    if (district_properties.incumbent_lifetime_score && district_properties.oponent_lifetime_score) {
-       is_incumbent = district_properties.incumbent_lifetime_score > district_properties.opponent_lifetime_score;
+    if (district_properties.incumbent_lifetime_score &&
+        district_properties.oponent_lifetime_score) {
+        is_incumbent =
+            district_properties.incumbent_lifetime_score >
+                district_properties.opponent_lifetime_score;
+
     } else if (district_properties.incumbent_lifetime_score) {
-	is_incumbent = true;
-   }
+	   is_incumbent = true;
+    }
     // TBD: for deciding action needed, we can compare lifetime scores?
 
-    // only saying which party won
+    // only saying which party won, take the first character.
     var prev_winner = district_properties.prev_natl_election_winner;
+    if (prev_winner) {
+        prev_winner = prev_winner[0];
+    } else {
+        prev_winner = "-";
+    }
+
     var prev_winner_percent = Math.round(district_properties.prev_natl_election_winner_percent * 100,2);
+    if (!prev_winner_percent) {
+        prev_winner_percent = "-";
+    }
     var prev_election_year = district_properties.prev_natl_election_year;
+
+    var climate_cabinet_ranking = district_properties.climate_cabinet_ranking;
+    var climate_cabinet_score = district_properties.climate_cabinet_score;
     
     var reps = '';
 
-    // TODO: Candidate Image. Not currently populated, so no we sub in the climate cabinet pic.
-    var img_src = "https://uploads-ssl.webflow.com/5f13afc0ce36dff9a4e6a640/5f1424fd860f156c851130d7_ClimCab-Logo.png";
-    reps += '<img width="373" src="' + img_src + '" alt="" sizes="(max-width: 479px) 159.796875px, (max-width: 767px) 37vw, (max-width: 991px) 286px, 373px" class="image-4">';
+    // TODO - add this data to dataset and use the correct icon.
+    var party = "democrat";
+
+    // TODO: Candidate Image. Not currently populated, so no we sub in a generic pic.
+    var img_src = "https://uploads-ssl.webflow.com/5f149275ce02e1caf8d6a2ef/5f3419033a168c57f59db21f_22_twitter-avi-gender-balanced-figure.png";
+    reps += '<div class="photo-div">' + '<img src="' + img_src + '" alt="" class="image-11"></div>';
 
     var candidate_name = is_incumbent ? district_properties.incumbent_name : district_properties.opponent_name;
 
-    var district = district_properties.name;    
-    reps += '<h5 class="card_intro heading-4">' + candidate_name + ', ' + 
-        (is_incumbent ? 'incumbent ' : 'candidate') + ' for ' + district + '</h5>';
+    var district = district_properties.state + " " + district_properties.name;
+    // Basic Candidate Info
+    reps += '<div class="candidate-info">' + 
+            '<img src="https://uploads-ssl.webflow.com/5f149275ce02e1caf8d6a2ef/5f3419033a168c32da9db220_22_climate-cabinate-icons-' +
+            party + '.png" alt="" class="party-logo">' + 
+            '<div class="text-block-5" style="align-self:center;justify-self:center;">' + (is_incumbent ? 'Incumbent ' : 'Candidate') + '</div>' +
+            '<h5 class="candidate-name" style="align-self:center;justify-self:center;">' + candidate_name + '</h5>' + 
+            '<div class="text-block-4" style="align-self:center;justify-self:center;">' + district + '</div></div>';
 
-    reps += '<div class="div-block-2">' + 
-            '<img src="https://uploads-ssl.webflow.com/5f13afc0ce36dff9a4e6a640/5f14e3b5b156a21f896d6fd5_StateChamber.png"' +
-            'width="47" alt="" class="image-5"><div class="text-block-2">Climate Cabinet Ranking: #' +
-            district_properties.climate_cabinet_ranking + ' </div></div>';
+    // Climate Cabinet Scores for Candidate
+    reps += '<div class="div-block-11"><div class="columns-2 w-row"><div class="w-col w-col-6">' +
+            // Climate Cabinet Score
+            '<img src="https://uploads-ssl.webflow.com/5f13afc0ce36dff9a4e6a640/5f37f70dc3b70c05d3c1213a_Icons-Score-Grey.png"' +
+            ' alt="" class="image-9"><div class="icon-name">Climate Cabinet Score</div><div class="text-block-7">' +
+            climate_cabinet_score + '</div></div>' + '<div class="w-col w-col-6">' +
+            // Climate Cabinet Ranking
+            '<img src="https://uploads-ssl.webflow.com/5f13afc0ce36dff9a4e6a640/5f37f70c17c81a205af52f7b_Icons-Rank-Grey.png"' +
+            'alt="" class="image-12"><div class="icon-name">Climate Cabinet Rank</div><div class="text-block-9">' +
+            climate_cabinet_ranking + '</div></div></div></div>' + 
+            '<div class="div-block-12"><div class="columns-2-copy w-row"><div class="w-col w-col-6">' +
+            // Candidate status
+            '<img src="https://uploads-ssl.webflow.com/5f13afc0ce36dff9a4e6a640/5f37f70d39ae744b0fedb7db_Icons-Trump-Status-Grey.png"' +
+            ' alt="" class="image-9"><div class="icon-name">Climate Cabinet Score</div><div class="text-block-7">' +
+            (is_incumbent ? 'Incumbent ' : 'Candidate') + '</div></div>' + '<div class="w-col w-col-6">' +
+            // Previous election results
+            '<img src="https://uploads-ssl.webflow.com/5f13afc0ce36dff9a4e6a640/5f37f70ddc915b5cbec8c24f_Icons-Trump-Clinton-Grey.png"' +
+            'alt="" class="image-12"><div class="icon-name">Climate Cabinet Rank</div><div class="text-block-9">' +
+            prev_winner + '+' + prev_winner_percent + '%' + '</div></div></div></div>';
 
-    var action_needed = is_incumbent ? "Flip the seat": "Hold the seat";
+    // Voting history.
+    // TODO - Voting Info data in js?
+    var vote1_text = "Test Vote Plz Ignore";
+    var vote2_text = "test Vote Plz Ignore";
+    var vote3_text = "Test Vote Plz Ignore";
+    // TODO - Uncomment or remove when we make a decision on votes.
+    /* reps +=  '<div class="vote-div"><div class="columns w-row"><div class="column-9 w-col w-col-2 w-col-small-4 w-col-tiny-4">' +
+             '<img src="https://uploads-ssl.webflow.com/5f13afc0ce36dff9a4e6a640/5f37f70dde15692d312cf715_Icons-Trump-Vote-Grey.png" alt="" class="image-13">' + 
+             '</div><div class="column-7 w-col w-col-6 w-col-small-4 w-col-tiny-4"><div class="text-block-3">' + 
+             'Representatives Climate Voting History</div></div><div class="column-8 w-col w-col-4 w-col-small-4 w-col-tiny-4">' + 
+             '<a href="https://www.google.com" target="_blank" class="link">Vote Info</a></div></div></div>' +
+             '<div data-duration-in="300" data-duration-out="100" class="tabs w-tabs"><div class="tabs-menu w-tab-menu" role="tablist">' + 
+             '<a data-w-tab="Tab 1" class="tab-link-tab-1 w-inline-block w-tab-link w--current" id="w-tabs-19-data-w-tab-0"' +
+             'href="#w-tabs-19-data-w-pane-0" role="tab" aria-controls="w-tabs-19-data-w-pane-0" aria-selected="true">' + 
+             '<div class="text-block-10">1</div></a><a data-w-tab="Tab 2" class="w-inline-block w-tab-link" tabindex="-1"' +
+             'id="w-tabs-19-data-w-tab-1" href="#w-tabs-19-data-w-pane-1" role="tab" aria-controls="w-tabs-19-data-w-pane-1"' +
+             'aria-selected="false"><div class="text-block-11">2</div></a><a data-w-tab="Tab 3" class="tab-link-tab-3 w-inline-block w-tab-link"' + 
+             ' tabindex="-1" id="w-tabs-19-data-w-tab-2" href="#w-tabs-19-data-w-pane-2" role="tab" aria-controls="w-tabs-19-data-w-pane-2"' + 
+             ' aria-selected="false"><div class="text-block-12">3</div></a></div><div class="tabs-content w-tab-content">' +
+             ' <div data-w-tab="Tab 1" class="tab-pane-tab-1 w-tab-pane w--tab-active" id="w-tabs-19-data-w-pane-0" role="tabpanel"' +
+             ' aria-labelledby="w-tabs-19-data-w-tab-0"><p class="paragraph-4">' + vote1_text + '</p>' + 
+             '</div><div data-w-tab="Tab 2" class="tab-pane-tab-2 w-tab-pane" id="w-tabs-19-data-w-pane-1" role="tabpanel" ' + 
+             'aria-labelledby="w-tabs-19-data-w-tab-1"><p class="paragraph-4">' + vote2_text + '</p>' +
+             '</div><div data-w-tab="Tab 3" class="tab-pane-tab-3 w-tab-pane" id="w-tabs-19-data-w-pane-2" role="tabpanel" ' +
+             'aria-labelledby="w-tabs-19-data-w-tab-2"><p class="paragraph-4">' + vote3_text + '</p></div></div></div>'; */
+
+    // Donate Button
     var donate_url = is_incumbent ?
         district_properties.incumbent_donate_url : district_properties.opponent_donate_url;
-    var donate_link = "<a href = " + donate_url + "> Donate to " + candidate_name + " here.</a>";
-    reps += '<h6>Action Needed: ' + action_needed + ' -- ' + donate_link + ' </h6>';
-
-
-    // TBD: do we have data on local election results?
-    if (prev_winner && prev_winner_percent && prev_election_year) {
-    	var race_label = "\"tossup\"";
-    	reps += '<br><p class="paragraph-4">This race is a ' + race_label + '. ' + prev_winner + ' won it by ' + prev_winner_percent + '% in ' + prev_election_year+'. </p>'; 
-    }
+    reps +=  '<div class="container-7 w-container"><div class="div-block-17"><a href="/spotlight-legend" target="_blank"' +
+             'class="link-block w-inline-block"><div class="div-block-18">' +
+             '<img src="https://uploads-ssl.webflow.com/5f13afc0ce36dff9a4e6a640/5f39d82ead458c7c81426b4e_Icons-Info-Grey.png"' + 
+             'alt="" class="image-16"></div></a><a href="' + donate_url + '" class="button-3 w-button">ActBlue</a></div></div>';
 
     var key_votes = "[Examples of key climate votes]";    
     reps += '<br><p class="paragraph-4> ' + candidate_name + ' has voted ' + key_votes + '. </p>';
@@ -213,25 +273,30 @@ const getDistrictCentroid = function(district, albers=false){
         response.properties.district_code = district.district_code;
         response.properties.name = district.name;
         response.properties.which_house = district.ccid.indexOf("L") > -1 ? "lower" : "upper";
-	response.properties.climate_cabinet_ranking = district.cc_ranking;
+        response.properties.climate_cabinet_ranking = district.cc_ranking;
+        response.properties.climate_cabinet_score = district.cc_score;
         if (district.elections && district.elections[0]) {
-		response.properties.prev_natl_election_winner = (district.elections[0]["dem_prop"] > district.elections[0]["rep_prop"]) ? "Democrats" : "Republicans";
-		response.properties.prev_natl_election_winner_percent = Math.abs(district.elections[0]["dem_prop"] - district.elections[0]["rep_prop"]);
-     		response.properties.prev_natl_election_year = district.elections[0].year;
-       } 
-       if (district.incumbent) {
-		var incumbent = district.incumbent;
-		response.properties.incumbent_name = incumbent.name;
-        	response.properties.incumbent_lifetime_score = incumbent.lifetime_score;
-		response.properties.incumbent_donate_url = incumbent.donation_link;
-	} 
+            response.properties.prev_natl_election_winner = (district.elections[0]["dem_prop"] > district.elections[0]["rep_prop"]) ? "Democrats" : "Republicans";
+            response.properties.prev_natl_election_winner_percent = Math.abs(district.elections[0]["dem_prop"] - district.elections[0]["rep_prop"]);
+        		response.properties.prev_natl_election_year = district.elections[0].year;
+        } 
+        if (district.incumbent) {
+            var incumbent = district.incumbent;
+            response.properties.incumbent_name = incumbent.name;
+            response.properties.incumbent_lifetime_score = incumbent.lifetime_score;
+            response.properties.incumbent_donate_url = incumbent.donation_link;
+            response.properties.incumbent_votes = incumbent.votes;
+        } 
         if (district.opoonent) {
-		var opponent = district.opponent;
-		response.properties.opponent_name = opponent.name;
-		response.properties.opponent_lifetime_score = opponent.lifetime_score;
-		response.properties.opponent_donate_url = district.opponent.donation_link;
+            var opponent = district.opponent;
+            response.properties.opponent_name = opponent.name;
+            response.properties.opponent_lifetime_score = opponent.lifetime_score;
+            response.properties.opponent_donate_url = district.opponent.donation_link;
         }
         response.geometry = (albers ? getCentroid(projectToAlbersUsa(shape.geometry)) : getCentroid(shape.geometry));
+        if (response.geometry == null) {
+            console.log("No geometry data for " + candidate_name);
+        }
         return response;
     })
 };
@@ -286,24 +351,23 @@ const getCentroid = function(geometry) {
     var polygon;
     var latitude;
     var longitude;
-    for (var i = 0; i < geometry.coordinates.length; i++) {
-        if (geometry.coordinates.length === 1) {
-           // Polygon coordinates[0][nodes]
-           polygon = geometry.coordinates[0];
-        } else {
-            // Polygon coordinates[poly][0][nodes]
-	    // HACK - Currently, some data is not formatted the same as others.
-	    // So skip it for now.
-	    return null;
-            polygon = geometry.coordinates[i][0];
-        }
-        for (var j = 0; j < polygon.length; j++) {
-            longitude = polygon[j][0];
-            latitude = polygon[j][1];
-            poly_bounds.push([longitude,latitude])
-        }
 
+    // No data, something is wrong.
+    if (geometry.coordinates.length === 0 ) return null;
+
+    if (geometry.coordinates.length === 1) {
+       polygon = geometry.coordinates[0];
+    } else {
+        // HACK - This district is non-contiguous, so
+        // just pick a point from it.
+        polygon = geometry.coordinates[0][0];
     }
+    for (var j = 0; j < polygon.length; j++) {
+        longitude = polygon[j][0];
+        latitude = polygon[j][1];
+        poly_bounds.push([longitude,latitude])
+    }
+
     var outline = turf.polygon([poly_bounds]);
     return turf.centroid(outline)['geometry'];
 }

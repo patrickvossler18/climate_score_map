@@ -460,90 +460,6 @@ button {
     left: 420px;
 }
 
-#legend {
-    background-color: #fff;
-    padding: 12px;
-    position: absolute;
-    bottom: 15px;
-    right: 15px;
-    width: 300px;
-    border-radius: 2px;
-    z-index: 1;
-    box-shadow: rgba(67, 90, 111, 0.3) 0px 0px 1px, rgba(67, 90, 111, 0.47) 0px 2px 4px -2px;
-}
-
-#legend h3 {
-    font-size: 18px;
-    margin-top: 0;
-    margin-bottom: -2px;
-    font-weight: 800;
-}
-
-#legend-content {
-    font-size: 14px;
-}
-
-#legend-model {
-    display: none;
-}
-
-#legend-streets {
-    display: none;
-}
-
-#legend-countries {
-    height: 69px;
-    width: 14px;
-    background: linear-gradient(to top, #fde0dd, #fa9fb5, #c51b8a);
-    position: relative;
-}
-
-.legend-top {
-    position: absolute;
-    top: 0;
-    line-height: 0.9;
-}
-
-.legend-middle {
-    position: absolute;
-    top: 28px;
-    line-height: 0.9;
-}
-
-.legend-bottom {
-    position: absolute;
-    top: 57px;
-    line-height: 0.9;
-}
-
-.legend-item {
-    margin-bottom: 4px;
-    width: 120px;
-    display: inline-block;
-}
-
-.legend-items {
-    transform: translateX(20px);
-    height: 100%;
-    color: #444;
-    font-size: 14px;
-}
-
-.legend-color {
-    width: 13px;
-    height: 13px;
-    display: inline-block;
-    background-color: #ccc;
-    position: relative;
-    top: 1px;
-    margin-right: 4px;
-    border-radius: 100px;
-}
-
-.legend-label {
-    display: inline-block;
-}
-
 .container {
     max-width: 900px;
     margin-left: auto;
@@ -941,7 +857,7 @@ h2 {
 }
 
 .map-div{
-    height: 550px;
+    height: 650px;
     width: 100%;
     position: relative;
     float: left;
@@ -957,4 +873,15 @@ h2 {
 
 .mapboxgl-canvas {
     outline: none !important;
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+#floating-card::-webkit-scrollbar{
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+#floating-card {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
 }
