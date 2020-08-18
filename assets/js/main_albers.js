@@ -161,8 +161,14 @@ const onDistrictClick = function(e) {
     var prev_winner = district_properties.prev_natl_election_winner;
     if (prev_winner) {
         prev_winner = prev_winner[0];
+    } else {
+        prev_winner = "???";
     }
+
     var prev_winner_percent = Math.round(district_properties.prev_natl_election_winner_percent * 100,2);
+    if (!prev_winner_percent) {
+        prev_winner_percent = "0";
+    }
     var prev_election_year = district_properties.prev_natl_election_year;
 
     var climate_cabinet_ranking = district_properties.climate_cabinet_ranking;
@@ -206,8 +212,7 @@ const onDistrictClick = function(e) {
             // Previous election results
             '<img src="https://uploads-ssl.webflow.com/5f13afc0ce36dff9a4e6a640/5f37f70ddc915b5cbec8c24f_Icons-Trump-Clinton-Grey.png"' +
             'alt="" class="image-12"><div class="icon-name">Climate Cabinet Rank</div><div class="text-block-9">' +
-            prev_winner + '+' + prev_winner_percent + "%" +
-            '</div></div></div></div>';
+            prev_winner + '+' + prev_winner_percent + '%' + '</div></div></div></div>';
 
     // Voting history.
     // TODO - Voting Info data in js?
