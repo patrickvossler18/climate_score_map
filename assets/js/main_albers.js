@@ -162,12 +162,12 @@ const onDistrictClick = function(e) {
     if (prev_winner) {
         prev_winner = prev_winner[0];
     } else {
-        prev_winner = "???";
+        prev_winner = "-";
     }
 
     var prev_winner_percent = Math.round(district_properties.prev_natl_election_winner_percent * 100,2);
     if (!prev_winner_percent) {
-        prev_winner_percent = "0";
+        prev_winner_percent = "-";
     }
     var prev_election_year = district_properties.prev_natl_election_year;
 
@@ -219,7 +219,8 @@ const onDistrictClick = function(e) {
     var vote1_text = "Test Vote Plz Ignore";
     var vote2_text = "test Vote Plz Ignore";
     var vote3_text = "Test Vote Plz Ignore";
-    reps +=  '<div class="vote-div"><div class="columns w-row"><div class="column-9 w-col w-col-2 w-col-small-4 w-col-tiny-4">' +
+    // TODO - Uncomment or remove when we make a decision on votes.
+    /* reps +=  '<div class="vote-div"><div class="columns w-row"><div class="column-9 w-col w-col-2 w-col-small-4 w-col-tiny-4">' +
              '<img src="https://uploads-ssl.webflow.com/5f13afc0ce36dff9a4e6a640/5f37f70dde15692d312cf715_Icons-Trump-Vote-Grey.png" alt="" class="image-13">' + 
              '</div><div class="column-7 w-col w-col-6 w-col-small-4 w-col-tiny-4"><div class="text-block-3">' + 
              'Representatives Climate Voting History</div></div><div class="column-8 w-col w-col-4 w-col-small-4 w-col-tiny-4">' + 
@@ -237,7 +238,7 @@ const onDistrictClick = function(e) {
              '</div><div data-w-tab="Tab 2" class="tab-pane-tab-2 w-tab-pane" id="w-tabs-19-data-w-pane-1" role="tabpanel" ' + 
              'aria-labelledby="w-tabs-19-data-w-tab-1"><p class="paragraph-4">' + vote2_text + '</p>' +
              '</div><div data-w-tab="Tab 3" class="tab-pane-tab-3 w-tab-pane" id="w-tabs-19-data-w-pane-2" role="tabpanel" ' +
-             'aria-labelledby="w-tabs-19-data-w-tab-2"><p class="paragraph-4">' + vote3_text + '</p></div></div></div>';
+             'aria-labelledby="w-tabs-19-data-w-tab-2"><p class="paragraph-4">' + vote3_text + '</p></div></div></div>'; */
 
     // Donate Button
     var donate_url = is_incumbent ?
@@ -273,24 +274,25 @@ const getDistrictCentroid = function(district, albers=false){
         response.properties.district_code = district.district_code;
         response.properties.name = district.name;
         response.properties.which_house = district.ccid.indexOf("L") > -1 ? "lower" : "upper";
-	    response.properties.climate_cabinet_ranking = district.cc_ranking;
+        response.properties.climate_cabinet_ranking = district.cc_ranking;
         response.properties.climate_cabinet_score = district.cc_score;
         if (district.elections && district.elections[0]) {
-		response.properties.prev_natl_election_winner = (district.elections[0]["dem_prop"] > district.elections[0]["rep_prop"]) ? "Democrats" : "Republicans";
-		response.properties.prev_natl_election_winner_percent = Math.abs(district.elections[0]["dem_prop"] - district.elections[0]["rep_prop"]);
-     		response.properties.prev_natl_election_year = district.elections[0].year;
-       } 
-       if (district.incumbent) {
-		var incumbent = district.incumbent;
-		response.properties.incumbent_name = incumbent.name;
-        	response.properties.incumbent_lifetime_score = incumbent.lifetime_score;
-		response.properties.incumbent_donate_url = incumbent.donation_link;
-	} 
+            response.properties.prev_natl_election_winner = (district.elections[0]["dem_prop"] > district.elections[0]["rep_prop"]) ? "Democrats" : "Republicans";
+            response.properties.prev_natl_election_winner_percent = Math.abs(district.elections[0]["dem_prop"] - district.elections[0]["rep_prop"]);
+        		response.properties.prev_natl_election_year = district.elections[0].year;
+        } 
+        if (district.incumbent) {
+            var incumbent = district.incumbent;
+            response.properties.incumbent_name = incumbent.name;
+            response.properties.incumbent_lifetime_score = incumbent.lifetime_score;
+            response.properties.incumbent_donate_url = incumbent.donation_link;
+            response.properties.incumbent_votes = incumbent.votes;
+        } 
         if (district.opoonent) {
-		var opponent = district.opponent;
-		response.properties.opponent_name = opponent.name;
-		response.properties.opponent_lifetime_score = opponent.lifetime_score;
-		response.properties.opponent_donate_url = district.opponent.donation_link;
+            var opponent = district.opponent;
+            response.properties.opponent_name = opponent.name;
+            response.properties.opponent_lifetime_score = opponent.lifetime_score;
+            response.properties.opponent_donate_url = district.opponent.donation_link;
         }
         response.geometry = (albers ? getCentroid(projectToAlbersUsa(shape.geometry)) : getCentroid(shape.geometry));
         if (response.geometry == null) {
