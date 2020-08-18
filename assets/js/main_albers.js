@@ -206,8 +206,8 @@ const onDistrictClick = function(e) {
             // Previous election results
             '<img src="https://uploads-ssl.webflow.com/5f13afc0ce36dff9a4e6a640/5f37f70ddc915b5cbec8c24f_Icons-Trump-Clinton-Grey.png"' +
             'alt="" class="image-12"><div class="icon-name">Climate Cabinet Rank</div><div class="text-block-9">' +
-            prev_winner + '+' + prev_winner_percent + "%"
-             '</div></div></div></div>';
+            prev_winner + '+' + prev_winner_percent + "%" +
+            '</div></div></div></div>';
 
     // Voting history.
     // TODO - Voting Info data in js?
