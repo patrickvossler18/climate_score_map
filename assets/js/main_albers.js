@@ -1,5 +1,5 @@
 mapboxgl.accessToken = 
-'pk.eyJ1IjoicGF0cmlja3Zvc3NsZXIiLCJhIjoiY2tjMHd0eTFrMHphMjJybG0yOTU1dDEzZyJ9.FsIqtdsHIru8Ay_0zmZYHw';
+'pk.eyJ1IjoiY2xpbWF0ZWNhYmluZXQiLCJhIjoiY2tkem41a2p3Mmd1NzJ0bXA3ZXc4dDBrdyJ9.MCFylyjbwUw7Sisd5QUhDw';
 
 // District Data comes from a var imported from top_20.js in index.html.
 // Here, we convert it from a dict of key to value to an array without the
@@ -23,7 +23,7 @@ var bounds = [
 var map = new mapboxgl.Map({
     container: 'map',
     // style: 'mapbox://styles/patrickvossler/ckc0ydvhi5h3v1iodhe5rgsjg', // mercator
-    style:"mapbox://styles/patrickvossler/ckcc7fav36ug51iqukp1vt6v8", //albers
+    style:"mapbox://styles/climatecabinet/cke05bgqr13cv19nxjurapvsc", //albers
     zoom: mapOrigin.zoom,
     attributionControl: false,
     maxBounds: bounds // prevents users from panning and zooming outside of bounding box
