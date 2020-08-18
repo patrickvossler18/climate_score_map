@@ -4,7 +4,7 @@ mapboxgl.accessToken =
 // District Data comes from a var imported from top_20.js in index.html.
 // Here, we convert it from a dict of key to value to an array without the
 // key, since we don't need it.
-district_data = Object.values(district_data); 
+district_data = Object.values(top_district_data).concat(Object.values(bottom_district_data)); 
 
 var mapOrigin = {
     zoom: 3.48,
@@ -232,6 +232,9 @@ const getDistrictCentroid = function(district, albers=false){
 		response.properties.opponent_donate_url = district.opponent.donation_link;
         }
         response.geometry = (albers ? getCentroid(projectToAlbersUsa(shape.geometry)) : getCentroid(shape.geometry));
+        if (response.geometry == null) {
+            console.log("No geometry data for " + candidate_name);
+        }
         return response;
     })
 };
@@ -286,24 +289,23 @@ const getCentroid = function(geometry) {
     var polygon;
     var latitude;
     var longitude;
-    for (var i = 0; i < geometry.coordinates.length; i++) {
-        if (geometry.coordinates.length === 1) {
-           // Polygon coordinates[0][nodes]
-           polygon = geometry.coordinates[0];
-        } else {
-            // Polygon coordinates[poly][0][nodes]
-	    // HACK - Currently, some data is not formatted the same as others.
-	    // So skip it for now.
-	    return null;
-            polygon = geometry.coordinates[i][0];
-        }
-        for (var j = 0; j < polygon.length; j++) {
-            longitude = polygon[j][0];
-            latitude = polygon[j][1];
-            poly_bounds.push([longitude,latitude])
-        }
 
+    // No data, something is wrong.
+    if (geometry.coordinates.length === 0 ) return null;
+
+    if (geometry.coordinates.length === 1) {
+       polygon = geometry.coordinates[0];
+    } else {
+        // HACK - This district is non-contiguous, so
+        // just pick a point from it.
+        polygon = geometry.coordinates[0][0];
     }
+    for (var j = 0; j < polygon.length; j++) {
+        longitude = polygon[j][0];
+        latitude = polygon[j][1];
+        poly_bounds.push([longitude,latitude])
+    }
+
     var outline = turf.polygon([poly_bounds]);
     return turf.centroid(outline)['geometry'];
 }
