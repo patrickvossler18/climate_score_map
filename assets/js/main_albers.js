@@ -185,7 +185,7 @@ const onDistrictClick = function(e) {
 
     var candidate_name = is_incumbent ? district_properties.incumbent_name : district_properties.opponent_name;
 
-    var district = district_properties.name;
+    var district = district_properties.state + " " + district_properties.name;
     // Basic Candidate Info
     reps += '<div class="candidate-info">' + 
             '<img src="https://uploads-ssl.webflow.com/5f149275ce02e1caf8d6a2ef/5f3419033a168c32da9db220_22_climate-cabinate-icons-' +
@@ -216,9 +216,9 @@ const onDistrictClick = function(e) {
 
     // Voting history.
     // TODO - Voting Info data in js?
-    var vote1_text = "";
-    var vote2_text = "";
-    var vote3_text = "";
+    var vote1_text = "Test Vote Plz Ignore";
+    var vote2_text = "test Vote Plz Ignore";
+    var vote3_text = "Test Vote Plz Ignore";
     reps +=  '<div class="vote-div"><div class="columns w-row"><div class="column-9 w-col w-col-2 w-col-small-4 w-col-tiny-4">' +
              '<img src="https://uploads-ssl.webflow.com/5f13afc0ce36dff9a4e6a640/5f37f70dde15692d312cf715_Icons-Trump-Vote-Grey.png" alt="" class="image-13">' + 
              '</div><div class="column-7 w-col w-col-6 w-col-small-4 w-col-tiny-4"><div class="text-block-3">' + 
@@ -227,11 +227,11 @@ const onDistrictClick = function(e) {
              '<div data-duration-in="300" data-duration-out="100" class="tabs w-tabs"><div class="tabs-menu w-tab-menu" role="tablist">' + 
              '<a data-w-tab="Tab 1" class="tab-link-tab-1 w-inline-block w-tab-link w--current" id="w-tabs-19-data-w-tab-0"' +
              'href="#w-tabs-19-data-w-pane-0" role="tab" aria-controls="w-tabs-19-data-w-pane-0" aria-selected="true">' + 
-             '<div class="text-block-10">Vote 1</div></a><a data-w-tab="Tab 2" class="w-inline-block w-tab-link" tabindex="-1"' +
+             '<div class="text-block-10">1</div></a><a data-w-tab="Tab 2" class="w-inline-block w-tab-link" tabindex="-1"' +
              'id="w-tabs-19-data-w-tab-1" href="#w-tabs-19-data-w-pane-1" role="tab" aria-controls="w-tabs-19-data-w-pane-1"' +
-             'aria-selected="false"><div class="text-block-11">Vote 2</div></a><a data-w-tab="Tab 3" class="tab-link-tab-3 w-inline-block w-tab-link"' + 
+             'aria-selected="false"><div class="text-block-11">2</div></a><a data-w-tab="Tab 3" class="tab-link-tab-3 w-inline-block w-tab-link"' + 
              ' tabindex="-1" id="w-tabs-19-data-w-tab-2" href="#w-tabs-19-data-w-pane-2" role="tab" aria-controls="w-tabs-19-data-w-pane-2"' + 
-             ' aria-selected="false"><div class="text-block-12">Vote 3</div></a></div><div class="tabs-content w-tab-content">' +
+             ' aria-selected="false"><div class="text-block-12">3</div></a></div><div class="tabs-content w-tab-content">' +
              ' <div data-w-tab="Tab 1" class="tab-pane-tab-1 w-tab-pane w--tab-active" id="w-tabs-19-data-w-pane-0" role="tabpanel"' +
              ' aria-labelledby="w-tabs-19-data-w-tab-0"><p class="paragraph-4">' + vote1_text + '</p>' + 
              '</div><div data-w-tab="Tab 2" class="tab-pane-tab-2 w-tab-pane" id="w-tabs-19-data-w-pane-1" role="tabpanel" ' + 
