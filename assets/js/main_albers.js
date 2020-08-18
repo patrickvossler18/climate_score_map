@@ -176,8 +176,8 @@ const onDistrictClick = function(e) {
     
     var reps = '';
 
-    // TODO - add this data to dataset?
-    var party = "PARTY";
+    // TODO - add this data to dataset and use the correct icon.
+    var party = "democrat";
 
     // TODO: Candidate Image. Not currently populated, so no we sub in a generic pic.
     var img_src = "https://uploads-ssl.webflow.com/5f149275ce02e1caf8d6a2ef/5f3419033a168c57f59db21f_22_twitter-avi-gender-balanced-figure.png";
