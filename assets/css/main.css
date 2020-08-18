@@ -941,10 +941,11 @@ h2 {
 }
 
 .map-div{
-    height: 550px;
+    height: 650px;
     width: 100%;
     position: relative;
     float: left;
+    padding: 10px;
 }
 
 .card_intro{
