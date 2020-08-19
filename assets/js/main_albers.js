@@ -472,7 +472,7 @@ const loadMap = function() {
                 'case',
                 ['boolean', ['feature-state', 'hover'], false],
                 1,
-                0.5
+                0.85
                 ],
                 // 'circle-opacity': 0.9,
                 'circle-color': '#000',
@@ -513,7 +513,7 @@ map.on('load', function() {
             paint: {
                 'fill-color': '#c36c27',
                 'fill-opacity': [
-                    'case', ['boolean', ['feature-state', 'hover'], false], 1, 0.75
+                    'case', ['boolean', ['feature-state', 'hover'], false], 1, 0.85
                 ]
             },
         },
