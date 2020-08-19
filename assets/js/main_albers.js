@@ -120,7 +120,6 @@ const onMouseMoveDistrict = function(e) {
             );
         }
         hoveredStateId = e.features[0].id;
-        console.log(e.features[0].id);
         map.setFeatureState(
             { source: 'state_districts_pts', id: hoveredStateId },
             { hover: true }
@@ -474,7 +473,7 @@ const loadMap = function() {
                 'case',
                 ['boolean', ['feature-state', 'hover'], false],
                 1,
-                0.85
+                0.5
                 ],
                 // 'circle-opacity': 0.9,
                 'circle-color': '#000',
