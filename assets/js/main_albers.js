@@ -120,7 +120,7 @@ const onMouseMoveDistrict = function(e) {
             );
         }
         hoveredStateId = e.features[0].id;
-        console.log(e.features[0]);
+        console.log(e.features[0].id);
         map.setFeatureState(
             { source: 'state_districts_pts', id: hoveredStateId },
             { hover: true }
@@ -270,7 +270,7 @@ const getDistrictCentroid = function(district, albers=false){
     return district['shapes'].map(function(shape,i){
         var response = {};
         response.type = "Feature";
-        response.id = i + 1 // doing this to avoid 0 == false in Javascript
+        response.id = parseInt(district['geoid']); // doing this to avoid 0 == false in Javascript
         response.properties = {};
         response.properties.state = district.state_abbr;
         response.properties.district_code = district.district_code;
