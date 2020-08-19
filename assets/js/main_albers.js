@@ -513,7 +513,7 @@ map.on('load', function() {
             paint: {
                 'fill-color': '#c36c27',
                 'fill-opacity': [
-                    'case', ['boolean', ['feature-state', 'hover'], false], 1, 0.5
+                    'case', ['boolean', ['feature-state', 'hover'], false], 1, 0.75
                 ]
             },
         },
