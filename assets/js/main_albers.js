@@ -54,6 +54,7 @@ var colorMixed = '#9a23c1';
 
 var hoveredStateId;
 var hoveredStateFillId;
+var hoveredDistrictId;
 var houseName = 'lower';
 var styleMode = 'polygons';
 
@@ -119,6 +120,7 @@ const onMouseMoveDistrict = function(e) {
             );
         }
         hoveredStateId = e.features[0].id;
+        console.log(e.features[0]);
         map.setFeatureState(
             { source: 'state_districts_pts', id: hoveredStateId },
             { hover: true }
