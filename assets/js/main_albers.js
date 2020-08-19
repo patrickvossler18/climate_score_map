@@ -512,7 +512,9 @@ map.on('load', function() {
             source: 'us-states',
             paint: {
                 'fill-color': '#c36c27',
-                'fill-opacity': 1
+                'fill-opacity': [
+                    'case', ['boolean', ['feature-state', 'hover'], false], 1, 0.5
+                ]
             },
         },
     );
@@ -524,12 +526,14 @@ map.on('load', function() {
             paint: {
                 'line-color': '#FFF',
                 'line-opacity': 0.9,
-                'line-width': [
-                    'case',
-                    ['boolean', ['feature-state', 'hover'], false],
-                    3,
-                    1
-                ],
+                'line-width': 1
+
+                // [
+                //     'case',
+                //     ['boolean', ['feature-state', 'hover'], false],
+                //     3,
+                //     1
+                // ],
             },
         },
     );
