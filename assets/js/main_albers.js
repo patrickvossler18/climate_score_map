@@ -29,7 +29,7 @@ var map = new mapboxgl.Map({
     style:"mapbox://styles/climatecabinet/cke05bgqr13cv19nxjurapvsc", //albers
     zoom: mapOrigin.zoom,
     attributionControl: false,
-    maxBounds: bounds // prevents users from panning and zooming outside of bounding box
+    maxBounds: bounds, // prevents users from panning and zooming outside of bounding box
     maxZoom: 13 // prevent users from zooming really far into the map
 
 });
