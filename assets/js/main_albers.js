@@ -578,4 +578,7 @@ map.on('load', function() {
     map.setLayoutProperty('us-states-line', 'visibility', 'visible')
     map.setLayoutProperty('district-polygons-fill', 'visibility', 'none')
     map.setLayoutProperty('district-polygons-line', 'visibility', 'none')
+    // move the state-points layer to the top so we don't hide the state abbreviations
+    // this ugly one-liner moves 'state-points', which are our abbreviations to the top of our stack of layers
+    map.moveLayer('state-points', map.getStyle().layers.slice(-1)[0]);
 });
