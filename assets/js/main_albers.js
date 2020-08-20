@@ -13,11 +13,14 @@ var mapOrigin = {
 };
 
 // got these bounds using map.fitBounds(turf.bbox(us_states_id_albers[0]), {padding: 20});
-var bounds = [
-        [-29.62723161264651, -14.135507266203689],
-        [26.315476155372494,13.760911540652828]
-      ];
+// var bounds = [
+//         [-29.62723161264651, -14.135507266203689],
+//         [26.315476155372494,13.760911540652828]
+//       ];
 
+var bounds = [
+        [-45,-45],[45,45]
+      ];
 
 
 var map = new mapboxgl.Map({
@@ -27,9 +30,16 @@ var map = new mapboxgl.Map({
     zoom: mapOrigin.zoom,
     attributionControl: false,
     maxBounds: bounds // prevents users from panning and zooming outside of bounding box
-    // minZoom: 4
+    maxZoom: 13 // prevent users from zooming really far into the map
 
 });
+
+// Adds an event listener that will fit the map to a bounding box of the states
+var bbox_usa_albers = turf.bbox(us_states_id_albers[0]);
+window.addEventListener('resize', function(event){
+    map.fitBounds(bbox_usa_albers, {padding: 20});
+});
+
 
 map.addControl(new mapboxgl.AttributionControl(), 'bottom-right');
 // map.addControl(new mapboxgl.NavigationControl(), 'top-left');
