@@ -1,10 +1,10 @@
 mapboxgl.accessToken = 
 'pk.eyJ1IjoiY2xpbWF0ZWNhYmluZXQiLCJhIjoiY2tkem41a2p3Mmd1NzJ0bXA3ZXc4dDBrdyJ9.MCFylyjbwUw7Sisd5QUhDw';
 
-// District Data comes from a var imported from top_20.js in index.html.
+// District Data comes from a var imported from cc40.js in index.html.
 // Here, we convert it from a dict of key to value to an array without the
 // key, since we don't need it.
-district_data = Object.values(top_district_data).concat(Object.values(bottom_district_data)); 
+district_data = Object.values(district_data); 
 
 var mapOrigin = {
     zoom: 3.48,
