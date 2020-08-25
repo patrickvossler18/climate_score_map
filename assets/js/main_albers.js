@@ -167,7 +167,12 @@ const onDistrictClick = function(e) {
     var climate_cabinet_ranking = district_properties.climate_cabinet_ranking;
     var climate_cabinet_score = district_properties.climate_cabinet_score;
     var party = district_properties.party;
-    var full_party = (party == "D" ? "democrat" : "republican");
+
+    var icon =  "https://uploads-ssl.webflow.com/5f149275ce02e1caf8d6a2ef/5f3419033a168c32da9db220_22_climate-cabinate-icons-democrat.png";
+    if (party == "R") {
+        icon = "https://uploads-ssl.webflow.com/5f149275ce02e1caf8d6a2ef/5f3419068cfd7dd95bdf9037_22_climate-cabinate-icons-republican.png";
+    }
+
     var vote_info_link = district_properties.vote_info_link;
     var district = district_properties.state_id;
     var candidate_name = is_incumbent ? district_properties.incumbent_name : district_properties.opponent_name;
@@ -186,8 +191,7 @@ const onDistrictClick = function(e) {
     // Basic Candidate Info
     reps+= '<div class="w-container">'+
                 '<div class="div-block-26">' +
-                    '<img src="https://uploads-ssl.webflow.com/5f149275ce02e1caf8d6a2ef/5f3419033a168c32da9db220_22_climate-cabinate-icons-' +
-                    full_party + '.png" alt="" class="party-logo">' +
+                    '<img src="' + icon + '" alt="" class="party-logo">' +
                     '<h5 class="candidate-name">'+ candidate_name +'</h5>'+
                 '</div>'+
             '</div>';
