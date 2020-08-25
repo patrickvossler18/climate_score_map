@@ -196,7 +196,7 @@ const onDistrictClick = function(e) {
                 '</div>'+
             '</div>';
 
-    reps += '<div class="candidate-info">' + 
+    reps += '<div class="candidate-info" style="align-items:center;">' + 
                 '<div class="text-block-5">' + district_properties.incumbent_or_challenger + '</div>' +
                 '<div class="text-block-4">' + district + '</div>'+
             '</div>';
