@@ -224,9 +224,8 @@ const onDistrictClick = function(e) {
                         '<img src="https://uploads-ssl.webflow.com/5f13afc0ce36dff9a4e6a640/5f3e7da3f6fa9c58668f582f_Icons-Race-Status-Grey.png"'+
                         ' alt="" class="image-9">'+
                         '<div class="icon-name">Race Status</div>'+
-                        '<div class="text-block-7">' + race_status + '</div>'
-                    '</div>'+
-
+                        '<div class="text-block-7">' + race_status + '</div>' +
+                    '</div>' +
                     '<div class="column-12 w-col w-col-6 w-col-small-6 w-col-tiny-6">'+
                         '<img src="https://uploads-ssl.webflow.com/5f13afc0ce36dff9a4e6a640/5f3e7da33bebdb1cd05a16fb_Icons-Trump-Clinton-Grey.png"'+
                         ' alt="" class="image-12">'+
