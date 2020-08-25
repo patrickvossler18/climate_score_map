@@ -231,7 +231,7 @@ const onDistrictClick = function(e) {
                         '<img src="https://uploads-ssl.webflow.com/5f13afc0ce36dff9a4e6a640/5f3e7da33bebdb1cd05a16fb_Icons-Trump-Clinton-Grey.png"'+
                         ' alt="" class="image-12">'+
                         '<div class="icon-name">Trump/Clinton Win Rate</div>'+
-                    '<div class="text-block-9">'+ prev_winner_percent + '%' + '</div>'+
+                    '<div class="text-block-9">'+ prev_winner_percent + '</div>'+
                     '</div>' +
                 '</div>' +
             '</div>';
