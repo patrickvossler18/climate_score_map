@@ -159,6 +159,9 @@ const onDistrictClick = function(e) {
 
     // Convenience vars.
     // TODO - some of these are based on strings. Instead, we should just represent them as bools.
+
+    // TODO - the candidate we care about is always the incumbent - even if they are actually the
+    // challenger.
     var is_incumbent = (district_properties.incumbent_or_challenger == "Incumbent");
     var prev_winner_percent = district_properties.presidential_win_rate;
     var climate_cabinet_ranking = district_properties.climate_cabinet_ranking;
@@ -168,6 +171,10 @@ const onDistrictClick = function(e) {
     var vote_info_link = district_properties.vote_info_link;
     var district = district_properties.state_id;
     var candidate_name = is_incumbent ? district_properties.incumbent_name : district_properties.opponent_name;
+    var donate_url = is_incumbent ? district_properties.incumbent_donate_url : district_properties.opponent_donate_url;
+
+    // This is currently fixed - all races are  tossups.
+    var race_status = "Tossup";
     
     var reps = '';
 
@@ -213,6 +220,7 @@ const onDistrictClick = function(e) {
                         '<img src="https://uploads-ssl.webflow.com/5f13afc0ce36dff9a4e6a640/5f3e7da3f6fa9c58668f582f_Icons-Race-Status-Grey.png"'+
                         ' alt="" class="image-9">'+
                         '<div class="icon-name">Race Status</div>'+
+                        '<div class="text-block-7">' + race_status + '</div>'
                     '</div>'+
 
                     '<div class="column-12 w-col w-col-6 w-col-small-6 w-col-tiny-6">'+
@@ -276,7 +284,6 @@ const onDistrictClick = function(e) {
             '</div>';
 
     // Donate Button
-    var donate_url = is_incumbent ? district_properties.incumbent_donate_url : district_properties.opponent_donate_url;
     reps += '<div class="div-block-17">'+
                 '<a href="/spotlight-legend" target="_blank" class="link-block w-inline-block">'+
                     '<div class="div-block-18">'+
@@ -327,7 +334,7 @@ const getDistrictCentroid = function(district, albers=false){
             response.properties.incumbent_donate_url = incumbent.donation_link;
             response.properties.incumbent_votes = incumbent.votes;
         } 
-        if (district.opoonent) {
+        if (district.opponent) {
             var opponent = district.opponent;
             response.properties.opponent_name = opponent.name;
             response.properties.opponent_lifetime_score = opponent.lifetime_score;
