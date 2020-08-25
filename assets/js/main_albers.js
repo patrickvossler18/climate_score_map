@@ -252,17 +252,11 @@ const onDistrictClick = function(e) {
     var spotlight_votes = district_properties.spotlight_votes.split("\",\"");
     var vote1_text = spotlight_votes[0].substring(2);
     var vote2_text = spotlight_votes[1].substring(0, spotlight_votes[1].length - 2);
+
      reps += '<div class="vote-div">'+
-                '<div class="columns w-row">'+
-                    '<div class="column-9 w-col w-col-2 w-col-small-4 w-col-tiny-4">' +
-                        '<img src="https://uploads-ssl.webflow.com/5f13afc0ce36dff9a4e6a640/5f37f70dde15692d312cf715_Icons-Trump-Vote-Grey.png" alt="" class="image-13">' + 
-                    '</div>'+
-                    '<div class="column-7 w-col w-col-6 w-col-small-4 w-col-tiny-4">'+
-                    '<div class="text-block-3">' + 
-                        'Representative\'s Climate Voting History</div>'+
-                    '</div>'+
-                    '<div class="column-8 w-col w-col-4 w-col-small-4 w-col-tiny-4">' + 
-                        '<a href="' + vote_info_link + '" target="_blank" class="link">Vote Info</a>'+
+                    '<img src="https://uploads-ssl.webflow.com/5f13afc0ce36dff9a4e6a640/5f3e7da30838ff14bd63af97_Icons-Vote-Grey.png" alt="" class="image-13">' + 
+                    '<div class="vote-text">Representative\'s Climate Related Voting History</div>' + 
+                    '<a href="' + vote_info_link + '" target="_blank" class="link">Vote Info</a>'+
                     '</div>'+
                 '</div>'+
              '</div>' +
