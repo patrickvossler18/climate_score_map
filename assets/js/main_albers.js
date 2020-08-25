@@ -156,53 +156,31 @@ const onDistrictClick = function(e) {
         { hover: false }
     );
     var district_properties = e.features[0].properties;
-  
-    var is_incumbent = false;
-    if (district_properties.incumbent_lifetime_score &&
-        district_properties.oponent_lifetime_score) {
-        is_incumbent =
-            district_properties.incumbent_lifetime_score >
-                district_properties.opponent_lifetime_score;
 
-    } else if (district_properties.incumbent_lifetime_score) {
-	   is_incumbent = true;
-    }
-    // TBD: for deciding action needed, we can compare lifetime scores?
-
-    // only saying which party won, take the first character.
-    var prev_winner = district_properties.prev_natl_election_winner;
-    if (prev_winner) {
-        prev_winner = prev_winner[0];
-    } else {
-        prev_winner = "-";
-    }
-
-    var prev_winner_percent = Math.round(district_properties.prev_natl_election_winner_percent * 100,2);
-    if (!prev_winner_percent) {
-        prev_winner_percent = "-";
-    }
-    var prev_election_year = district_properties.prev_natl_election_year;
-
+    // Convenience vars.
+    // TODO - some of these are based on strings. Instead, we should just represent them as bools.
+    var is_incumbent = (district_properties.incumbent_or_challenger == "Incumbent");
+    var prev_winner_percent = district_properties.presidential_win_rate;
     var climate_cabinet_ranking = district_properties.climate_cabinet_ranking;
     var climate_cabinet_score = district_properties.climate_cabinet_score;
+    var party = district_properties.party;
+    var full_party = (party == "D" ? "democrat" : "republican");
+    var vote_info_link = district_properties.vote_info_link;
+    var district = district_properties.state_id;
+    var candidate_name = is_incumbent ? district_properties.incumbent_name : district_properties.opponent_name;
     
     var reps = '';
 
-    // TODO - add this data to dataset and use the correct icon.
-    var party = "democrat";
 
-    // TODO: Candidate Image. Not currently populated, so no we sub in a generic pic.
+    // TODO: Candidate Image. Not currently populated, so for now we sub in a generic pic.
     var img_src = "https://uploads-ssl.webflow.com/5f149275ce02e1caf8d6a2ef/5f3419033a168c57f59db21f_22_twitter-avi-gender-balanced-figure.png";
     reps += '<div class="photo-div">' + '<img src="' + img_src + '" alt="" class="image-11"></div>';
 
-    var candidate_name = is_incumbent ? district_properties.incumbent_name : district_properties.opponent_name;
-
-    var district = district_properties.state + " " + district_properties.name;
     // Basic Candidate Info
     reps+= '<div class="w-container">'+
                 '<div class="div-block-26">' +
                     '<img src="https://uploads-ssl.webflow.com/5f149275ce02e1caf8d6a2ef/5f3419033a168c32da9db220_22_climate-cabinate-icons-' +
-                    party + '.png" alt="" class="party-logo">' +
+                    full_party + '.png" alt="" class="party-logo">' +
                     '<h5 class="candidate-name">'+ candidate_name +'</h5>'+
                 '</div>'+
             '</div>';
@@ -241,7 +219,7 @@ const onDistrictClick = function(e) {
                         '<img src="https://uploads-ssl.webflow.com/5f13afc0ce36dff9a4e6a640/5f3e7da33bebdb1cd05a16fb_Icons-Trump-Clinton-Grey.png"'+
                         ' alt="" class="image-12">'+
                         '<div class="icon-name">Trump/Clinton Win Rate</div>'+
-                    '<div class="text-block-9">'+ prev_winner + '+' + prev_winner_percent + '%' + '</div>'+
+                    '<div class="text-block-9">'+ prev_winner_percent + '%' + '</div>'+
                     '</div>' +
                 '</div>' +
             '</div>';
@@ -258,14 +236,10 @@ const onDistrictClick = function(e) {
             //             '<a href="https://www.sierraclub.org/sites/www.sierraclub.org/files/sce/iowa-chapter/political/2019-2020Scorecard.pdf" target="_blank" class="link">Vote Info</a></div></div></div>'
 
 
-
-
-    // Voting history.
-    // TODO - Voting Info data in js?
-    var vote1_text = "Test Vote Plz Ignore";
-    var vote2_text = "test Vote Plz Ignore";
-    var vote3_text = "Test Vote Plz Ignore";
-    // TODO - Uncomment or remove when we make a decision on votes.
+    // TODO - fix whatever is causing this to be a string instead of an array and undo this hack.
+    var spotlight_votes = district_properties.spotlight_votes.split("\",\"");
+    var vote1_text = spotlight_votes[0].substring(2);
+    var vote2_text = spotlight_votes[1].substring(0, spotlight_votes[1].length - 2);
      reps += '<div class="vote-div">'+
                 '<div class="columns w-row">'+
                     '<div class="column-9 w-col w-col-2 w-col-small-4 w-col-tiny-4">' +
@@ -276,7 +250,7 @@ const onDistrictClick = function(e) {
                         'Representative\'s Climate Voting History</div>'+
                     '</div>'+
                     '<div class="column-8 w-col w-col-4 w-col-small-4 w-col-tiny-4">' + 
-                        '<a href="https://www.google.com" target="_blank" class="link">Vote Info</a>'+
+                        '<a href="' + vote_info_link + '" target="_blank" class="link">Vote Info</a>'+
                     '</div>'+
                 '</div>'+
              '</div>' +
@@ -311,32 +285,6 @@ const onDistrictClick = function(e) {
                 '</a>'+
                 '<a href="'+ donate_url +'" class="button-3 w-button">ActBlue</a>'+
             '</div>';
-
-
-             //        '<a data-w-tab="Tab 1" class="tab-link-tab-1 w-inline-block w-tab-link w--current" id="w-tabs-19-data-w-tab-0"' +
-             // 'href="#w-tabs-19-data-w-pane-0" role="tab" aria-controls="w-tabs-19-data-w-pane-0" aria-selected="true">' + 
-             // '<div class="text-block-10">1</div></a><a data-w-tab="Tab 2" class="w-inline-block w-tab-link" tabindex="-1"' +
-             // 'id="w-tabs-19-data-w-tab-1" href="#w-tabs-19-data-w-pane-1" role="tab" aria-controls="w-tabs-19-data-w-pane-1"' +
-             // 'aria-selected="false"><div class="text-block-11">2</div></a><a data-w-tab="Tab 3" class="tab-link-tab-3 w-inline-block w-tab-link"' + 
-             // ' tabindex="-1" id="w-tabs-19-data-w-tab-2" href="#w-tabs-19-data-w-pane-2" role="tab" aria-controls="w-tabs-19-data-w-pane-2"' + 
-             // ' aria-selected="false"><div class="text-block-12">3</div></a></div><div class="tabs-content w-tab-content">' +
-             // ' <div data-w-tab="Tab 1" class="tab-pane-tab-1 w-tab-pane w--tab-active" id="w-tabs-19-data-w-pane-0" role="tabpanel"' +
-             // ' aria-labelledby="w-tabs-19-data-w-tab-0"><p class="paragraph-4">' + vote1_text + '</p>' + 
-             // '</div><div data-w-tab="Tab 2" class="tab-pane-tab-2 w-tab-pane" id="w-tabs-19-data-w-pane-1" role="tabpanel" ' + 
-             // 'aria-labelledby="w-tabs-19-data-w-tab-1"><p class="paragraph-4">' + vote2_text + '</p>' +
-             // '</div><div data-w-tab="Tab 3" class="tab-pane-tab-3 w-tab-pane" id="w-tabs-19-data-w-pane-2" role="tabpanel" ' +
-             // 'aria-labelledby="w-tabs-19-data-w-tab-2"><p class="paragraph-4">' + vote3_text + '</p></div></div></div>'; 
-
-    // // Donate Button
-    // var donate_url = is_incumbent ?
-    //     district_properties.incumbent_donate_url : district_properties.opponent_donate_url;
-    // reps +=  '<div class="container-7 w-container"><div class="div-block-17"><a href="/spotlight-legend" target="_blank"' +
-    //          'class="link-block w-inline-block"><div class="div-block-18">' +
-    //          '<img src="https://uploads-ssl.webflow.com/5f13afc0ce36dff9a4e6a640/5f39d82ead458c7c81426b4e_Icons-Info-Grey.png"' + 
-    //          'alt="" class="image-16"></div></a><a href="' + donate_url + '" class="button-3 w-button">ActBlue</a></div></div>';
-
-    // var key_votes = "[Examples of key climate votes]";    
-    // reps += '<br><p class="paragraph-4> ' + candidate_name + ' has voted ' + key_votes + '. </p>';
    
     // Override all inner html of the popup.
     popup.innerHTML = reps;
@@ -349,19 +297,24 @@ const onDistrictClick = function(e) {
 };
 
 const getDistrictCentroid = function(district, albers=false){
-    // TODO: Handle upper and lower legislatures
-    // TODO: Select shape based on year. Currently assuming we only have one shape in the array
+    //   TODO - make this function just a straight passthrough of properties.
     return district['shapes'].map(function(shape,i){
         var response = {};
         response.type = "Feature";
         response.id = parseInt(district['geoid']); // doing this to avoid 0 == false in Javascript
         response.properties = {};
         response.properties.state = district.state_abbr;
+        response.properties.state_id = district.state_id;
         response.properties.district_code = district.district_code;
         response.properties.name = district.name;
         response.properties.which_house = district.ccid.indexOf("L") > -1 ? "lower" : "upper";
         response.properties.climate_cabinet_ranking = district.cc_ranking;
         response.properties.climate_cabinet_score = district.cc_score;
+        response.properties.presidential_win_rate = district.presidential_win_rate;
+        response.properties.party = district.party;
+        response.properties.vote_info_link = district.vote_info_link;
+        response.properties.incumbent_or_challenger = district.incumbent_or_challenger;
+        response.properties.spotlight_votes = district.spotlight_votes;
         if (district.elections && district.elections[0]) {
             response.properties.prev_natl_election_winner = (district.elections[0]["dem_prop"] > district.elections[0]["rep_prop"]) ? "Democrats" : "Republicans";
             response.properties.prev_natl_election_winner_percent = Math.abs(district.elections[0]["dem_prop"] - district.elections[0]["rep_prop"]);
