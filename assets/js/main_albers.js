@@ -179,7 +179,7 @@ const onDistrictClick = function(e) {
     var donate_url = is_incumbent ? district_properties.incumbent_donate_url : district_properties.opponent_donate_url;
 
     // This is currently fixed - all races are  tossups.
-    var race_status = "Tossup";
+    var race_status = is_incumbent ? "Hold the seat" : "Flip the seat";
     
     var reps = '';
 
