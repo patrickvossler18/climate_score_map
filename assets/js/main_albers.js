@@ -288,7 +288,7 @@ const onDistrictClick = function(e) {
                         '<img src="https://uploads-ssl.webflow.com/5f13afc0ce36dff9a4e6a640/5f39d82ead458c7c81426b4e_Icons-Info-Grey.png" alt="" class="image-16">'+
                     '</div>'+
                 '</a>'+
-                '<a href="'+ donate_url +'" class="button-3 w-button">ActBlue</a>'+
+                '<a href="'+ donate_url +'" class="button-3 w-button">Take Action</a>'+
             '</div>';
    
     // Override all inner html of the popup.
