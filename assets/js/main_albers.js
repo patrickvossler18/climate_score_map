@@ -263,10 +263,10 @@ const onDistrictClick = function(e) {
 
              '<div data-duration-in="300" data-duration-out="100" class="tabs w-tabs">'+ 
                 '<div class="tabs-menu w-tab-menu" role="tablist">' +
-                    '<a data-w-tab="Tab 1" class="tab-link-tab-1 w-inline-block w-tab-link w--current" id="w-tabs-0-data-w-tab-0" href="#w-tabs-0-data-w-pane-0" role="tab" aria-controls="w-tabs-0-data-w-pane-0" aria-selected="true">'+
+                    '<a data-w-tab="Tab 1" class="tab-link-tab-1 w-inline-block w-tab-link w--current" id="w-tabs-0-data-w-tab-0" href="#" role="tab" aria-controls="w-tabs-0-data-w-pane-0" aria-selected="true">'+
                         '<div class="text-block-10">Vote 1</div>'+
                     '</a>'+
-                    '<a data-w-tab="Tab 2" class="tab-link-tab-2 w-inline-block w-tab-link" tabindex="-1" id="w-tabs-0-data-w-tab-1" href="#w-tabs-0-data-w-pane-1" role="tab" aria-controls="w-tabs-0-data-w-pane-1" aria-selected="false">'+
+                    '<a data-w-tab="Tab 2" class="tab-link-tab-2 w-inline-block w-tab-link" tabindex="-1" id="w-tabs-0-data-w-tab-1" href="#" role="tab" aria-controls="w-tabs-0-data-w-pane-1" aria-selected="false">'+
                         '<div class="text-block-11">Vote 2</div>'+
                     '</a>'+
                 '</div>' +
@@ -299,6 +299,15 @@ const onDistrictClick = function(e) {
         { source: 'state_districts_pts', id: hoveredStateId },
         { hover: true }
     );
+
+    // now that we've injected the vote information, add the listeners
+    var tabs = document.getElementsByClassName('w-tab-link');
+
+    for(j = 0; j < tabs.length; j++) {
+      // attach event listener to all tabs
+      tabs[j].addEventListener('click', clickTab)
+    }
+
 };
 
 const getDistrictCentroid = function(district, albers=false){
@@ -416,6 +425,26 @@ const getCentroid = function(geometry) {
 
     var outline = turf.polygon([poly_bounds]);
     return turf.centroid(outline)['geometry'];
+}
+
+// event listener function for voting tabs
+const clickTab = function(e) {
+  for (i = 0; i < pages.length; i++) {
+    // deactivate all tabs
+    tabs[i].classList.remove('w--current')
+    // hide all pages
+    pages[i].classList.remove('w--tab-active')
+  }
+
+  // activate current tab
+  e.currentTarget.classList.add('w--current')
+  
+  var pageToShow = e.currentTarget.getAttribute('aria-controls');
+
+  // show current page
+  var currentPage = document.querySelector('#'+pageToShow)
+  currentPage.classList.add('w--tab-active')
+
 }
 
 const loadMap = function() {
