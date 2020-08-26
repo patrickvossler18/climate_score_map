@@ -309,7 +309,8 @@ const getDistrictCentroid = function(district, albers=false){
         response.id = parseInt(district['geoid']); // doing this to avoid 0 == false in Javascript
         response.properties = {};
         response.properties.state = district.state_abbr;
-        response.properties.state_id = district.state_id;
+        // split state id at the AD/SD/HD part, join it back together with spaces, and trim any extra whitespace
+        response.properties.state_id = district.state_id.split(/(AD\d+|SD\d+|HD\d+)/).join(" ").trim();
         response.properties.district_code = district.district_code;
         response.properties.name = district.name;
         response.properties.which_house = district.ccid.indexOf("L") > -1 ? "lower" : "upper";
