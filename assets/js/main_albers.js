@@ -255,7 +255,7 @@ const onDistrictClick = function(e) {
 
      reps += '<div class="vote-div">'+
                     '<img src="https://uploads-ssl.webflow.com/5f13afc0ce36dff9a4e6a640/5f3e7da30838ff14bd63af97_Icons-Vote-Grey.png" alt="" class="image-13">' + 
-                    '<div class="vote-text">Representative\'s Climate Related Voting History</div>' + 
+                    '<div class="vote-text">Incumbent\'s Climate Votes</div>' + 
                     '<a href="' + vote_info_link + '" target="_blank" class="link">Vote Info</a>'+
                     '</div>'+
                 '</div>'+
