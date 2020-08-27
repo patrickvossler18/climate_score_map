@@ -174,7 +174,7 @@ const onDistrictClick = function(e) {
     }
 
     var vote_info_link = district_properties.vote_info_link;
-    var district = district_properties.state_id;
+    var district = district_properties.district_full_name;
     var candidate_name = is_incumbent ? district_properties.incumbent_name : district_properties.opponent_name;
     var donate_url = is_incumbent ? district_properties.incumbent_donate_url : district_properties.opponent_donate_url;
 
@@ -318,8 +318,7 @@ const getDistrictCentroid = function(district, albers=false){
         response.id = parseInt(district['geoid']); // doing this to avoid 0 == false in Javascript
         response.properties = {};
         response.properties.state = district.state_abbr;
-        // split state id at the AD/SD/HD part, join it back together with spaces, and trim any extra whitespace
-        response.properties.state_id = district.state_id.split(/(AD\d+|SD\d+|HD\d+)/).join(" ").trim();
+        response.properties.district_full_name = district.dist_full_name;
         response.properties.district_code = district.district_code;
         response.properties.name = district.name;
         response.properties.which_house = district.ccid.indexOf("L") > -1 ? "lower" : "upper";
