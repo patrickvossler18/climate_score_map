@@ -429,21 +429,24 @@ const getCentroid = function(geometry) {
 
 // event listener function for voting tabs
 const clickTab = function(e) {
-  for (i = 0; i < pages.length; i++) {
+    var tabs = document.getElementsByClassName('w-tab-link');
+    var pages = document.getElementsByClassName('w-tab-pane');
+
+    for (i = 0; i < pages.length; i++) {
     // deactivate all tabs
     tabs[i].classList.remove('w--current')
     // hide all pages
     pages[i].classList.remove('w--tab-active')
-  }
+    }
 
-  // activate current tab
-  e.currentTarget.classList.add('w--current')
-  
-  var pageToShow = e.currentTarget.getAttribute('aria-controls');
+    // activate current tab
+    e.currentTarget.classList.add('w--current')
 
-  // show current page
-  var currentPage = document.querySelector('#'+pageToShow)
-  currentPage.classList.add('w--tab-active')
+    var pageToShow = e.currentTarget.getAttribute('aria-controls');
+
+    // show current page
+    var currentPage = document.querySelector('#'+pageToShow)
+    currentPage.classList.add('w--tab-active')
 
 }
 
