@@ -168,9 +168,9 @@ const onDistrictClick = function(e) {
     var climate_cabinet_score = district_properties.climate_cabinet_score;
     var party = district_properties.party;
 
-    var icon =  "https://uploads-ssl.webflow.com/5f149275ce02e1caf8d6a2ef/5f3419033a168c32da9db220_22_climate-cabinate-icons-democrat.png";
+    var icon =  "https://uploads-ssl.webflow.com/5f149275ce02e1caf8d6a2ef/5f46c6afa7badc7c108b1dc4_22_icons-democrat-blue.png";
     if (party == "R") {
-        icon = "https://uploads-ssl.webflow.com/5f149275ce02e1caf8d6a2ef/5f3419068cfd7dd95bdf9037_22_climate-cabinate-icons-republican.png";
+        icon = "https://uploads-ssl.webflow.com/5f149275ce02e1caf8d6a2ef/5f46c7a4bfe4ad819717e7eb_22_icons-republican-red.png";
     }
 
     var vote_info_link = district_properties.vote_info_link;
