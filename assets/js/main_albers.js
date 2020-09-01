@@ -206,7 +206,7 @@ const onDistrictClick = function(e) {
                 '<div class="columns-2 w-row">'+
                     '<div class="column-10 w-col w-col-6 w-col-small-6 w-col-tiny-6">'+
                         '<img src="https://uploads-ssl.webflow.com/5f13afc0ce36dff9a4e6a640/5f37f70dc3b70c05d3c1213a_Icons-Score-Grey.png" alt="" class="image-9">' +
-                        '<div class="icon-name">Climate Cabinet Score</div>'
+                        '<div class="icon-name">Incumbent\'s Climate Cabinet Score</div>'
                         +'<div class="text-block-7">'+climate_cabinet_score +'</div>'+
                     '</div>'+
                     '<div class="column-11 w-col w-col-6 w-col-small-6 w-col-tiny-6">'+
