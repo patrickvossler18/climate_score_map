@@ -42,10 +42,11 @@ window.addEventListener('resize', function(event){
 
 
 map.addControl(new mapboxgl.AttributionControl(), 'bottom-right');
-// map.addControl(new mapboxgl.NavigationControl(), 'top-left');
 map.dragRotate.disable();
 map.touchZoomRotate.disableRotation();
-// map.scrollZoom.disable();
+
+// Disable scrool to zoom until map is interacted with. 
+map.scrollZoom.disable();
 
 var url = new URL(window.location.href);
 var embed = url.searchParams.get('embed');
@@ -450,6 +451,11 @@ const clickTab = function(e) {
 }
 
 const loadMap = function() {
+    map.on('click', function(e) {
+        // Disable scroll to zoom until Map is interacted with.
+        map.scrollZoom.enable();
+    });
+
     map.on('mousemove', 'district-points', function(e) {
         onMouseMoveDistrict(e);
     });
