@@ -885,3 +885,8 @@ h2 {
   -ms-overflow-style: none;  /* IE and Edge */
   scrollbar-width: none;  /* Firefox */
 }
+
+/* Make sure anchors have no borders or the mapbox logo shows a weird sliver. */
+.mapbox-ctrl-logo {
+  border:none;
+}
