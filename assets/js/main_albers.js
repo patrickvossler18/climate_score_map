@@ -4,7 +4,9 @@ mapboxgl.accessToken =
 // District Data comes from a var imported from cc40.js in index.html.
 // Here, we convert it from a dict of key to value to an array without the
 // key, since we don't need it.
-district_data = Object.values(district_data); 
+district_data = Object.values(district_data);
+// removing 42170L, 12116L
+district_data = district_data.filter( el => !([ "42170L", "12116L"].includes(el.ccid)) ); 
 
 var mapOrigin = {
     zoom: 3.48,
